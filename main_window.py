@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1428, 838)
+        MainWindow.resize(1412, 844)
         icon = QIcon()
         icon.addFile(u":/icons/res/science-atom-icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -430,10 +430,10 @@ class Ui_MainWindow(object):
         self.groupBox_6.setAutoFillBackground(False)
         self.verticalLayoutWidget_4 = QWidget(self.groupBox_6)
         self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
-        self.verticalLayoutWidget_4.setGeometry(QRect(10, 20, 491, 351))
+        self.verticalLayoutWidget_4.setGeometry(QRect(10, 20, 481, 361))
         self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_5.setContentsMargins(0, 6, 0, 0)
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.formLayout_9 = QFormLayout()
@@ -453,29 +453,29 @@ class Ui_MainWindow(object):
 
         self.formLayout_9.setWidget(0, QFormLayout.FieldRole, self.lineEdit)
 
-        self.lineEdit_5 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_5.setObjectName(u"lineEdit_5")
-        self.lineEdit_5.setFont(font9)
-
-        self.formLayout_9.setWidget(1, QFormLayout.FieldRole, self.lineEdit_5)
-
         self.label_20 = QLabel(self.verticalLayoutWidget_4)
         self.label_20.setObjectName(u"label_20")
         self.label_20.setFont(font9)
 
         self.formLayout_9.setWidget(1, QFormLayout.LabelRole, self.label_20)
 
-        self.lineEdit_6 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_6.setObjectName(u"lineEdit_6")
-        self.lineEdit_6.setFont(font9)
+        self.lineEdit_5 = QLineEdit(self.verticalLayoutWidget_4)
+        self.lineEdit_5.setObjectName(u"lineEdit_5")
+        self.lineEdit_5.setFont(font9)
 
-        self.formLayout_9.setWidget(2, QFormLayout.FieldRole, self.lineEdit_6)
+        self.formLayout_9.setWidget(1, QFormLayout.FieldRole, self.lineEdit_5)
 
         self.label_21 = QLabel(self.verticalLayoutWidget_4)
         self.label_21.setObjectName(u"label_21")
         self.label_21.setFont(font9)
 
         self.formLayout_9.setWidget(2, QFormLayout.LabelRole, self.label_21)
+
+        self.lineEdit_6 = QLineEdit(self.verticalLayoutWidget_4)
+        self.lineEdit_6.setObjectName(u"lineEdit_6")
+        self.lineEdit_6.setFont(font9)
+
+        self.formLayout_9.setWidget(2, QFormLayout.FieldRole, self.lineEdit_6)
 
         self.label_22 = QLabel(self.verticalLayoutWidget_4)
         self.label_22.setObjectName(u"label_22")
@@ -501,23 +501,17 @@ class Ui_MainWindow(object):
 
         self.formLayout_9.setWidget(4, QFormLayout.FieldRole, self.lineEdit_8)
 
-        self.lineEdit_9 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_9.setObjectName(u"lineEdit_9")
-        self.lineEdit_9.setFont(font9)
-
-        self.formLayout_9.setWidget(5, QFormLayout.FieldRole, self.lineEdit_9)
-
         self.label_24 = QLabel(self.verticalLayoutWidget_4)
         self.label_24.setObjectName(u"label_24")
         self.label_24.setFont(font9)
 
         self.formLayout_9.setWidget(5, QFormLayout.LabelRole, self.label_24)
 
-        self.lineEdit_10 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_10.setObjectName(u"lineEdit_10")
-        self.lineEdit_10.setFont(font9)
+        self.lineEdit_9 = QLineEdit(self.verticalLayoutWidget_4)
+        self.lineEdit_9.setObjectName(u"lineEdit_9")
+        self.lineEdit_9.setFont(font9)
 
-        self.formLayout_9.setWidget(6, QFormLayout.FieldRole, self.lineEdit_10)
+        self.formLayout_9.setWidget(5, QFormLayout.FieldRole, self.lineEdit_9)
 
         self.label_25 = QLabel(self.verticalLayoutWidget_4)
         self.label_25.setObjectName(u"label_25")
@@ -525,8 +519,21 @@ class Ui_MainWindow(object):
 
         self.formLayout_9.setWidget(6, QFormLayout.LabelRole, self.label_25)
 
+        self.lineEdit_10 = QLineEdit(self.verticalLayoutWidget_4)
+        self.lineEdit_10.setObjectName(u"lineEdit_10")
+        self.lineEdit_10.setFont(font9)
+
+        self.formLayout_9.setWidget(6, QFormLayout.FieldRole, self.lineEdit_10)
+
 
         self.horizontalLayout_3.addLayout(self.formLayout_9)
+
+        self.line_2 = QFrame(self.verticalLayoutWidget_4)
+        self.line_2.setObjectName(u"line_2")
+        self.line_2.setFrameShape(QFrame.VLine)
+        self.line_2.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_3.addWidget(self.line_2)
 
         self.formLayout_10 = QFormLayout()
         self.formLayout_10.setObjectName(u"formLayout_10")
@@ -536,17 +543,35 @@ class Ui_MainWindow(object):
 
         self.formLayout_10.setWidget(0, QFormLayout.LabelRole, self.label_27)
 
+        self.lineEdit_11 = QLineEdit(self.verticalLayoutWidget_4)
+        self.lineEdit_11.setObjectName(u"lineEdit_11")
+        self.lineEdit_11.setFont(font9)
+
+        self.formLayout_10.setWidget(0, QFormLayout.FieldRole, self.lineEdit_11)
+
         self.label_28 = QLabel(self.verticalLayoutWidget_4)
         self.label_28.setObjectName(u"label_28")
         self.label_28.setFont(font9)
 
         self.formLayout_10.setWidget(1, QFormLayout.LabelRole, self.label_28)
 
+        self.lineEdit_12 = QLineEdit(self.verticalLayoutWidget_4)
+        self.lineEdit_12.setObjectName(u"lineEdit_12")
+        self.lineEdit_12.setFont(font9)
+
+        self.formLayout_10.setWidget(1, QFormLayout.FieldRole, self.lineEdit_12)
+
         self.label_29 = QLabel(self.verticalLayoutWidget_4)
         self.label_29.setObjectName(u"label_29")
         self.label_29.setFont(font9)
 
         self.formLayout_10.setWidget(2, QFormLayout.LabelRole, self.label_29)
+
+        self.lineEdit_13 = QLineEdit(self.verticalLayoutWidget_4)
+        self.lineEdit_13.setObjectName(u"lineEdit_13")
+        self.lineEdit_13.setFont(font9)
+
+        self.formLayout_10.setWidget(2, QFormLayout.FieldRole, self.lineEdit_13)
 
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -556,26 +581,11 @@ class Ui_MainWindow(object):
 
         self.formLayout_10.setItem(4, QFormLayout.LabelRole, self.verticalSpacer)
 
-        self.lineEdit_11 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_11.setObjectName(u"lineEdit_11")
-
-        self.formLayout_10.setWidget(0, QFormLayout.FieldRole, self.lineEdit_11)
-
-        self.lineEdit_12 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_12.setObjectName(u"lineEdit_12")
-
-        self.formLayout_10.setWidget(1, QFormLayout.FieldRole, self.lineEdit_12)
-
-        self.lineEdit_13 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_13.setObjectName(u"lineEdit_13")
-
-        self.formLayout_10.setWidget(2, QFormLayout.FieldRole, self.lineEdit_13)
-
 
         self.horizontalLayout_3.addLayout(self.formLayout_10)
 
-        self.horizontalLayout_3.setStretch(0, 2)
-        self.horizontalLayout_3.setStretch(1, 1)
+        self.horizontalLayout_3.setStretch(0, 3)
+        self.horizontalLayout_3.setStretch(2, 1)
 
         self.verticalLayout_5.addLayout(self.horizontalLayout_3)
 
@@ -595,6 +605,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.plainTextEdit = QPlainTextEdit(self.verticalLayoutWidget_4)
         self.plainTextEdit.setObjectName(u"plainTextEdit")
+        self.plainTextEdit.setFont(font9)
 
         self.horizontalLayout_4.addWidget(self.plainTextEdit)
 
@@ -621,7 +632,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1428, 21))
+        self.menubar.setGeometry(QRect(0, 0, 1412, 21))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")

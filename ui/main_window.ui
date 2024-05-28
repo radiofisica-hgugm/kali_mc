@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1428</width>
-    <height>838</height>
+    <width>1412</width>
+    <height>844</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -782,13 +782,16 @@
             <rect>
              <x>10</x>
              <y>20</y>
-             <width>491</width>
-             <height>351</height>
+             <width>481</width>
+             <height>361</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
+            <property name="topMargin">
+             <number>6</number>
+            </property>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="2,1">
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,0,1">
               <item>
                <layout class="QFormLayout" name="formLayout_9">
                 <item row="0" column="0">
@@ -814,16 +817,6 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="lineEdit_5">
-                  <property name="font">
-                   <font>
-                    <family>Lucida Sans</family>
-                    <pointsize>10</pointsize>
-                   </font>
-                  </property>
-                 </widget>
-                </item>
                 <item row="1" column="0">
                  <widget class="QLabel" name="label_20">
                   <property name="font">
@@ -837,8 +830,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="1">
-                 <widget class="QLineEdit" name="lineEdit_6">
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="lineEdit_5">
                   <property name="font">
                    <font>
                     <family>Lucida Sans</family>
@@ -857,6 +850,16 @@
                   </property>
                   <property name="text">
                    <string>Localización:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="lineEdit_6">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
                   </property>
                  </widget>
                 </item>
@@ -906,16 +909,6 @@
                   </property>
                  </widget>
                 </item>
-                <item row="5" column="1">
-                 <widget class="QLineEdit" name="lineEdit_9">
-                  <property name="font">
-                   <font>
-                    <family>Lucida Sans</family>
-                    <pointsize>10</pointsize>
-                   </font>
-                  </property>
-                 </widget>
-                </item>
                 <item row="5" column="0">
                  <widget class="QLabel" name="label_24">
                   <property name="font">
@@ -929,8 +922,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="6" column="1">
-                 <widget class="QLineEdit" name="lineEdit_10">
+                <item row="5" column="1">
+                 <widget class="QLineEdit" name="lineEdit_9">
                   <property name="font">
                    <font>
                     <family>Lucida Sans</family>
@@ -952,7 +945,24 @@
                   </property>
                  </widget>
                 </item>
+                <item row="6" column="1">
+                 <widget class="QLineEdit" name="lineEdit_10">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
                </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_2">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+               </widget>
               </item>
               <item>
                <layout class="QFormLayout" name="formLayout_10">
@@ -969,6 +979,16 @@
                   </property>
                  </widget>
                 </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="lineEdit_11">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
                 <item row="1" column="0">
                  <widget class="QLabel" name="label_28">
                   <property name="font">
@@ -982,6 +1002,16 @@
                   </property>
                  </widget>
                 </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="lineEdit_12">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
                 <item row="2" column="0">
                  <widget class="QLabel" name="label_29">
                   <property name="font">
@@ -992,6 +1022,16 @@
                   </property>
                   <property name="text">
                    <string>Esc. vert.:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="lineEdit_13">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
                   </property>
                  </widget>
                 </item>
@@ -1021,15 +1061,6 @@
                   </property>
                  </spacer>
                 </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="lineEdit_11"/>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="lineEdit_12"/>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QLineEdit" name="lineEdit_13"/>
-                </item>
                </layout>
               </item>
              </layout>
@@ -1051,7 +1082,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
-               <widget class="QPlainTextEdit" name="plainTextEdit"/>
+               <widget class="QPlainTextEdit" name="plainTextEdit">
+                <property name="font">
+                 <font>
+                  <family>Lucida Sans</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushreport">
@@ -1077,7 +1115,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1428</width>
+     <width>1412</width>
      <height>21</height>
     </rect>
    </property>
