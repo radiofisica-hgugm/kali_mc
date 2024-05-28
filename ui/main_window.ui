@@ -6,17 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1292</width>
-    <height>823</height>
+    <width>1428</width>
+    <height>838</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Kali MC</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="main.qrc">
+    <normaloff>:/icons/res/science-atom-icon.svg</normaloff>:/icons/res/science-atom-icon.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,4,4">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,5,4">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <property name="topMargin">
        <number>4</number>
       </property>
@@ -43,6 +50,12 @@
         </item>
         <item>
          <widget class="QGroupBox" name="groupBox">
+          <property name="minimumSize">
+           <size>
+            <width>230</width>
+            <height>80</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <family>Lucida Sans</family>
@@ -572,6 +585,36 @@
               </property>
              </widget>
             </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_30">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>10</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Desv. (%):</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLabel" name="desv_label">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>10</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </widget>
@@ -645,7 +688,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_9">
+             <widget class="QLabel" name="label_linac_dose">
               <property name="font">
                <font>
                 <family>Lucida Sans</family>
@@ -661,7 +704,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_12">
+             <widget class="QLabel" name="label_linac_energy">
               <property name="font">
                <font>
                 <family>Lucida Sans</family>
@@ -677,7 +720,7 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLabel" name="label_13">
+             <widget class="QLabel" name="label_linac_applicator">
               <property name="font">
                <font>
                 <family>Lucida Sans</family>
@@ -712,9 +755,13 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="6,3">
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
         <item>
-         <widget class="GraphicsLayoutWidget" name="graphWidget4" native="true"/>
+         <widget class="GLViewWidget" name="openGLWidget">
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QGroupBox" name="groupBox_6">
@@ -724,9 +771,299 @@
             <pointsize>13</pointsize>
            </font>
           </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
           <property name="title">
            <string>Datos Administrativos</string>
           </property>
+          <widget class="QWidget" name="verticalLayoutWidget_4">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>491</width>
+             <height>351</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="2,1">
+              <item>
+               <layout class="QFormLayout" name="formLayout_9">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_18">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Nombre y apellidos:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="lineEdit">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="lineEdit_5">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_20">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Nº de Historia:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="lineEdit_6">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_21">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Localización:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_22">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Radiofísico:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QLineEdit" name="lineEdit_7">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label_23">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>O. Radioterápico:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QLineEdit" name="lineEdit_8">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QLineEdit" name="lineEdit_9">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_24">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>T.E.R.t</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QLineEdit" name="lineEdit_10">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="label_25">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Nº de RIO:</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QFormLayout" name="formLayout_10">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_27">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Pitch (º):</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_28">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Roll (º):</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_29">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Esc. vert.:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <spacer name="verticalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="4" column="0">
+                 <spacer name="verticalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="lineEdit_11"/>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="lineEdit_12"/>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="lineEdit_13"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="Line" name="line">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_26">
+              <property name="text">
+               <string>Incidencias:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QPlainTextEdit" name="plainTextEdit"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushreport">
+                <property name="text">
+                 <string>Generar Informe</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -740,7 +1077,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1292</width>
+     <width>1428</width>
      <height>21</height>
     </rect>
    </property>
@@ -754,7 +1091,14 @@
    <header>pyqtgraph</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>GLViewWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">pyqtgraph.opengl</header>
+  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="main.qrc"/>
+ </resources>
  <connections/>
 </ui>

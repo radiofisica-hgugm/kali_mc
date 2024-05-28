@@ -7,6 +7,7 @@ import threading
 
 import numpy as np
 import pyqtgraph as pg
+import pyqtgraph.opengl as gl
 #from PIL import Image
 try:
     import pyi_splash
@@ -44,23 +45,36 @@ class Window(QMainWindow, Ui_MainWindow):
         # Pyqtgraph image_____________________________________
         self.p1 = self.graphWidget1.addPlot(colspan=1, title="Crossline")
         self.p1.addItem(img_item := self.img1)
-        self.p1.addColorBar(img_item, colorMap='viridis', values=(0, 1))
+        #self.p1.addColorBar(img_item, colorMap='viridis', values=(0, 1))
+        self.hist = pg.HistogramLUTItem()
+        self.hist.setImageItem(self.img1)
+        self.h1 = self.graphWidget1.addItem(self.hist)
+
+
         self.p2 = self.graphWidget2.addPlot(colspan=1, title="Inline")
         self.p3 = self.graphWidget3.addPlot(colspan=1, title="Isodosis del 90% en zmax")
-        self.p4 = self.graphWidget4.addPlot(colspan=1, title="Fourth plot") #Probar GLViewWidget
+
+        g = gl.GLGridItem()
+        self.openGLWidget.addItem(g)
+
 
         # FAKE DATA
-        time = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        temperature = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
-        self.p1.plot(time, temperature)
-        self.p2.plot(time, temperature)
+        x = np.random.normal(size=1000)
+        y = np.random.normal(size=1000)
+        z = np.random.normal(size=1000)
+
+        pts = np.vstack([x, y, z]).transpose()
+        scatter = gl.GLScatterPlotItem(pos=pts, color=(1, 1, 1, 1), size=0.1)
+        self.openGLWidget.addItem(scatter)
 
 
 
         self.graphWidget1.setBackground('w')
         self.graphWidget2.setBackground('w')
         self.graphWidget3.setBackground('w')
-        self.graphWidget4.setBackground('w')
+        # self.openGLWidget.opts['bgcolor'] = (0.5, 0.5, 0.5, 1) #GREY
+        self.openGLWidget.opts['bgcolor'] = (0.3, 0.3, 0.3, 1)
+
         # Interpret image data as row-major instead of col-major
         # Otherwise, image shows rotated 90ยบ
         pg.setConfigOptions(imageAxisOrder='row-major')
@@ -104,11 +118,28 @@ class Window(QMainWindow, Ui_MainWindow):
         self.output_label.setText('')
         self.UM_label.setText('')
 
+    def change_gradient(self, gradient_name):
+        # Define gradient presets
+        gradient_presets = {
+            'viridis': pg.colormap.get('viridis'),
+            'plasma': pg.colormap.get('plasma'),
+            'inferno': pg.colormap.get('inferno'),
+            'magma': pg.colormap.get('magma'),
+            'cividis': pg.colormap.get('cividis'),
+            'turbo': pg.colormap.get('turbo')
+        }
+
+        # Apply the selected gradient
+        if gradient_name in gradient_presets:
+            colormap = gradient_presets[gradient_name]
+            lut = colormap.getLookupTable()
+            self.img1.setLookupTable(lut)
+            #self.img1.setLevels([0, 1])  # Normalize the data to [0, 1]
+
     def plot_distribs(self):
         results = self.dose_distrib
         D = results['Dose']
-        S = results['Sigma']
-
+        # S = results['Sigma']
         X = results['X']
         Y = results['Z']
         Xbin, Ybin, Zbin = D.shape
@@ -121,23 +152,81 @@ class Window(QMainWindow, Ui_MainWindow):
         d_x = x_scale[1] - x_scale[0]
         d_y = y_scale[1] - y_scale[0]
         extent = [-d_x + x_start, x_end + d_x, y_start - d_y, y_end + d_y]
-        # Scale and offset parameters for image
-        mm_per_pixel = (0.12, 0.34) #TO DO: implementar escala
-        mm_offset = (34.5, 56.7)
 
         self.p1.clear()
         self.img1 = pg.ImageItem()
         self.p1.addItem(self.img1)
         plane_idx = int(round(np.median(range(Ybin))))
+        # TODO: interpolate at x = 0 or y = 0, create mesh?
         self.data = np.rot90(D[:, plane_idx, :])
         self.img1.setImage(self.data)
+        # self.hist = pg.HistogramLUTItem()
+        self.hist.setImageItem(self.img1)
+        # self.h1 = self.graphWidget1.addItem(self.hist)
         # self.reset_tools()
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
-        # if rect is None:
-        #     rect = [0, 0, 2.54 / self.info['dpi'][0], 2.54 / self.info['dpi'][1]]
-        tr.scale(extent[2], extent[3])  # scale horizontal and vertical axes
-        tr.translate(extent[0], extent[1])
+        tr.translate(x_start - d_x, y_end + d_y/2)
+        tr.scale((extent[1] - extent[0])/len(x_scale), (y_end - y_start)/len(y_scale))  # scale horizontal and vertical axes
+        print(f'x_start: {x_start}')
+        print(f'x_end: {x_end}')
+        print(f'y_start: {y_start}')
+        print(f'y_end: {y_end}')
+
+        self.p1.addItem(pg.GridItem())
+        self.p1.getViewBox().invertY(True)
+        self.p1.getViewBox().setAspectLocked(lock=True, ratio=1)
+        self.change_gradient('turbo')
+        levels = np.linspace(self.data.min(), self.data.max(), 10)
+        for level in levels:
+            iso_curve = pg.IsocurveItem(level=level, pen='k')
+            iso_curve.setData(self.data)
+            self.p1.addItem(iso_curve)
+            iso_curve.setTransform(tr)
         self.img1.setTransform(tr)
+        self.p1.autoRange()
+
+        # 3D
+        alpha = 0.3
+        self.openGLWidget.clear()
+        self.openGLWidget.setCameraPosition(distance=20)
+        g = gl.GLGridItem()
+        self.openGLWidget.addItem(g)
+        v = gl.GLVolumeItem(D)
+        verts, faces = pg.isosurface(D, D.max() *0.9)
+        md = gl.MeshData(vertexes=verts, faces=faces)
+        colors = np.ones((md.faceCount(), 4), dtype=float)
+        colors[:, 1] = 0.0  # 0.2
+        colors[:, 3] = alpha # 0.2
+        colors[:, 2] = np.linspace(0, 1, colors.shape[0])
+        md.setFaceColors(colors)
+        m2 = gl.GLMeshItem(meshdata=md, smooth=True, shader='balloon')
+        m2.setGLOptions('additive')
+
+        self.openGLWidget.addItem(m2)
+        # m2.translate(-D.shape[0]/2, -D.shape[1]/2, -D.shape[2]+1)
+        m2.scale((extent[1] - extent[0]) / len(x_scale), (extent[1] - extent[0]) / len(x_scale), (y_end - y_start) / len(y_scale))
+        # m2.translate(x_start - d_x, x_start - d_x, y_start + d_y / 2)
+        m2.translate(x_start - d_x/2, x_start - d_x/2, y_start -d_y/2)
+
+        verts, faces = pg.isosurface(D, D.max() * 0.2)
+        md = gl.MeshData(vertexes=verts, faces=faces)
+        colors = np.zeros((md.faceCount(), 4), dtype=float) #BLUE
+        colors[:, 1] = 0.0  # 0.2
+        colors[:, 3] = alpha  # 0.2
+        colors[:, 2] = np.linspace(0, 1, colors.shape[0])
+        md.setFaceColors(colors)
+        m3 = gl.GLMeshItem(meshdata=md, smooth=True, shader='balloon')
+        m3.setGLOptions('additive')
+
+        self.openGLWidget.addItem(m3)
+        # m3.translate(-D.shape[0] / 2, -D.shape[1] / 2, -D.shape[2] + 1)
+        m3.scale((extent[1] - extent[0]) / len(x_scale), (extent[1] - extent[0]) / len(x_scale),
+                 (y_end - y_start) / len(y_scale))
+        m3.translate(x_start - d_x/2, x_start - d_x/2, y_start -d_y/2)
+
+
+
+
 
         # fig, [(ax0, ax1), (ax2, ax3)] = plt.subplots(
         #     2, 2, sharey=True, figsize=(10, 9))

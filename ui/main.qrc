@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>res/science-atom-icon.svg</file>
+  </qresource>
+</RCC>
