@@ -125,10 +125,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.d_x = d_x
         self.d_y = d_y
         self.d_z = d_z
-        self.extent = [-d_x/2 + x_start, x_end + d_x/2, z_start - d_z/2, z_end + d_z/2]
-        print(self.extent)
+        self.extent = [-d_x / 2 + x_start, x_end + d_x / 2, z_start - d_z / 2, z_end + d_z / 2]
+        print(f'extent crossline: {self.extent}')
         self.extent3D = [x_start, x_end, y_start, y_end, z_start, z_end]
-        print(self.extent3D)
+        print(f'3D extent: {self.extent3D}')
 
         self.p1.clear()
 
@@ -143,7 +143,8 @@ class Window(QMainWindow, Ui_MainWindow):
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
         tr.translate(self.extent[0], self.extent[3])
-        tr.scale((self.extent[1] - self.extent[0])/Xbin, (self.extent[3] - self.extent[2])/Ybin)  # scale horizontal and vertical axes
+        tr.scale((self.extent[1] - self.extent[0]) / Xbin,
+                 (self.extent[3] - self.extent[2]) / Zbin)  # scale horizontal and vertical axes
         print(f'x_start: {x_start}')
         print(f'x_end: {x_end}')
         print(f'y_start: {y_start}')
@@ -176,7 +177,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.create_3D_isodose(level=level, red=reds[idx], green=greens[idx], alpha=alphas[idx])
         # 3D Cylinder
         applicator = int(self.combo_applicator.currentText())
-        md = gl.MeshData.cylinder(rows=10, cols=20, radius=[applicator/2, applicator/2], length=5.0)
+        md = gl.MeshData.cylinder(rows=10, cols=20, radius=[applicator / 2, applicator / 2], length=5.0)
         colors = np.zeros((md.faceCount(), 4), dtype=float)
         colors[:, 1] = 0.1  # 0.2
         colors[:, 3] = 100  # 0.2
@@ -199,9 +200,9 @@ class Window(QMainWindow, Ui_MainWindow):
         m = gl.GLMeshItem(meshdata=md, smooth=True, shader='balloon')
         m.setGLOptions('additive')
         self.openGLWidget.addItem(m)
-        m.translate(self.extent3D[0] + self.d_x/2, self.extent3D[2] + self.d_y/2, self.extent3D[4] + self.d_z/2)
+        m.translate(self.extent3D[0] + self.d_x / 2, self.extent3D[2] + self.d_y / 2, self.extent3D[4] + self.d_z / 2)
         m.scale((self.extent3D[1] - self.extent3D[0]) / Xbin, (self.extent3D[3] - self.extent3D[2]) / Ybin,
-                 (self.extent3D[5] - self.extent3D[4]) / Zbin)
+                (self.extent3D[5] - self.extent3D[4]) / Zbin)
 
 
 if __name__ == "__main__":
