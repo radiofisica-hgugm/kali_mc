@@ -1,9 +1,7 @@
 import multiprocessing
-import os
 import sys
 from PySide2.QtWidgets import QApplication
 from PySide2 import QtGui
-import threading
 
 import numpy as np
 import pyqtgraph as pg
@@ -11,7 +9,7 @@ import pyqtgraph.opengl as gl
 
 try:
     import pyi_splash
-except:
+except ModuleNotFoundError:
     pass
 from main_window import Ui_MainWindow, QMainWindow
 import conf
@@ -27,6 +25,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.energies = [6, 8, 10, 12]
         self.npzfile = ''
         self.dose_distrib = None
+        self.dose = 0
+        self.cGy_UM = 0
+        self.UM = 0
 
         # Callbacks:
         self.combo_applicator.activated.connect(self.refresh)
@@ -36,21 +37,23 @@ class Window(QMainWindow, Ui_MainWindow):
         self.radio2.toggled.connect(self.refresh)
         self.radio3.toggled.connect(self.refresh)
         self.radio4.toggled.connect(self.refresh)
+        self.calcular.clicked.connect(self.calculate_UM)
 
         self.calcular.setEnabled(False)
         self.img1 = pg.ImageItem()
+        self.data_cross = None
 
         self.pref = conf.PREF  # Reference Pressure
         self.label_pref.setText(str(self.pref))
 
         # Pyqtgraph image_____________________________________
         self.p1 = self.graphWidget1.addPlot(colspan=1, title="Crossline")
-        self.p1.addItem(img_item := self.img1)
+        self.p1.addItem(self.img1)
 
         self.p2 = self.graphWidget2.addPlot(colspan=1, title="Inline")
         self.p3 = self.graphWidget3.addPlot(colspan=1, title="Isodosis del 90% en zmax")
 
-        self.extent = [1, 1]
+        self.extent_cross = [1, 1]
         self.extent3D = [1, 1, 1]
         self.d_x = 0.0
         self.d_y = 0.0
@@ -71,6 +74,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def find_checked_radiobutton(self):
         """ find the checked radiobutton, returns energy index """
         radiobuttons = [self.radio1, self.radio2, self.radio3, self.radio4]
+        checked_radiobutton_idx = -1
         for e_idx, rb in enumerate(radiobuttons):
             if rb.isChecked():
                 checked_radiobutton_idx = e_idx
@@ -125,8 +129,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.d_x = d_x
         self.d_y = d_y
         self.d_z = d_z
-        self.extent = [-d_x / 2 + x_start, x_end + d_x / 2, z_start - d_z / 2, z_end + d_z / 2]
-        print(f'extent crossline: {self.extent}')
+        self.extent_cross = [-d_x / 2 + x_start, x_end + d_x / 2, z_start - d_z / 2, z_end + d_z / 2]
+        print(f'extent crossline: {self.extent_cross}')
         self.extent3D = [x_start, x_end, y_start, y_end, z_start, z_end]
         print(f'3D extent: {self.extent3D}')
 
@@ -136,15 +140,15 @@ class Window(QMainWindow, Ui_MainWindow):
         self.p1.addItem(self.img1)
         plane_idx = int(round(np.median(range(Ybin))))
         # TODO: interpolate at x = 0 or y = 0, create mesh?
-        self.data = np.rot90(D[:, plane_idx, :])
+        self.data_cross = np.rot90(D[:, plane_idx, :])
         # Interpolate to get max in clinical axis
-        self.img1.setImage(self.data)
+        self.img1.setImage(self.data_cross)
         self.p1.addColorBar(self.img1, colorMap='turbo')
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
-        tr.translate(self.extent[0], self.extent[3])
-        tr.scale((self.extent[1] - self.extent[0]) / Xbin,
-                 (self.extent[3] - self.extent[2]) / Zbin)  # scale horizontal and vertical axes
+        tr.translate(self.extent_cross[0], self.extent_cross[3])
+        tr.scale((self.extent_cross[1] - self.extent_cross[0]) / Xbin,
+                 (self.extent_cross[3] - self.extent_cross[2]) / Zbin)  # scale horizontal and vertical axes
         print(f'x_start: {x_start}')
         print(f'x_end: {x_end}')
         print(f'y_start: {y_start}')
@@ -155,10 +159,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.p1.getViewBox().setAspectLocked(lock=True, ratio=1)
         self.p1.getAxis('bottom').setLabel('cm')
 
-        levels = np.linspace(self.data.min(), self.data.max(), 10)
+        levels = np.linspace(self.data_cross.min(), self.data_cross.max(), 10)
         for level in levels:
             iso_curve = pg.IsocurveItem(level=level, pen='k')
-            iso_curve.setData(self.data)
+            iso_curve.setData(self.data_cross)
             self.p1.addItem(iso_curve)
             iso_curve.setTransform(tr)
         self.img1.setTransform(tr)
@@ -204,6 +208,22 @@ class Window(QMainWindow, Ui_MainWindow):
         m.scale((self.extent3D[1] - self.extent3D[0]) / Xbin, (self.extent3D[3] - self.extent3D[2]) / Ybin,
                 (self.extent3D[5] - self.extent3D[4]) / Zbin)
 
+    def calculate_UM(self):
+        # Retrieve data from gui:
+        self.dose = float(self.dosis_edit.text())
+        applicator = self.combo_applicator.currentText()
+        b_idx = self.combo_bevel.currentIndex() - 1  # bevel index
+        energy_idx = self.find_checked_radiobutton()
+        p_today = float(self.phoy_edit.text())  # Pressure correction
+
+        # Load output from file and calculate
+        OFs = np.load(rf'data\OF_C{applicator}.npz', allow_pickle=True)['arr_0']
+        self.cGy_UM = OFs[b_idx, energy_idx]
+        self.output_label.setText(f'{self.cGy_UM:.3f}')
+        prescription_isodose = 90
+        self.UM = int(np.round(self.dose/self.cGy_UM/(prescription_isodose/100)/self.pref*p_today))
+        self.UM_label.setText(str(self.UM))
+
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
@@ -215,6 +235,6 @@ if __name__ == "__main__":
         pyi_splash.update_text("Kali MC starting...")
         pyi_splash.close()
 
-    except:
+    except NameError:
         pass
     sys.exit(app.exec_())

@@ -292,11 +292,11 @@ class Ui_MainWindow(object):
 
         self.formLayout_8.setWidget(3, QFormLayout.FieldRole, self.output_label)
 
-        self.lineEdit_3 = QLineEdit(self.formLayoutWidget_5)
-        self.lineEdit_3.setObjectName(u"lineEdit_3")
-        self.lineEdit_3.setFont(font7)
+        self.phoy_edit = QLineEdit(self.formLayoutWidget_5)
+        self.phoy_edit.setObjectName(u"phoy_edit")
+        self.phoy_edit.setFont(font7)
 
-        self.formLayout_8.setWidget(1, QFormLayout.FieldRole, self.lineEdit_3)
+        self.formLayout_8.setWidget(1, QFormLayout.FieldRole, self.phoy_edit)
 
         self.lineEdit_4 = QLineEdit(self.formLayoutWidget_5)
         self.lineEdit_4.setObjectName(u"lineEdit_4")
