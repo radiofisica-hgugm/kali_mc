@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/calc-icon-blue.svg</file>
+    <file>res/generate-report-icon-blue.svg</file>
+    <file>res/angle-icon-blue.svg</file>
+    <file>res/generate-report-icon.svg</file>
     <file>res/curved-arrow-icon.svg</file>
     <file>res/science-atom-icon.svg</file>
   </qresource>

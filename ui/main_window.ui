@@ -69,11 +69,27 @@
            <string>Aplicador</string>
           </property>
           <layout class="QFormLayout" name="formLayout_4">
-           <item row="0" column="0" colspan="2">
+           <item row="1" column="0" colspan="2">
             <layout class="QFormLayout" name="formLayout_3">
              <property name="rightMargin">
               <number>15</number>
              </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="font">
+                <font>
+                 <family>Lucida Sans</family>
+                 <pointsize>10</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                 <kerning>false</kerning>
+                </font>
+               </property>
+               <property name="text">
+                <string>Cono</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="1">
               <widget class="QComboBox" name="combo_applicator">
                <item>
@@ -128,38 +144,6 @@
                </item>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="font">
-                <font>
-                 <family>Lucida Sans</family>
-                 <pointsize>10</pointsize>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                 <kerning>false</kerning>
-                </font>
-               </property>
-               <property name="text">
-                <string>Cono</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="font">
-                <font>
-                 <family>Lucida Sans</family>
-                 <pointsize>10</pointsize>
-                 <weight>50</weight>
-                 <bold>false</bold>
-                 <kerning>false</kerning>
-                </font>
-               </property>
-               <property name="text">
-                <string>Bisel</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="1">
               <widget class="QComboBox" name="combo_bevel">
                <item>
@@ -188,6 +172,57 @@
                 </property>
                </item>
               </widget>
+             </item>
+             <item row="1" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <item>
+                <widget class="QLabel" name="label_9">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>16</horstretch>
+                   <verstretch>16</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap resource="main.qrc">:/icons/res/angle-icon-blue.svg</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_3">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Lucida Sans</family>
+                   <pointsize>10</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                   <kerning>false</kerning>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Bisel</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
@@ -432,7 +467,7 @@
             <rect>
              <x>10</x>
              <y>30</y>
-             <width>211</width>
+             <width>222</width>
              <height>181</height>
             </rect>
            </property>
@@ -582,6 +617,10 @@
              <widget class="QPushButton" name="calcular">
               <property name="text">
                <string>CALCULAR</string>
+              </property>
+              <property name="icon">
+               <iconset resource="main.qrc">
+                <normaloff>:/icons/res/calc-icon-blue.svg</normaloff>:/icons/res/calc-icon-blue.svg</iconset>
               </property>
              </widget>
             </item>
@@ -1095,8 +1134,18 @@
                <layout class="QVBoxLayout" name="verticalLayout_2">
                 <item>
                  <widget class="QPushButton" name="pushreport">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>Generar Informe</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="main.qrc">
+                    <normaloff>:/icons/res/generate-report-icon-blue.svg</normaloff>:/icons/res/generate-report-icon-blue.svg</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1112,7 +1161,7 @@
                    <string>Enviar RTPlan</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="main.qrc">
+                   <iconset>
                     <normaloff>:/icons/res/curved-arrow-icon.svg</normaloff>:/icons/res/curved-arrow-icon.svg</iconset>
                   </property>
                  </widget>
