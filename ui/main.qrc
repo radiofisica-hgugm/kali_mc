@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/curved-arrow-icon.svg</file>
     <file>res/science-atom-icon.svg</file>
   </qresource>
 </RCC>

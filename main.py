@@ -109,6 +109,9 @@ class Window(QMainWindow, Ui_MainWindow):
             self.calcular.setEnabled(False)
         self.output_label.setText('')
         self.UM_label.setText('')
+        self.label_linac_dose.setText('')
+        self.label_linac_energy.setText('')
+        self.label_linac_applicator.setText('')
 
     def plot_distribs(self):
         results = self.dose_distrib
@@ -223,6 +226,9 @@ class Window(QMainWindow, Ui_MainWindow):
         prescription_isodose = 90
         self.UM = int(np.round(self.dose/self.cGy_UM/(prescription_isodose/100)/self.pref*p_today))
         self.UM_label.setText(str(self.UM))
+        self.label_linac_dose.setText(str(self.UM))
+        self.label_linac_energy.setText(f'{self.energies[energy_idx]} MeV')
+        self.label_linac_applicator.setText(f'{int(applicator)*10} mm')
 
 
 if __name__ == "__main__":

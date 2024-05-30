@@ -609,10 +609,24 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.plainTextEdit)
 
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.pushreport = QPushButton(self.verticalLayoutWidget_4)
         self.pushreport.setObjectName(u"pushreport")
 
-        self.horizontalLayout_4.addWidget(self.pushreport)
+        self.verticalLayout_2.addWidget(self.pushreport)
+
+        self.pushreport_2 = QPushButton(self.verticalLayoutWidget_4)
+        self.pushreport_2.setObjectName(u"pushreport_2")
+        self.pushreport_2.setFont(font4)
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/res/curved-arrow-icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushreport_2.setIcon(icon1)
+
+        self.verticalLayout_2.addWidget(self.pushreport_2)
+
+
+        self.horizontalLayout_4.addLayout(self.verticalLayout_2)
 
 
         self.verticalLayout_5.addLayout(self.horizontalLayout_4)
@@ -709,8 +723,9 @@ class Ui_MainWindow(object):
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"N\u00ba de RIO:", None))
         self.label_27.setText(QCoreApplication.translate("MainWindow", u"Pitch (\u00ba):", None))
         self.label_28.setText(QCoreApplication.translate("MainWindow", u"Roll (\u00ba):", None))
-        self.label_29.setText(QCoreApplication.translate("MainWindow", u"Esc. vert.:", None))
+        self.label_29.setText(QCoreApplication.translate("MainWindow", u"Esc. vert. (cm):", None))
         self.label_26.setText(QCoreApplication.translate("MainWindow", u"Incidencias:", None))
         self.pushreport.setText(QCoreApplication.translate("MainWindow", u"Generar Informe", None))
+        self.pushreport_2.setText(QCoreApplication.translate("MainWindow", u"Enviar RTPlan", None))
     # retranslateUi
 

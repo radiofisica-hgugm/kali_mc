@@ -1092,11 +1092,32 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushreport">
-                <property name="text">
-                 <string>Generar Informe</string>
-                </property>
-               </widget>
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <item>
+                 <widget class="QPushButton" name="pushreport">
+                  <property name="text">
+                   <string>Generar Informe</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushreport_2">
+                  <property name="font">
+                   <font>
+                    <family>Lucida Sans</family>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Enviar RTPlan</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="main.qrc">
+                    <normaloff>:/icons/res/curved-arrow-icon.svg</normaloff>:/icons/res/curved-arrow-icon.svg</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
