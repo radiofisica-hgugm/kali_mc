@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1412, 844)
+        MainWindow.resize(1489, 847)
         icon = QIcon()
         icon.addFile(u":/icons/res/science-atom-icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -76,24 +76,6 @@ class Ui_MainWindow(object):
 
         self.formLayout_3.setWidget(0, QFormLayout.FieldRole, self.combo_applicator)
 
-        self.label_2 = QLabel(self.groupBox)
-        self.label_2.setObjectName(u"label_2")
-        font2 = QFont()
-        font2.setFamily(u"Lucida Sans")
-        font2.setPointSize(10)
-        font2.setBold(False)
-        font2.setWeight(50)
-        font2.setKerning(False)
-        self.label_2.setFont(font2)
-
-        self.formLayout_3.setWidget(0, QFormLayout.LabelRole, self.label_2)
-
-        self.label_3 = QLabel(self.groupBox)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setFont(font2)
-
-        self.formLayout_3.setWidget(1, QFormLayout.LabelRole, self.label_3)
-
         self.combo_bevel = QComboBox(self.groupBox)
         self.combo_bevel.addItem("")
         self.combo_bevel.addItem("")
@@ -104,8 +86,64 @@ class Ui_MainWindow(object):
 
         self.formLayout_3.setWidget(1, QFormLayout.FieldRole, self.combo_bevel)
 
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.label_9 = QLabel(self.groupBox)
+        self.label_9.setObjectName(u"label_9")
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(16)
+        sizePolicy.setVerticalStretch(16)
+        sizePolicy.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
+        self.label_9.setSizePolicy(sizePolicy)
+        self.label_9.setMaximumSize(QSize(16, 16))
+        self.label_9.setPixmap(QPixmap(u":/icons/res/angle-icon-blue.svg"))
+        self.label_9.setScaledContents(True)
 
-        self.formLayout_4.setLayout(0, QFormLayout.SpanningRole, self.formLayout_3)
+        self.horizontalLayout_6.addWidget(self.label_9)
+
+        self.label_3 = QLabel(self.groupBox)
+        self.label_3.setObjectName(u"label_3")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy1)
+        font2 = QFont()
+        font2.setFamily(u"Lucida Sans")
+        font2.setPointSize(10)
+        font2.setBold(False)
+        font2.setWeight(50)
+        font2.setKerning(False)
+        self.label_3.setFont(font2)
+
+        self.horizontalLayout_6.addWidget(self.label_3)
+
+
+        self.formLayout_3.setLayout(1, QFormLayout.LabelRole, self.horizontalLayout_6)
+
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.label_12 = QLabel(self.groupBox)
+        self.label_12.setObjectName(u"label_12")
+        sizePolicy.setHeightForWidth(self.label_12.sizePolicy().hasHeightForWidth())
+        self.label_12.setSizePolicy(sizePolicy)
+        self.label_12.setMaximumSize(QSize(16, 16))
+        self.label_12.setPixmap(QPixmap(u":/icons/res/cylinder.svg"))
+        self.label_12.setScaledContents(True)
+
+        self.horizontalLayout_5.addWidget(self.label_12)
+
+        self.label_2 = QLabel(self.groupBox)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setFont(font2)
+
+        self.horizontalLayout_5.addWidget(self.label_2)
+
+
+        self.formLayout_3.setLayout(0, QFormLayout.LabelRole, self.horizontalLayout_5)
+
+
+        self.formLayout_4.setLayout(1, QFormLayout.SpanningRole, self.formLayout_3)
 
 
         self.verticalLayout.addWidget(self.groupBox)
@@ -118,7 +156,7 @@ class Ui_MainWindow(object):
         self.groupBox_2.setFont(font3)
         self.formLayoutWidget_2 = QWidget(self.groupBox_2)
         self.formLayoutWidget_2.setObjectName(u"formLayoutWidget_2")
-        self.formLayoutWidget_2.setGeometry(QRect(10, 20, 207, 56))
+        self.formLayoutWidget_2.setGeometry(QRect(10, 20, 231, 61))
         self.formLayout_5 = QFormLayout(self.formLayoutWidget_2)
         self.formLayout_5.setObjectName(u"formLayout_5")
         self.formLayout_5.setContentsMargins(0, 0, 15, 0)
@@ -128,16 +166,16 @@ class Ui_MainWindow(object):
 
         self.formLayout_5.setWidget(0, QFormLayout.LabelRole, self.label_4)
 
+        self.dosis_edit = QLineEdit(self.formLayoutWidget_2)
+        self.dosis_edit.setObjectName(u"dosis_edit")
+
+        self.formLayout_5.setWidget(0, QFormLayout.FieldRole, self.dosis_edit)
+
         self.label_5 = QLabel(self.formLayoutWidget_2)
         self.label_5.setObjectName(u"label_5")
         self.label_5.setFont(font2)
 
         self.formLayout_5.setWidget(1, QFormLayout.LabelRole, self.label_5)
-
-        self.dosis_edit = QLineEdit(self.formLayoutWidget_2)
-        self.dosis_edit.setObjectName(u"dosis_edit")
-
-        self.formLayout_5.setWidget(0, QFormLayout.FieldRole, self.dosis_edit)
 
         self.lineEdit_2 = QLineEdit(self.formLayoutWidget_2)
         self.lineEdit_2.setObjectName(u"lineEdit_2")
@@ -237,10 +275,10 @@ class Ui_MainWindow(object):
         self.groupBox_4.setFont(font6)
         self.formLayoutWidget_5 = QWidget(self.groupBox_4)
         self.formLayoutWidget_5.setObjectName(u"formLayoutWidget_5")
-        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 211, 181))
+        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 231, 181))
         self.formLayout_8 = QFormLayout(self.formLayoutWidget_5)
         self.formLayout_8.setObjectName(u"formLayout_8")
-        self.formLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.formLayout_8.setContentsMargins(0, 0, 15, 0)
         self.label_14 = QLabel(self.formLayoutWidget_5)
         self.label_14.setObjectName(u"label_14")
         font7 = QFont()
@@ -310,6 +348,9 @@ class Ui_MainWindow(object):
 
         self.calcular = QPushButton(self.formLayoutWidget_5)
         self.calcular.setObjectName(u"calcular")
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/res/calc-icon-blue.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.calcular.setIcon(icon1)
 
         self.formLayout_8.setWidget(2, QFormLayout.FieldRole, self.calcular)
 
@@ -382,7 +423,6 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.groupBox_5)
 
         self.verticalLayout.setStretch(0, 1)
-        self.verticalLayout.setStretch(1, 2)
         self.verticalLayout.setStretch(2, 2)
         self.verticalLayout.setStretch(3, 4)
         self.verticalLayout.setStretch(4, 5)
@@ -611,17 +651,27 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(5, -1, -1, -1)
         self.pushreport = QPushButton(self.verticalLayoutWidget_4)
         self.pushreport.setObjectName(u"pushreport")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.pushreport.sizePolicy().hasHeightForWidth())
+        self.pushreport.setSizePolicy(sizePolicy2)
+        self.pushreport.setFont(font4)
+        icon2 = QIcon()
+        icon2.addFile(u":/icons/res/generate-report-icon-blue.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushreport.setIcon(icon2)
 
         self.verticalLayout_2.addWidget(self.pushreport)
 
         self.pushreport_2 = QPushButton(self.verticalLayoutWidget_4)
         self.pushreport_2.setObjectName(u"pushreport_2")
         self.pushreport_2.setFont(font4)
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/res/curved-arrow-icon.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushreport_2.setIcon(icon1)
+        icon3 = QIcon()
+        icon3.addFile(u":/icons/res/curved-arrow-icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushreport_2.setIcon(icon3)
 
         self.verticalLayout_2.addWidget(self.pushreport_2)
 
@@ -646,7 +696,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1412, 21))
+        self.menubar.setGeometry(QRect(0, 0, 1489, 21))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -672,14 +722,16 @@ class Ui_MainWindow(object):
         self.combo_applicator.setItemText(8, QCoreApplication.translate("MainWindow", u"4", None))
         self.combo_applicator.setItemText(9, QCoreApplication.translate("MainWindow", u"3", None))
 
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Cono", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Bisel", None))
         self.combo_bevel.setItemText(0, "")
         self.combo_bevel.setItemText(1, QCoreApplication.translate("MainWindow", u"0", None))
         self.combo_bevel.setItemText(2, QCoreApplication.translate("MainWindow", u"15", None))
         self.combo_bevel.setItemText(3, QCoreApplication.translate("MainWindow", u"30", None))
         self.combo_bevel.setItemText(4, QCoreApplication.translate("MainWindow", u"45", None))
 
+        self.label_9.setText("")
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Bisel", None))
+        self.label_12.setText("")
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Cono", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"Prescripci\u00f3n", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Dosis (cGy)", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Profundidad (cm)", None))

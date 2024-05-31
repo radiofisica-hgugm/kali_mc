@@ -173,7 +173,8 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # 3D
         self.openGLWidget.clear()
-        self.openGLWidget.setCameraPosition(distance=20)
+        self.openGLWidget.setCameraPosition(distance=20, azimuth=-135)
+
         g = gl.GLGridItem()
         self.openGLWidget.addItem(g)
         levels = [1.05, 0.9, 0.2]

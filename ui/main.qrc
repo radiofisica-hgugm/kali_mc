@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/cylinder.svg</file>
     <file>res/calc-icon-blue.svg</file>
     <file>res/generate-report-icon-blue.svg</file>
     <file>res/angle-icon-blue.svg</file>
