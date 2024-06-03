@@ -37,6 +37,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.radio2.toggled.connect(self.refresh)
         self.radio3.toggled.connect(self.refresh)
         self.radio4.toggled.connect(self.refresh)
+        self.phoy_edit.textChanged.connect(self.refresh)
         self.calcular.clicked.connect(self.calculate_UM)
 
         self.calcular.setEnabled(False)
@@ -85,6 +86,7 @@ class Window(QMainWindow, Ui_MainWindow):
         applicator = self.combo_applicator.currentText()
         b_idx = self.combo_bevel.currentIndex() - 1  # bevel index
         bevel = self.combo_bevel.currentText()
+        pressure = self.phoy_edit.text()
 
         print(self.npzfile)
         if (
@@ -101,7 +103,14 @@ class Window(QMainWindow, Ui_MainWindow):
             self.npzfile = rf'data\sim\C{applicator}\B{bevel}\C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz'
             results = np.load(self.npzfile, allow_pickle=True)
             self.dose_distrib = results['SpatialDoseDistrib'][()]
-            self.calcular.setEnabled(True)
+            R90_array = np.load(rf'data/R90_C{applicator}.npz')['R90'][:, b_idx]  # load R90 data
+            self.label_6MeV.setText(f'{R90_array[0]:.1f}')
+            self.label_8MeV.setText(f'{R90_array[1]:.1f}')
+            self.label_10MeV.setText(f'{R90_array[2]:.1f}')
+            self.label_12MeV.setText(f'{R90_array[3]:.1f}')
+
+            if pressure != '':
+                self.calcular.setEnabled(True)
             self.plot_distribs()
         else:
             self.npzfile = ''
@@ -173,7 +182,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # 3D
         self.openGLWidget.clear()
-        self.openGLWidget.setCameraPosition(distance=20, azimuth=-135)
+        self.openGLWidget.setCameraPosition(distance=20, azimuth=-55, elevation=15)
 
         g = gl.GLGridItem()
         self.openGLWidget.addItem(g)
@@ -183,17 +192,8 @@ class Window(QMainWindow, Ui_MainWindow):
         alphas = [0.2, 0.3, 255]
         for idx, level in enumerate(levels):
             self.create_3D_isodose(level=level, red=reds[idx], green=greens[idx], alpha=alphas[idx])
+
         # 3D Cylinder
-        applicator = int(self.combo_applicator.currentText())
-        # md = gl.MeshData.cylinder(rows=10, cols=20, radius=[applicator / 2, applicator / 2], length=5.0)
-        # colors = np.zeros((md.faceCount(), 4), dtype=float)
-        # colors[:, 1] = 0.1  # 0.2
-        # colors[:, 3] = 100  # 0.2
-        # colors[:, 2] = np.linspace(0, 1, colors.shape[0])
-        # md.setFaceColors(colors)
-        # m = gl.GLMeshItem(meshdata=md, smooth=True, shader='balloon')
-        # m.setGLOptions('additive')
-        # m.rotate(-45, 0, 1, 0)
         self.add_inclined_cylinder()
 
     def add_inclined_cylinder(self):
@@ -202,8 +202,8 @@ class Window(QMainWindow, Ui_MainWindow):
         sectors = 50  # Number of sectors for the circular base
         angle = float(self.combo_bevel.currentText())  # Inclination angle in degrees
         inclination_radians = np.radians(-angle)
-        radius_y = float(self.combo_applicator.currentText()) / 2
-        radius_x = radius_y / np.cos(inclination_radians)
+        radius_y = float(self.combo_applicator.currentText()) / 2  # Scale y semi-minor axis
+        radius_x = radius_y / np.cos(inclination_radians)  # Scale y semi-major axis
 
         # Create the cylinder mesh data
         verts = []
@@ -239,13 +239,12 @@ class Window(QMainWindow, Ui_MainWindow):
         colors = np.zeros((meshdata.faceCount(), 4), dtype=float)
         colors[:, 1] = 0.1  # 0.2
         colors[:, 3] = 100  # 0.2
-        colors[:, 2] = np.linspace(0, 1, colors.shape[0])
+        colors[:, 2] = 0 # 0 -> green, 1-> blue
         meshdata.setFaceColors(colors)
         m = gl.GLMeshItem(meshdata=meshdata, smooth=True, shader='balloon')
         m.setGLOptions('additive')
-        inclined_cylinder = m
 
-        self.openGLWidget.addItem(inclined_cylinder)
+        self.openGLWidget.addItem(m)
 
     def create_3D_isodose(self, level, red, green, alpha):
         D = self.dose_distrib['Dose']

@@ -168,6 +168,7 @@ class Ui_MainWindow(object):
 
         self.dosis_edit = QLineEdit(self.formLayoutWidget_2)
         self.dosis_edit.setObjectName(u"dosis_edit")
+        self.dosis_edit.setAlignment(Qt.AlignCenter)
 
         self.formLayout_5.setWidget(0, QFormLayout.FieldRole, self.dosis_edit)
 
@@ -179,6 +180,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_2 = QLineEdit(self.formLayoutWidget_2)
         self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.lineEdit_2.setAlignment(Qt.AlignCenter)
 
         self.formLayout_5.setWidget(1, QFormLayout.FieldRole, self.lineEdit_2)
 
@@ -207,12 +209,14 @@ class Ui_MainWindow(object):
         self.label_8MeV = QLabel(self.formLayoutWidget_3)
         self.label_8MeV.setObjectName(u"label_8MeV")
         self.label_8MeV.setFont(font4)
+        self.label_8MeV.setAlignment(Qt.AlignCenter)
 
         self.formLayout_6.setWidget(2, QFormLayout.FieldRole, self.label_8MeV)
 
         self.label_6MeV = QLabel(self.formLayoutWidget_3)
         self.label_6MeV.setObjectName(u"label_6MeV")
         self.label_6MeV.setFont(font4)
+        self.label_6MeV.setAlignment(Qt.AlignCenter)
 
         self.formLayout_6.setWidget(1, QFormLayout.FieldRole, self.label_6MeV)
 
@@ -237,12 +241,14 @@ class Ui_MainWindow(object):
         self.label_10MeV = QLabel(self.formLayoutWidget_3)
         self.label_10MeV.setObjectName(u"label_10MeV")
         self.label_10MeV.setFont(font4)
+        self.label_10MeV.setAlignment(Qt.AlignCenter)
 
         self.formLayout_6.setWidget(3, QFormLayout.FieldRole, self.label_10MeV)
 
         self.label_12MeV = QLabel(self.formLayoutWidget_3)
         self.label_12MeV.setObjectName(u"label_12MeV")
         self.label_12MeV.setFont(font4)
+        self.label_12MeV.setAlignment(Qt.AlignCenter)
 
         self.formLayout_6.setWidget(4, QFormLayout.FieldRole, self.label_12MeV)
 
@@ -259,6 +265,7 @@ class Ui_MainWindow(object):
         font5.setBold(True)
         font5.setWeight(75)
         self.label_11.setFont(font5)
+        self.label_11.setAlignment(Qt.AlignCenter)
 
         self.formLayout_6.setWidget(0, QFormLayout.FieldRole, self.label_11)
 
@@ -275,7 +282,7 @@ class Ui_MainWindow(object):
         self.groupBox_4.setFont(font6)
         self.formLayoutWidget_5 = QWidget(self.groupBox_4)
         self.formLayoutWidget_5.setObjectName(u"formLayoutWidget_5")
-        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 231, 181))
+        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 246, 181))
         self.formLayout_8 = QFormLayout(self.formLayoutWidget_5)
         self.formLayout_8.setObjectName(u"formLayout_8")
         self.formLayout_8.setContentsMargins(0, 0, 15, 0)
@@ -755,7 +762,7 @@ class Ui_MainWindow(object):
         self.label_19.setText(QCoreApplication.translate("MainWindow", u"UM 2\u00ba c\u00e1lculo:", None))
         self.label_pref.setText("")
         self.output_label.setText("")
-        self.calcular.setText(QCoreApplication.translate("MainWindow", u"CALCULAR", None))
+        self.calcular.setText(QCoreApplication.translate("MainWindow", u" CALCULAR", None))
         self.label_30.setText(QCoreApplication.translate("MainWindow", u"Desv. (%):", None))
         self.desv_label.setText("")
         self.groupBox_5.setTitle("")
