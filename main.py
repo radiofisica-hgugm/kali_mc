@@ -185,15 +185,67 @@ class Window(QMainWindow, Ui_MainWindow):
             self.create_3D_isodose(level=level, red=reds[idx], green=greens[idx], alpha=alphas[idx])
         # 3D Cylinder
         applicator = int(self.combo_applicator.currentText())
-        md = gl.MeshData.cylinder(rows=10, cols=20, radius=[applicator / 2, applicator / 2], length=5.0)
-        colors = np.zeros((md.faceCount(), 4), dtype=float)
+        # md = gl.MeshData.cylinder(rows=10, cols=20, radius=[applicator / 2, applicator / 2], length=5.0)
+        # colors = np.zeros((md.faceCount(), 4), dtype=float)
+        # colors[:, 1] = 0.1  # 0.2
+        # colors[:, 3] = 100  # 0.2
+        # colors[:, 2] = np.linspace(0, 1, colors.shape[0])
+        # md.setFaceColors(colors)
+        # m = gl.GLMeshItem(meshdata=md, smooth=True, shader='balloon')
+        # m.setGLOptions('additive')
+        # m.rotate(-45, 0, 1, 0)
+        self.add_inclined_cylinder()
+
+    def add_inclined_cylinder(self):
+        # Define the cylinder parameters
+        height = 5
+        sectors = 50  # Number of sectors for the circular base
+        angle = float(self.combo_bevel.currentText())  # Inclination angle in degrees
+        inclination_radians = np.radians(-angle)
+        radius_y = float(self.combo_applicator.currentText()) / 2
+        radius_x = radius_y / np.cos(inclination_radians)
+
+        # Create the cylinder mesh data
+        verts = []
+        faces = []
+
+        # Create vertices for the base and top of the cylinder
+        for i in range(sectors):
+            theta = 2 * np.pi * i / sectors
+            y = radius_y * np.cos(theta)
+            x = radius_x * np.sin(theta)
+            z_bottom = 0
+            z_top = height * np.cos(inclination_radians)
+            x_top = x + height * np.sin(inclination_radians)
+
+            verts.append((x, y, z_bottom))
+            verts.append((x_top, y, z_top))
+
+        for i in range(sectors):
+            j = (i + 1) % sectors
+            faces.append((i * 2, j * 2, i * 2 + 1))
+            faces.append((j * 2, j * 2 + 1, i * 2 + 1))
+
+            # Bottom and top faces
+        for i in range(sectors - 2):
+            faces.append((0, (i + 1) * 2, (i + 2) * 2))
+            faces.append((1, (i + 2) * 2 + 1, (i + 1) * 2 + 1))
+
+        verts = np.array(verts)
+        faces = np.array(faces)
+
+        # Create the mesh item
+        meshdata = gl.MeshData(vertexes=verts, faces=faces)
+        colors = np.zeros((meshdata.faceCount(), 4), dtype=float)
         colors[:, 1] = 0.1  # 0.2
         colors[:, 3] = 100  # 0.2
         colors[:, 2] = np.linspace(0, 1, colors.shape[0])
-        md.setFaceColors(colors)
-        m = gl.GLMeshItem(meshdata=md, smooth=True, shader='balloon')
+        meshdata.setFaceColors(colors)
+        m = gl.GLMeshItem(meshdata=meshdata, smooth=True, shader='balloon')
         m.setGLOptions('additive')
-        self.openGLWidget.addItem(m)
+        inclined_cylinder = m
+
+        self.openGLWidget.addItem(inclined_cylinder)
 
     def create_3D_isodose(self, level, red, green, alpha):
         D = self.dose_distrib['Dose']
