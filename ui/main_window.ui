@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Rafael Ayala - Servicio de Dosimetría y Radioprotección HGUGM 2024 </author>
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
@@ -575,7 +576,7 @@
             <item row="4" column="0">
              <widget class="QLabel" name="label_17">
               <property name="text">
-               <string>UM*:</string>
+               <string>UM:</string>
               </property>
              </widget>
             </item>
@@ -583,6 +584,9 @@
              <widget class="QLabel" name="UM_label">
               <property name="text">
                <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -614,6 +618,9 @@
               <property name="text">
                <string/>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
              </widget>
             </item>
             <item row="3" column="1">
@@ -629,6 +636,9 @@
               <property name="text">
                <string/>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
              </widget>
             </item>
             <item row="1" column="1">
@@ -641,6 +651,9 @@
                 <bold>false</bold>
                </font>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
              </widget>
             </item>
             <item row="5" column="1">
@@ -652,6 +665,9 @@
                 <weight>50</weight>
                 <bold>false</bold>
                </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -706,6 +722,9 @@
               </property>
               <property name="text">
                <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -1269,6 +1288,32 @@
    <header location="global">pyqtgraph.opengl</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>combo_applicator</tabstop>
+  <tabstop>combo_bevel</tabstop>
+  <tabstop>dosis_edit</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+  <tabstop>radio1</tabstop>
+  <tabstop>radio2</tabstop>
+  <tabstop>radio3</tabstop>
+  <tabstop>radio4</tabstop>
+  <tabstop>phoy_edit</tabstop>
+  <tabstop>calcular</tabstop>
+  <tabstop>lineEdit_4</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>lineEdit_5</tabstop>
+  <tabstop>lineEdit_6</tabstop>
+  <tabstop>lineEdit_7</tabstop>
+  <tabstop>lineEdit_8</tabstop>
+  <tabstop>lineEdit_9</tabstop>
+  <tabstop>lineEdit_10</tabstop>
+  <tabstop>lineEdit_11</tabstop>
+  <tabstop>lineEdit_12</tabstop>
+  <tabstop>lineEdit_13</tabstop>
+  <tabstop>plainTextEdit</tabstop>
+  <tabstop>pushreport</tabstop>
+  <tabstop>pushreport_2</tabstop>
+ </tabstops>
  <resources>
   <include location="main.qrc"/>
  </resources>

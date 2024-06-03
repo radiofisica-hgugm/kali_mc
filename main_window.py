@@ -316,6 +316,7 @@ class Ui_MainWindow(object):
 
         self.UM_label = QLabel(self.formLayoutWidget_5)
         self.UM_label.setObjectName(u"UM_label")
+        self.UM_label.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(4, QFormLayout.FieldRole, self.UM_label)
 
@@ -328,24 +329,28 @@ class Ui_MainWindow(object):
         self.label_pref = QLabel(self.formLayoutWidget_5)
         self.label_pref.setObjectName(u"label_pref")
         self.label_pref.setFont(font7)
+        self.label_pref.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(0, QFormLayout.FieldRole, self.label_pref)
 
         self.output_label = QLabel(self.formLayoutWidget_5)
         self.output_label.setObjectName(u"output_label")
         self.output_label.setFont(font7)
+        self.output_label.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(3, QFormLayout.FieldRole, self.output_label)
 
         self.phoy_edit = QLineEdit(self.formLayoutWidget_5)
         self.phoy_edit.setObjectName(u"phoy_edit")
         self.phoy_edit.setFont(font7)
+        self.phoy_edit.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(1, QFormLayout.FieldRole, self.phoy_edit)
 
         self.lineEdit_4 = QLineEdit(self.formLayoutWidget_5)
         self.lineEdit_4.setObjectName(u"lineEdit_4")
         self.lineEdit_4.setFont(font7)
+        self.lineEdit_4.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(5, QFormLayout.FieldRole, self.lineEdit_4)
 
@@ -370,6 +375,7 @@ class Ui_MainWindow(object):
         self.desv_label = QLabel(self.formLayoutWidget_5)
         self.desv_label.setObjectName(u"desv_label")
         self.desv_label.setFont(font7)
+        self.desv_label.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(6, QFormLayout.FieldRole, self.desv_label)
 
@@ -708,6 +714,29 @@ class Ui_MainWindow(object):
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        QWidget.setTabOrder(self.combo_applicator, self.combo_bevel)
+        QWidget.setTabOrder(self.combo_bevel, self.dosis_edit)
+        QWidget.setTabOrder(self.dosis_edit, self.lineEdit_2)
+        QWidget.setTabOrder(self.lineEdit_2, self.radio1)
+        QWidget.setTabOrder(self.radio1, self.radio2)
+        QWidget.setTabOrder(self.radio2, self.radio3)
+        QWidget.setTabOrder(self.radio3, self.radio4)
+        QWidget.setTabOrder(self.radio4, self.phoy_edit)
+        QWidget.setTabOrder(self.phoy_edit, self.calcular)
+        QWidget.setTabOrder(self.calcular, self.lineEdit_4)
+        QWidget.setTabOrder(self.lineEdit_4, self.lineEdit)
+        QWidget.setTabOrder(self.lineEdit, self.lineEdit_5)
+        QWidget.setTabOrder(self.lineEdit_5, self.lineEdit_6)
+        QWidget.setTabOrder(self.lineEdit_6, self.lineEdit_7)
+        QWidget.setTabOrder(self.lineEdit_7, self.lineEdit_8)
+        QWidget.setTabOrder(self.lineEdit_8, self.lineEdit_9)
+        QWidget.setTabOrder(self.lineEdit_9, self.lineEdit_10)
+        QWidget.setTabOrder(self.lineEdit_10, self.lineEdit_11)
+        QWidget.setTabOrder(self.lineEdit_11, self.lineEdit_12)
+        QWidget.setTabOrder(self.lineEdit_12, self.lineEdit_13)
+        QWidget.setTabOrder(self.lineEdit_13, self.plainTextEdit)
+        QWidget.setTabOrder(self.plainTextEdit, self.pushreport)
+        QWidget.setTabOrder(self.pushreport, self.pushreport_2)
 
         self.retranslateUi(MainWindow)
 
@@ -757,7 +786,7 @@ class Ui_MainWindow(object):
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"Pref (hPa):", None))
         self.label_15.setText(QCoreApplication.translate("MainWindow", u"Phoy (hPa):", None))
         self.label_16.setText(QCoreApplication.translate("MainWindow", u"cGy/UM Pref:", None))
-        self.label_17.setText(QCoreApplication.translate("MainWindow", u"UM*:", None))
+        self.label_17.setText(QCoreApplication.translate("MainWindow", u"UM:", None))
         self.UM_label.setText("")
         self.label_19.setText(QCoreApplication.translate("MainWindow", u"UM 2\u00ba c\u00e1lculo:", None))
         self.label_pref.setText("")
