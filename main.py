@@ -4,6 +4,7 @@ from PySide2.QtWidgets import QApplication
 from PySide2 import QtGui
 
 import numpy as np
+from scipy.interpolate import RegularGridInterpolator
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 
@@ -150,6 +151,22 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.img1 = pg.ImageItem()
         self.p1.addItem(self.img1)
+
+        # Create the interpolator
+        interpolator = RegularGridInterpolator((x_scale, y_scale, z_scale), D)
+
+        # Define the points on the y=0 plane for interpolation
+        x_vals = x_scale
+        y_val = 0
+        z_vals = z_scale
+        X_plane, Z_plane = np.meshgrid(x_vals, z_vals, indexing='ij')
+
+        # Create the grid points for the y=0 plane
+        points_plane = np.vstack([X_plane.ravel(), y_val * np.ones_like(X_plane.ravel()), Z_plane.ravel()]).T
+
+        # Interpolate the data on the y=0 plane
+        D_plane = interpolator(points_plane).reshape(X_plane.shape)
+
         plane_idx = int(round(np.median(range(Ybin))))
         # TODO: interpolate at x = 0 or y = 0, create mesh?
         self.data_cross = np.rot90(D[:, plane_idx, :])
