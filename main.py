@@ -29,6 +29,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.dose = 0
         self.cGy_UM = 0
         self.UM = 0
+        self.clinical_max = 0
+        self.z_clinical_max = 0
 
         # Callbacks:
         self.combo_applicator.activated.connect(self.refresh)
@@ -90,7 +92,7 @@ class Window(QMainWindow, Ui_MainWindow):
         bevel = self.combo_bevel.currentText()
         pressure = self.phoy_edit.text()
 
-        print(self.npzfile)
+        # print(self.npzfile)
         if (
                 (a_idx >= 0) and
                 (b_idx >= 0) and
@@ -144,9 +146,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.d_y = d_y
         self.d_z = d_z
         self.extent_cross = [-d_x / 2 + x_start, x_end + d_x / 2, z_start - d_z / 2, z_end + d_z / 2]
-        print(f'extent crossline: {self.extent_cross}')
+        # print(f'extent crossline: {self.extent_cross}')
         self.extent3D = [x_start, x_end, y_start, y_end, z_start, z_end]
-        print(f'3D extent: {self.extent3D}')
+        # print(f'3D extent: {self.extent3D}')
 
         self.p1.clear()
 
@@ -155,11 +157,11 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # Create the interpolator
         interpolator = RegularGridInterpolator((x_scale, y_scale, z_scale), D)
-
+        grid_factor = 0.5  # Finer grid
         # Define the points on the y=0 plane for interpolation
-        x_vals = x_scale
+        x_vals = np.linspace(x_scale[0], x_scale[-1], int(len(x_scale) * (1 / grid_factor)))
         y_val = 0
-        z_vals = z_scale
+        z_vals = np.linspace(z_scale[0], z_scale[-1], int(len(z_scale) * (1 / grid_factor)))
         X_plane, Z_plane = np.meshgrid(x_vals, z_vals, indexing='ij')
 
         # Create the grid points for the y=0 plane
@@ -169,15 +171,32 @@ class Window(QMainWindow, Ui_MainWindow):
         D_plane = interpolator(points_plane).reshape(X_plane.shape)
 
         self.data_cross = np.rot90(D_plane)
-        # Interpolate to get max in clinical axis
-        self.img1.setImage(self.data_cross)
+
+        # Interpolate to get max in clinical axis  ____________________________________________________________________
+        x_val = 0
+        y_val = 0
+        z_vals = np.linspace(np.min(z_scale), np.max(z_scale))
+        points = np.array([[x_val, y_val, z] for z in z_vals])
+        depth_dose = interpolator(points)
+        self.p2.plot(np.abs(z_vals), depth_dose)
+        self.clinical_max = np.max(depth_dose)
+        self.z_clinical_max = z_vals[np.argmax(depth_dose)]
+
+        plot_relative = True
+        if plot_relative:
+            data_cross = self.data_cross / self.clinical_max * 100
+            levels = np.array([10, 30, 50, 70, 80, 90, 100, 110])
+        else:
+            data_cross = self.data_cross
+            levels = np.array([10, 30, 50, 70, 80, 90, 100, 110]) * self.clinical_max / 100
+        self.img1.setImage(data_cross)
 
         # Colorbar
         if self.colorbar:
             self.colorbar.setParentItem(None)
             self.colorbar = None
 
-        self.colorbar = pg.ColorBarItem(values=(self.data_cross.min(), self.data_cross.max()), colorMap='turbo')
+        self.colorbar = pg.ColorBarItem(values=(data_cross.min(), data_cross.max()), colorMap='turbo')
         self.colorbar.setImageItem(self.img1, insert_in=self.p1)
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
@@ -190,12 +209,19 @@ class Window(QMainWindow, Ui_MainWindow):
         self.p1.getViewBox().setAspectLocked(lock=True, ratio=1)
         self.p1.getAxis('bottom').setLabel('cm')
 
-        levels = np.linspace(self.data_cross.min(), self.data_cross.max(), 10)
         for level in levels:
             iso_curve = pg.IsocurveItem(level=level, pen='k')
-            iso_curve.setData(self.data_cross)
+            iso_curve.setData(data_cross)
             self.p1.addItem(iso_curve)
             iso_curve.setParentItem(self.img1)
+            # Find a position to place the text
+            pos = self.find_text_position(data_cross, level)
+            if pos is not None:
+                text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
+                text.setPos(pos[0], pos[1])
+                self.p1.addItem(text)
+                text.setParentItem(self.img1)
+
         self.img1.setTransform(tr)
         self.p1.autoRange()
 
@@ -214,6 +240,19 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # 3D Cylinder
         self.add_inclined_cylinder()
+
+    def find_text_position(self, data, level):
+        """
+        Find a suitable position to place the text label for a given iso level.
+        """
+        mask = data >= level
+        y, x = np.where(mask)
+        if len(x) > 0 and len(y) > 0:
+            # Use the center of the largest cluster of points as the position
+            x_center = np.min(x) + (np.max(x) - np.min(x)) * 0.75
+            y_center = np.max(y)
+            return x_center, y_center
+        return None
 
     def add_inclined_cylinder(self):
         # Define the cylinder parameters
