@@ -37,6 +37,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.Xbin = 0
         self.Ybin = 0
         self.Zbin = 0
+        self.levels = np.array([10, 30, 50, 70, 80, 90, 100, 110])
+        self.grid_factor = 0.5  # Finer grid
 
         # Callbacks:
         self.combo_applicator.activated.connect(self.refresh)
@@ -51,8 +53,11 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.calcular.setEnabled(False)
         self.img1 = pg.ImageItem()
+        self.img2 = pg.ImageItem()
         self.data_cross = None
-        self.colorbar = None
+        self.data_in = None
+        self.colorbar_cross = None
+        self.colorbar_in = None
 
         self.pref = conf.PREF  # Reference Pressure
         self.label_pref.setText(str(self.pref))
@@ -62,9 +67,11 @@ class Window(QMainWindow, Ui_MainWindow):
         self.p1.addItem(self.img1)
 
         self.p2 = self.graphWidget2.addPlot(colspan=1, title="Inline")
+        self.p2.addItem(self.img2)
         self.p3 = self.graphWidget3.addPlot(colspan=1, title="Isodosis del 90% en zmax")
 
         self.extent_cross = [1, 1]
+        self.extent_in = [1, 1]
         self.extent3D = [1, 1, 1]
         self.d_x = 0.0
         self.d_y = 0.0
@@ -152,6 +159,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.d_y = d_y
         self.d_z = d_z
         self.extent_cross = [-d_x / 2 + x_start, x_end + d_x / 2, z_start - d_z / 2, z_end + d_z / 2]
+        self.extent_in = [-d_y / 2 + y_start, y_end + d_y / 2, z_start - d_z / 2, z_end + d_z / 2]
         # print(f'extent crossline: {self.extent_cross}')
         self.extent3D = [x_start, x_end, y_start, y_end, z_start, z_end]
         # print(f'3D extent: {self.extent3D}')
@@ -166,12 +174,14 @@ class Window(QMainWindow, Ui_MainWindow):
         z_vals = np.linspace(np.min(self.z_scale), np.max(self.z_scale))
         points = np.array([[x_val, y_val, z] for z in z_vals])
         depth_dose = interpolator(points)
-        self.p2.plot(np.abs(z_vals), depth_dose)
         self.clinical_max = np.max(depth_dose)
         self.z_clinical_max = z_vals[np.argmax(depth_dose)]
 
         # plot cross plane
-        self.plot_plane(interpolator, cross=True)
+        self.plot_crossplane(interpolator)
+
+        # plot inline plane
+        self.plot_inplane(interpolator)
 
         # 3D
         self.openGLWidget.clear()
@@ -189,67 +199,131 @@ class Window(QMainWindow, Ui_MainWindow):
         # 3D Cylinder
         self.add_inclined_cylinder()
 
-    def plot_plane(self, interpolator, cross=True):
+    def plot_crossplane(self, interpolator):
         plot_relative = True
-        if cross:
-            self.p1.clear()
-            self.img1 = pg.ImageItem()
-            self.p1.addItem(self.img1)
-            grid_factor = 0.5  # Finer grid
-            # Define the points on the y=0 plane for interpolation
-            x_vals = np.linspace(self.x_scale[0], self.x_scale[-1], int(len(self.x_scale) * (1 / grid_factor)))
-            y_val = 0
-            z_vals = np.linspace(self.z_scale[0], self.z_scale[-1], int(len(self.z_scale) * (1 / grid_factor)))
-            X_plane, Z_plane = np.meshgrid(x_vals, z_vals, indexing='ij')
 
-            # Create the grid points for the y=0 plane
-            points_plane = np.vstack([X_plane.ravel(), y_val * np.ones_like(X_plane.ravel()), Z_plane.ravel()]).T
+        self.p1.clear()
+        self.img1 = pg.ImageItem()
+        self.p1.addItem(self.img1)
 
-            # Interpolate the data on the y=0 plane
-            D_plane = interpolator(points_plane).reshape(X_plane.shape)
-            self.data_cross = np.rot90(D_plane)
+        # Define the points on the y=0 plane for interpolation
+        x_vals = np.linspace(self.x_scale[0], self.x_scale[-1], int(len(self.x_scale) * (1 / self.grid_factor)))
+        y_val = 0
+        z_vals = np.linspace(self.z_scale[0], self.z_scale[-1], int(len(self.z_scale) * (1 / self.grid_factor)))
+        X_plane, Z_plane = np.meshgrid(x_vals, z_vals, indexing='ij')
 
-            if plot_relative:
-                data_cross = self.data_cross / self.clinical_max * 100
-                levels = np.array([10, 30, 50, 70, 80, 90, 100, 110])
-            else:
-                data_cross = self.data_cross
-                levels = np.array([10, 30, 50, 70, 80, 90, 100, 110]) * self.clinical_max / 100
-            self.img1.setImage(data_cross)
+        # Create the grid points for the y=0 plane
+        points_plane = np.vstack([X_plane.ravel(), y_val * np.ones_like(X_plane.ravel()), Z_plane.ravel()]).T
 
-            # Colorbar
-            if self.colorbar:
-                self.colorbar.setParentItem(None)
-                self.colorbar = None
+        # Interpolate the data on the y=0 plane
+        D_plane = interpolator(points_plane).reshape(X_plane.shape)
+        self.data_cross = np.rot90(D_plane)
+        data = self.data_cross
+        self.p1.addItem(pg.GridItem())
+        self.p1.getViewBox().invertY(True)
+        self.p1.getViewBox().setAspectLocked(lock=True, ratio=1)
+        self.p1.getAxis('bottom').setLabel('cm')
+        extent = self.extent_cross
 
-            self.colorbar = pg.ColorBarItem(values=(data_cross.min(), data_cross.max()), colorMap='turbo')
-            self.colorbar.setImageItem(self.img1, insert_in=self.p1)
+        if plot_relative:
+            data = data / self.clinical_max * 100
+            levels = self.levels
+        else:
+            levels = self.levels * self.clinical_max / 100
+        self.img1.setImage(data)
 
-            tr = QtGui.QTransform()  # prepare ImageItem transformation:
-            tr.translate(self.extent_cross[0], self.extent_cross[3])
-            tr.scale((self.extent_cross[1] - self.extent_cross[0]) / len(x_vals),
-                     (self.extent_cross[3] - self.extent_cross[2]) / len(z_vals))  # scale horizontal and vertical axes
+        # Colorbar
+        if self.colorbar_cross:
+            self.colorbar_cross.setParentItem(None)
+            self.colorbar_cross = None
 
-            self.p1.addItem(pg.GridItem())
-            self.p1.getViewBox().invertY(True)
-            self.p1.getViewBox().setAspectLocked(lock=True, ratio=1)
-            self.p1.getAxis('bottom').setLabel('cm')
+        self.colorbar_cross = pg.ColorBarItem(values=(data.min(), data.max()), colorMap='turbo')
+        self.colorbar_cross.setImageItem(self.img1, insert_in=self.p1)
 
-            for level in levels:
-                iso_curve = pg.IsocurveItem(level=level, pen='k')
-                iso_curve.setData(data_cross)
-                self.p1.addItem(iso_curve)
-                iso_curve.setParentItem(self.img1)
-                # Find a position to place the text
-                pos = self.find_text_position(data_cross, level)
-                if pos is not None:
-                    text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
-                    text.setPos(pos[0], pos[1])
-                    self.p1.addItem(text)
-                    text.setParentItem(self.img1)
+        tr = QtGui.QTransform()  # prepare ImageItem transformation:
+        tr.translate(extent[0], extent[3])
+        tr.scale((extent[1] - extent[0]) / len(x_vals),
+                 (extent[3] - extent[2]) / len(z_vals))  # scale horizontal and vertical axes
 
-            self.img1.setTransform(tr)
-            self.p1.autoRange()
+        for level in levels:
+            iso_curve = pg.IsocurveItem(level=level, pen='k')
+            iso_curve.setData(data)
+            self.p1.addItem(iso_curve)
+            iso_curve.setParentItem(self.img1)
+            # Find a position to place the text
+            pos = self.find_text_position(data, level)
+            if pos is not None:
+                text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
+                text.setPos(pos[0], pos[1])
+                self.p1.addItem(text)
+                text.setParentItem(self.img1)
+
+        self.img1.setTransform(tr)
+        self.p1.autoRange()
+
+    def plot_inplane(self, interpolator):
+        plot_relative = True
+
+        self.p2.clear()
+        self.img2 = pg.ImageItem()
+        self.p2.addItem(self.img2)
+
+        # Define the points on the y=0 plane for interpolation
+        x_vals = 0
+        y_vals = np.linspace(self.y_scale[0], self.y_scale[-1], int(len(self.y_scale) * (1 / self.grid_factor)))
+        z_vals = np.linspace(self.z_scale[0], self.z_scale[-1], int(len(self.z_scale) * (1 / self.grid_factor)))
+        Y_plane, Z_plane = np.meshgrid(y_vals, z_vals, indexing='ij')
+
+        # Create the grid points for the y=0 plane
+        points_plane = np.vstack([x_vals * np.ones_like(Y_plane.ravel()), Y_plane.ravel(), Z_plane.ravel()]).T
+
+        # Interpolate the data on the y=0 plane
+        D_plane = interpolator(points_plane).reshape(Y_plane.shape)
+        self.data_in = np.rot90(D_plane)
+        self.p2.addItem(pg.GridItem())
+        self.p2.getViewBox().invertY(True)
+        self.p2.getViewBox().setAspectLocked(lock=True, ratio=1)
+        self.p2.getAxis('bottom').setLabel('cm')
+
+        if plot_relative:
+            data = self.data_in / self.clinical_max * 100
+            levels = self.levels
+        else:
+            data = self.data_in
+            levels = self.levels * self.clinical_max / 100
+        self.img2.setImage(data)
+
+        # Colorbar
+        if self.colorbar_in:
+            self.colorbar_in.setParentItem(None)
+            self.colorbar_in = None
+
+        self.colorbar_in = pg.ColorBarItem(values=(data.min(), data.max()), colorMap='turbo')
+        self.colorbar_in.setImageItem(self.img2, insert_in=self.p2)
+
+        tr = QtGui.QTransform()  # prepare ImageItem transformation:
+        extent = self.extent_in
+        tr.translate(extent[0], extent[3])
+        tr.scale((extent[1] - extent[0]) / len(y_vals),
+                 (extent[3] - extent[2]) / len(z_vals))  # scale horizontal and vertical axes
+
+        for level in levels:
+            iso_curve = pg.IsocurveItem(level=level, pen='k')
+            iso_curve.setData(data)
+            self.p2.addItem(iso_curve)
+            iso_curve.setParentItem(self.img2)
+            # Find a position to place the text
+            pos = self.find_text_position(data, level)
+            if pos is not None:
+                text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
+                text.setPos(pos[0], pos[1])
+                self.p2.addItem(text)
+                text.setParentItem(self.img2)
+
+        self.img2.setTransform(tr)
+        self.p2.autoRange()
+
+
 
     def find_text_position(self, data, level):
         """
