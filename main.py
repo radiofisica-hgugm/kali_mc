@@ -44,6 +44,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.calcular.setEnabled(False)
         self.img1 = pg.ImageItem()
         self.data_cross = None
+        self.colorbar = None
 
         self.pref = conf.PREF  # Reference Pressure
         self.label_pref.setText(str(self.pref))
@@ -167,21 +168,22 @@ class Window(QMainWindow, Ui_MainWindow):
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(X_plane.shape)
 
-        plane_idx = int(round(np.median(range(Ybin))))
-        # TODO: interpolate at x = 0 or y = 0, create mesh?
-        self.data_cross = np.rot90(D[:, plane_idx, :])
+        self.data_cross = np.rot90(D_plane)
         # Interpolate to get max in clinical axis
         self.img1.setImage(self.data_cross)
-        self.p1.addColorBar(self.img1, colorMap='turbo')
+
+        # Colorbar
+        if self.colorbar:
+            self.colorbar.setParentItem(None)
+            self.colorbar = None
+
+        self.colorbar = pg.ColorBarItem(values=(self.data_cross.min(), self.data_cross.max()), colorMap='turbo')
+        self.colorbar.setImageItem(self.img1, insert_in=self.p1)
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
         tr.translate(self.extent_cross[0], self.extent_cross[3])
         tr.scale((self.extent_cross[1] - self.extent_cross[0]) / Xbin,
                  (self.extent_cross[3] - self.extent_cross[2]) / Zbin)  # scale horizontal and vertical axes
-        print(f'x_start: {x_start}')
-        print(f'x_end: {x_end}')
-        print(f'y_start: {y_start}')
-        print(f'y_end: {y_end}')
 
         self.p1.addItem(pg.GridItem())
         self.p1.getViewBox().invertY(True)
@@ -193,7 +195,7 @@ class Window(QMainWindow, Ui_MainWindow):
             iso_curve = pg.IsocurveItem(level=level, pen='k')
             iso_curve.setData(self.data_cross)
             self.p1.addItem(iso_curve)
-            iso_curve.setTransform(tr)
+            iso_curve.setParentItem(self.img1)
         self.img1.setTransform(tr)
         self.p1.autoRange()
 
