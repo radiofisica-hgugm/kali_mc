@@ -5,8 +5,12 @@ from PySide2 import QtGui
 
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import cm
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
+import pyqtgraph.exporters
+import tempfile, os
 
 try:
     import pyi_splash
@@ -50,6 +54,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.radio4.toggled.connect(self.refresh)
         self.phoy_edit.textChanged.connect(self.refresh)
         self.calcular.clicked.connect(self.calculate_UM)
+        self.pushreport.clicked.connect(self.generate_report)
 
         self.calcular.setEnabled(False)
         self.img1 = pg.ImageItem()
@@ -423,6 +428,27 @@ class Window(QMainWindow, Ui_MainWindow):
         self.label_linac_dose.setText(str(self.UM))
         self.label_linac_energy.setText(f'{self.energies[energy_idx]} MeV')
         self.label_linac_applicator.setText(f'{int(applicator)*10} mm')
+    def generate_report(self):
+        print('Generating report ..........')
+        self.p1.autoRange()
+        self.p2.autoRange()
+        with tempfile.TemporaryDirectory() as tempdir:
+            exporter = pg.exporters.ImageExporter(self.p1)
+            # set export parameters if needed
+            # exporter.parameters()['width'] = 650  # (note this also affects height parameter)
+            # save to file
+            file_cross = os.path.join(tempdir, 'cross.png')
+            exporter.export(file_cross)
+
+            c = canvas.Canvas(r"d:\test.pdf")
+            # move the origin up and to the left
+            c.translate(cm, cm)
+            c.setFillColorRGB(1, 0, 1)
+            c.drawImage(file_cross, 10, 550, 250)
+            c.drawImage(file_cross, 330, 550, 250)
+
+            c.showPage()
+            c.save()
 
 
 if __name__ == "__main__":
