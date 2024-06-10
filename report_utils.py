@@ -1,13 +1,16 @@
 from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, Flowable
 from reportlab.lib.units import cm
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
-from PIL import Image
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib import colors
+from PIL import Image as PILImage
 
 
 def get_image_size(path, desired_width):
-    with Image.open(path) as img:
+    with PILImage.open(path) as img:
         width, height = img.size
         aspect_ratio = height / width
         new_width = desired_width
@@ -15,73 +18,175 @@ def get_image_size(path, desired_width):
         return new_width, new_height
 
 
-def create_pdf(output_path, cross_img, in_img):
-    c = canvas.Canvas(output_path, pagesize=A4)
-    width, height = A4
+class RectText(Flowable):
+    def __init__(self, width, height, text, style):
+        Flowable.__init__(self)
+        self.width = width
+        self.height = height
+        self.text = text
+        self.style = style
+
+    def draw(self):
+        self.canv.setFillColor(colors.HexColor("#2A82C0"))
+        self.canv.rect(0, -0.2, self.width, self.height, fill=1, stroke=0)
+        self.canv.setFillColor(colors.white)
+        self.canv.setFont(self.style.fontName, self.style.fontSize)
+        self.canv.drawString(3, self.height - self.style.fontSize - 2, self.text)
+
+
+def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
     # Register Lucida Sans font
     pdfmetrics.registerFont(TTFont('LucidaSans', 'report/LSANS.ttf'))
-    c.setFont('LucidaSans', 14)  # Set default font size
 
-    # Define sizes in centimeters
-    title_font_size = 20
-    desired_width = 8.5 * cm  # Desired width for image
-    padding = 1.27 * cm  # Padding in centimeters
+    # Document setup
+    doc = SimpleDocTemplate(output_path, pagesize=A4, topMargin=1.0*cm, leftMargin=2*cm, rightMargin=2*cm, bottomMargin=1.0*cm)
+    elements = []
+
+    styles = getSampleStyleSheet()
+    styles.add(
+        ParagraphStyle(name='LucidaTitle', fontName='LucidaSans', fontSize=20, textColor=colors.HexColor("#2A82C0")))
+    styles.add(
+        ParagraphStyle(name='LucidaSubtitle', fontName='LucidaSans', fontSize=16, textColor=colors.HexColor("#2A82C0")))
+    styles.add(ParagraphStyle(name='LucidaBody', fontName='LucidaSans', fontSize=10, leading=18))
 
 
-    # Add Logo
-    logo_ratio = 1200/151
-    c.drawImage('report/logo_gregoriomaranon.png', padding, height - 1*cm -padding, width=200, height=200/logo_ratio, mask='auto' )
+    # Add logo
+    logo_ratio = 1200 / 151
+    logo_path = 'report/logo_gregoriomaranon.png'
+    logo_width = 200
+    logo_height = logo_width / logo_ratio
+    logo_img = Image(logo_path, width=logo_width, height=logo_height)
+
+    # Add department
+    department = Paragraph("Servicio de Dosimetría y Radioprotección", styles['LucidaBody'])
+    header_table = Table([[logo_img, department]], colWidths=[8 * cm, 9 * cm])
+
+    elements.append(header_table)
+    elements.append(Spacer(1, 0.3 * cm))
 
     # Add title
-    text_x = padding
-    text_y = height - 3.5 * cm
-    # Draw title
-    c.setFont('LucidaSans', title_font_size)
-    # c.drawCentredString(title_x, title_y, "Sample Report Title")
-    c.drawString(text_x, text_y, "Radioterapia Intraoperatoria")
-    c.setFont('LucidaSans', title_font_size-4)
-    c.drawString(text_x, text_y - 1 *cm, "Informe de tratamiento")
+    title = Paragraph("Radioterapia Intraoperatoria", styles['LucidaTitle'])
+    subtitle = Paragraph("Informe de tratamiento", styles['LucidaSubtitle'])
+    elements.append(title)
+    elements.append(Spacer(1, 0.4 * cm))
+    elements.append(subtitle)
+    elements.append(Spacer(1, 0.5 * cm))
 
-    # Reset font size for the rest of the document
-    c.setFont('LucidaSans', 12)
-
-    # Patient data:
-    pat_name = ""
-    pat_surname = ""
-    pat_nhist = ""
-    t = c.beginText()
-    t.setTextOrigin(padding, text_y - 2 *cm)
-    t.textLines(f"""
-    Nombre:{pat_name}
-    Apellidos: {pat_surname}
-    Nº de historia: {pat_nhist}
-    """)
-    c.drawText(t)
-
-    c.line(padding, text_y - 4 *cm, width - padding, text_y - 4 *cm)
-    c.setFont('LucidaSans', 16)
-    c.drawString(padding,  text_y - 5 *cm, "Prescripción:")
-    c.setFont('LucidaSans', 12)
-
-    # Image coordinates (top-left corner)
-    y_pos_img = height - 22 * cm
-    positions = [
-        (padding, y_pos_img),
-        (2 * padding + desired_width, y_pos_img),
-        (padding, y_pos_img -3.5 *cm),
-        (2 * padding + desired_width, y_pos_img -3.5 *cm),
+    # Administrative data table
+    admin_data = [
+        ["NOMBRE:", data_dict['Name']],
+        ["APELLIDOS:", data_dict['Surname']],
+        ["Nº DE HISTORIA:", data_dict['ID']],
+        ["LOCALIZACIÓN:", data_dict['Site']],
+        ["RADIOFÍSICO HOSPITALARIO:", data_dict['Physicist']],
+        ["ONCÓLOGO RADIOTERÁPICO:", data_dict['Oncologist']],
+        ["T.E.R.t:", data_dict['TERt']],
+        ["Fecha:", data_dict['Date']],
+        ["Nº DE RIO:", data_dict['IORT_number']]
     ]
-    images = [cross_img, in_img, cross_img, in_img]
-    # Draw images with aspect ratio preserved
-    for i, (x, y) in enumerate(positions):
-        image_path = cross_img
+    admin_table = Table(admin_data, colWidths=[7 * cm, 10 * cm])
+    admin_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
+    ]))
+    elements.append(admin_table)
+    elements.append(Spacer(1, 0.3 * cm))
+
+    # Prescription section
+    prescription_title = RectText(width=16 * cm, height=0.8 * cm, text="Prescripción:", style=styles['LucidaSubtitle'])
+    elements.append(prescription_title)
+    elements.append(Spacer(1, 0.3 * cm))
+    prescription_data = [
+        ["DIÁMETRO CONO (cm):", data_dict['Applicator']],
+        ["BISEL (º):", data_dict['Bevel']],
+        ["DOSIS PRESCRITA (cGy):", data_dict['Dose']],
+        ["PROF. TRATAMIENTO AL 90%:", ""]
+    ]
+    prescription_table = Table(prescription_data, colWidths=[7 * cm, 10 * cm])
+    prescription_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
+    ]))
+    elements.append(prescription_table)
+    elements.append(Spacer(1, 0.3 * cm))
+
+    # Treatment plan section
+    plan_title = RectText(width=16 * cm, height=0.8 * cm, text="Planificación:", style=styles['LucidaSubtitle'])
+    elements.append(plan_title)
+    elements.append(Spacer(1, 0.4 * cm))
+    plan_data = [
+        ["ENERGÍA (MeV):", data_dict['Energy']],
+        ["PROFUNDIDAD R90 (cm):", ""],
+        ["zmax (cm):", ""],
+        ["cGy/UM @ zmax:", data_dict['Output']],
+        ["Long. X R90 (cm):", ""],
+        ["Long. Y R90 (cm):", ""]
+    ]
+    plan_table = Table(plan_data, colWidths=[7 * cm, 10 * cm])
+    plan_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
+    ]))
+    elements.append(plan_table)
+    elements.append(Spacer(1, 0.1 * cm))
+
+    # UM section
+    um_title = Paragraph("UM:", styles['LucidaSubtitle'])
+    elements.append(um_title)
+    elements.append(Spacer(1, 0.2 * cm))
+    um_data = [
+        ["UM segundo cálculo:", data_dict['Energy']],
+        ["Desviación (%):", ""]
+    ]
+    um_table = Table(um_data, colWidths=[7 * cm, 10 * cm])
+    um_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
+    ]))
+    elements.append(um_table)
+    elements.append(Spacer(1, 0.2 * cm))
+
+    # Images
+    images = [cross_img, in_img, tri_img, in_img]
+    desired_width = 8.5 * cm  # Desired width for image
+
+    imgs = []
+    for image_path in images:
         img_width, img_height = get_image_size(image_path, desired_width)
-        c.drawImage(images[i], x, y - img_height + desired_width, img_width, img_height)
+        imgs.append(Image(image_path, width=img_width, height=img_height))
 
-    # Add some text
-    text_x = padding
-    text_y = padding
-    c.drawString(text_x, text_y, "Servicio de Dosimetría y Radioprotección")
+    img_table = Table([[imgs[0], imgs[1]], [imgs[2], imgs[3]]], colWidths=[9 * cm, 8 * cm])
+    img_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 5),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3)
+    ]))
+    elements.append(img_table)
+    # Build PDF
+    doc.build(elements)
 
-    c.showPage()
-    c.save()
+

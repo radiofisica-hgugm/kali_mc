@@ -166,11 +166,11 @@ class Ui_MainWindow(object):
 
         self.formLayout_5.setWidget(0, QFormLayout.LabelRole, self.label_4)
 
-        self.dosis_edit = QLineEdit(self.formLayoutWidget_2)
-        self.dosis_edit.setObjectName(u"dosis_edit")
-        self.dosis_edit.setAlignment(Qt.AlignCenter)
+        self.DoseEdit = QLineEdit(self.formLayoutWidget_2)
+        self.DoseEdit.setObjectName(u"DoseEdit")
+        self.DoseEdit.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_5.setWidget(0, QFormLayout.FieldRole, self.dosis_edit)
+        self.formLayout_5.setWidget(0, QFormLayout.FieldRole, self.DoseEdit)
 
         self.label_5 = QLabel(self.formLayoutWidget_2)
         self.label_5.setObjectName(u"label_5")
@@ -500,83 +500,83 @@ class Ui_MainWindow(object):
 
         self.formLayout_9.setWidget(0, QFormLayout.LabelRole, self.label_18)
 
-        self.lineEdit = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit.setObjectName(u"lineEdit")
-        self.lineEdit.setFont(font9)
+        self.NameEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.NameEdit.setObjectName(u"NameEdit")
+        self.NameEdit.setFont(font9)
 
-        self.formLayout_9.setWidget(0, QFormLayout.FieldRole, self.lineEdit)
+        self.formLayout_9.setWidget(0, QFormLayout.FieldRole, self.NameEdit)
 
         self.label_20 = QLabel(self.verticalLayoutWidget_4)
         self.label_20.setObjectName(u"label_20")
         self.label_20.setFont(font9)
 
-        self.formLayout_9.setWidget(1, QFormLayout.LabelRole, self.label_20)
+        self.formLayout_9.setWidget(2, QFormLayout.LabelRole, self.label_20)
 
-        self.lineEdit_5 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_5.setObjectName(u"lineEdit_5")
-        self.lineEdit_5.setFont(font9)
+        self.IDEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.IDEdit.setObjectName(u"IDEdit")
+        self.IDEdit.setFont(font9)
 
-        self.formLayout_9.setWidget(1, QFormLayout.FieldRole, self.lineEdit_5)
+        self.formLayout_9.setWidget(2, QFormLayout.FieldRole, self.IDEdit)
 
         self.label_21 = QLabel(self.verticalLayoutWidget_4)
         self.label_21.setObjectName(u"label_21")
         self.label_21.setFont(font9)
 
-        self.formLayout_9.setWidget(2, QFormLayout.LabelRole, self.label_21)
+        self.formLayout_9.setWidget(3, QFormLayout.LabelRole, self.label_21)
 
-        self.lineEdit_6 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_6.setObjectName(u"lineEdit_6")
-        self.lineEdit_6.setFont(font9)
+        self.SiteEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.SiteEdit.setObjectName(u"SiteEdit")
+        self.SiteEdit.setFont(font9)
 
-        self.formLayout_9.setWidget(2, QFormLayout.FieldRole, self.lineEdit_6)
+        self.formLayout_9.setWidget(3, QFormLayout.FieldRole, self.SiteEdit)
 
         self.label_22 = QLabel(self.verticalLayoutWidget_4)
         self.label_22.setObjectName(u"label_22")
         self.label_22.setFont(font9)
 
-        self.formLayout_9.setWidget(3, QFormLayout.LabelRole, self.label_22)
+        self.formLayout_9.setWidget(4, QFormLayout.LabelRole, self.label_22)
 
-        self.lineEdit_7 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_7.setObjectName(u"lineEdit_7")
-        self.lineEdit_7.setFont(font9)
+        self.PhysicistEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.PhysicistEdit.setObjectName(u"PhysicistEdit")
+        self.PhysicistEdit.setFont(font9)
 
-        self.formLayout_9.setWidget(3, QFormLayout.FieldRole, self.lineEdit_7)
+        self.formLayout_9.setWidget(4, QFormLayout.FieldRole, self.PhysicistEdit)
 
         self.label_23 = QLabel(self.verticalLayoutWidget_4)
         self.label_23.setObjectName(u"label_23")
         self.label_23.setFont(font9)
 
-        self.formLayout_9.setWidget(4, QFormLayout.LabelRole, self.label_23)
+        self.formLayout_9.setWidget(5, QFormLayout.LabelRole, self.label_23)
 
-        self.lineEdit_8 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_8.setObjectName(u"lineEdit_8")
-        self.lineEdit_8.setFont(font9)
+        self.OncologistEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.OncologistEdit.setObjectName(u"OncologistEdit")
+        self.OncologistEdit.setFont(font9)
 
-        self.formLayout_9.setWidget(4, QFormLayout.FieldRole, self.lineEdit_8)
+        self.formLayout_9.setWidget(5, QFormLayout.FieldRole, self.OncologistEdit)
 
         self.label_24 = QLabel(self.verticalLayoutWidget_4)
         self.label_24.setObjectName(u"label_24")
         self.label_24.setFont(font9)
 
-        self.formLayout_9.setWidget(5, QFormLayout.LabelRole, self.label_24)
+        self.formLayout_9.setWidget(6, QFormLayout.LabelRole, self.label_24)
 
-        self.lineEdit_9 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_9.setObjectName(u"lineEdit_9")
-        self.lineEdit_9.setFont(font9)
+        self.TechnologistEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.TechnologistEdit.setObjectName(u"TechnologistEdit")
+        self.TechnologistEdit.setFont(font9)
 
-        self.formLayout_9.setWidget(5, QFormLayout.FieldRole, self.lineEdit_9)
+        self.formLayout_9.setWidget(6, QFormLayout.FieldRole, self.TechnologistEdit)
 
-        self.label_25 = QLabel(self.verticalLayoutWidget_4)
-        self.label_25.setObjectName(u"label_25")
-        self.label_25.setFont(font9)
+        self.label_31 = QLabel(self.verticalLayoutWidget_4)
+        self.label_31.setObjectName(u"label_31")
+        self.label_31.setFont(font9)
 
-        self.formLayout_9.setWidget(6, QFormLayout.LabelRole, self.label_25)
+        self.formLayout_9.setWidget(1, QFormLayout.LabelRole, self.label_31)
 
-        self.lineEdit_10 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_10.setObjectName(u"lineEdit_10")
-        self.lineEdit_10.setFont(font9)
+        self.SurnameEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.SurnameEdit.setObjectName(u"SurnameEdit")
+        self.SurnameEdit.setFont(font9)
 
-        self.formLayout_9.setWidget(6, QFormLayout.FieldRole, self.lineEdit_10)
+        self.formLayout_9.setWidget(1, QFormLayout.FieldRole, self.SurnameEdit)
 
 
         self.horizontalLayout_3.addLayout(self.formLayout_9)
@@ -596,11 +596,11 @@ class Ui_MainWindow(object):
 
         self.formLayout_10.setWidget(0, QFormLayout.LabelRole, self.label_27)
 
-        self.lineEdit_11 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_11.setObjectName(u"lineEdit_11")
-        self.lineEdit_11.setFont(font9)
+        self.PitchEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.PitchEdit.setObjectName(u"PitchEdit")
+        self.PitchEdit.setFont(font9)
 
-        self.formLayout_10.setWidget(0, QFormLayout.FieldRole, self.lineEdit_11)
+        self.formLayout_10.setWidget(0, QFormLayout.FieldRole, self.PitchEdit)
 
         self.label_28 = QLabel(self.verticalLayoutWidget_4)
         self.label_28.setObjectName(u"label_28")
@@ -608,11 +608,11 @@ class Ui_MainWindow(object):
 
         self.formLayout_10.setWidget(1, QFormLayout.LabelRole, self.label_28)
 
-        self.lineEdit_12 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_12.setObjectName(u"lineEdit_12")
-        self.lineEdit_12.setFont(font9)
+        self.RollEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.RollEdit.setObjectName(u"RollEdit")
+        self.RollEdit.setFont(font9)
 
-        self.formLayout_10.setWidget(1, QFormLayout.FieldRole, self.lineEdit_12)
+        self.formLayout_10.setWidget(1, QFormLayout.FieldRole, self.RollEdit)
 
         self.label_29 = QLabel(self.verticalLayoutWidget_4)
         self.label_29.setObjectName(u"label_29")
@@ -620,11 +620,11 @@ class Ui_MainWindow(object):
 
         self.formLayout_10.setWidget(2, QFormLayout.LabelRole, self.label_29)
 
-        self.lineEdit_13 = QLineEdit(self.verticalLayoutWidget_4)
-        self.lineEdit_13.setObjectName(u"lineEdit_13")
-        self.lineEdit_13.setFont(font9)
+        self.VerticalEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.VerticalEdit.setObjectName(u"VerticalEdit")
+        self.VerticalEdit.setFont(font9)
 
-        self.formLayout_10.setWidget(2, QFormLayout.FieldRole, self.lineEdit_13)
+        self.formLayout_10.setWidget(2, QFormLayout.FieldRole, self.VerticalEdit)
 
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -632,7 +632,19 @@ class Ui_MainWindow(object):
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.formLayout_10.setItem(4, QFormLayout.LabelRole, self.verticalSpacer)
+        self.formLayout_10.setItem(5, QFormLayout.LabelRole, self.verticalSpacer)
+
+        self.label_25 = QLabel(self.verticalLayoutWidget_4)
+        self.label_25.setObjectName(u"label_25")
+        self.label_25.setFont(font9)
+
+        self.formLayout_10.setWidget(4, QFormLayout.LabelRole, self.label_25)
+
+        self.IORTnumberEdit = QLineEdit(self.verticalLayoutWidget_4)
+        self.IORTnumberEdit.setObjectName(u"IORTnumberEdit")
+        self.IORTnumberEdit.setFont(font9)
+
+        self.formLayout_10.setWidget(4, QFormLayout.FieldRole, self.IORTnumberEdit)
 
 
         self.horizontalLayout_3.addLayout(self.formLayout_10)
@@ -656,11 +668,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.plainTextEdit = QPlainTextEdit(self.verticalLayoutWidget_4)
-        self.plainTextEdit.setObjectName(u"plainTextEdit")
-        self.plainTextEdit.setFont(font9)
+        self.CommentsEdit = QPlainTextEdit(self.verticalLayoutWidget_4)
+        self.CommentsEdit.setObjectName(u"CommentsEdit")
+        self.CommentsEdit.setFont(font9)
 
-        self.horizontalLayout_4.addWidget(self.plainTextEdit)
+        self.horizontalLayout_4.addWidget(self.CommentsEdit)
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -715,8 +727,8 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
         QWidget.setTabOrder(self.combo_applicator, self.combo_bevel)
-        QWidget.setTabOrder(self.combo_bevel, self.dosis_edit)
-        QWidget.setTabOrder(self.dosis_edit, self.lineEdit_2)
+        QWidget.setTabOrder(self.combo_bevel, self.DoseEdit)
+        QWidget.setTabOrder(self.DoseEdit, self.lineEdit_2)
         QWidget.setTabOrder(self.lineEdit_2, self.radio1)
         QWidget.setTabOrder(self.radio1, self.radio2)
         QWidget.setTabOrder(self.radio2, self.radio3)
@@ -724,18 +736,17 @@ class Ui_MainWindow(object):
         QWidget.setTabOrder(self.radio4, self.phoy_edit)
         QWidget.setTabOrder(self.phoy_edit, self.calcular)
         QWidget.setTabOrder(self.calcular, self.lineEdit_4)
-        QWidget.setTabOrder(self.lineEdit_4, self.lineEdit)
-        QWidget.setTabOrder(self.lineEdit, self.lineEdit_5)
-        QWidget.setTabOrder(self.lineEdit_5, self.lineEdit_6)
-        QWidget.setTabOrder(self.lineEdit_6, self.lineEdit_7)
-        QWidget.setTabOrder(self.lineEdit_7, self.lineEdit_8)
-        QWidget.setTabOrder(self.lineEdit_8, self.lineEdit_9)
-        QWidget.setTabOrder(self.lineEdit_9, self.lineEdit_10)
-        QWidget.setTabOrder(self.lineEdit_10, self.lineEdit_11)
-        QWidget.setTabOrder(self.lineEdit_11, self.lineEdit_12)
-        QWidget.setTabOrder(self.lineEdit_12, self.lineEdit_13)
-        QWidget.setTabOrder(self.lineEdit_13, self.plainTextEdit)
-        QWidget.setTabOrder(self.plainTextEdit, self.pushreport)
+        QWidget.setTabOrder(self.lineEdit_4, self.NameEdit)
+        QWidget.setTabOrder(self.NameEdit, self.IDEdit)
+        QWidget.setTabOrder(self.IDEdit, self.SiteEdit)
+        QWidget.setTabOrder(self.SiteEdit, self.PhysicistEdit)
+        QWidget.setTabOrder(self.PhysicistEdit, self.OncologistEdit)
+        QWidget.setTabOrder(self.OncologistEdit, self.TechnologistEdit)
+        QWidget.setTabOrder(self.TechnologistEdit, self.PitchEdit)
+        QWidget.setTabOrder(self.PitchEdit, self.RollEdit)
+        QWidget.setTabOrder(self.RollEdit, self.VerticalEdit)
+        QWidget.setTabOrder(self.VerticalEdit, self.CommentsEdit)
+        QWidget.setTabOrder(self.CommentsEdit, self.pushreport)
         QWidget.setTabOrder(self.pushreport, self.pushreport_2)
 
         self.retranslateUi(MainWindow)
@@ -802,16 +813,17 @@ class Ui_MainWindow(object):
         self.label_linac_energy.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">0 MeV</span></p></body></html>", None))
         self.label_linac_applicator.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Appl</span></p></body></html>", None))
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Datos Administrativos", None))
-        self.label_18.setText(QCoreApplication.translate("MainWindow", u"Nombre y apellidos:", None))
+        self.label_18.setText(QCoreApplication.translate("MainWindow", u"Nombre:", None))
         self.label_20.setText(QCoreApplication.translate("MainWindow", u"N\u00ba de Historia:", None))
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"Localizaci\u00f3n:", None))
         self.label_22.setText(QCoreApplication.translate("MainWindow", u"Radiof\u00edsico:", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"O. Radioter\u00e1pico:", None))
         self.label_24.setText(QCoreApplication.translate("MainWindow", u"T.E.R.t", None))
-        self.label_25.setText(QCoreApplication.translate("MainWindow", u"N\u00ba de RIO:", None))
+        self.label_31.setText(QCoreApplication.translate("MainWindow", u"Apellidos:", None))
         self.label_27.setText(QCoreApplication.translate("MainWindow", u"Pitch (\u00ba):", None))
         self.label_28.setText(QCoreApplication.translate("MainWindow", u"Roll (\u00ba):", None))
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"Esc. vert. (cm):", None))
+        self.label_25.setText(QCoreApplication.translate("MainWindow", u"N\u00ba de RIO:", None))
         self.label_26.setText(QCoreApplication.translate("MainWindow", u"Incidencias:", None))
         self.pushreport.setText(QCoreApplication.translate("MainWindow", u"Generar Informe", None))
         self.pushreport_2.setText(QCoreApplication.translate("MainWindow", u"Enviar RTPlan", None))

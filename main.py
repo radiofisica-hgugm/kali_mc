@@ -8,6 +8,7 @@ from scipy.interpolate import RegularGridInterpolator
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 import pyqtgraph.exporters
+import datetime
 import tempfile, os
 
 try:
@@ -45,7 +46,7 @@ class Window(QMainWindow, Ui_MainWindow):
         # Callbacks:
         self.combo_applicator.activated.connect(self.refresh)
         self.combo_bevel.activated.connect(self.refresh)
-        self.dosis_edit.textChanged.connect(self.refresh)
+        self.DoseEdit.textChanged.connect(self.refresh)
         self.radio1.toggled.connect(self.refresh)
         self.radio2.toggled.connect(self.refresh)
         self.radio3.toggled.connect(self.refresh)
@@ -112,7 +113,7 @@ class Window(QMainWindow, Ui_MainWindow):
         if (
                 (a_idx >= 0) and
                 (b_idx >= 0) and
-                (self.dosis_edit.text() != '') and
+                (self.DoseEdit.text() != '') and
                 (self.radio1.isChecked() or
                  self.radio2.isChecked() or
                  self.radio3.isChecked() or
@@ -410,7 +411,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def calculate_UM(self):
         # Retrieve data from gui:
-        self.dose = float(self.dosis_edit.text())
+        self.dose = float(self.DoseEdit.text())
         applicator = self.combo_applicator.currentText()
         b_idx = self.combo_bevel.currentIndex() - 1  # bevel index
         energy_idx = self.find_checked_radiobutton()
@@ -431,6 +432,7 @@ class Window(QMainWindow, Ui_MainWindow):
         print('Generating report ..........')
         self.p1.autoRange()
         self.p2.autoRange()
+        data_dict = self.create_data_dict()
         with tempfile.TemporaryDirectory() as tempdir:
             exporter = pg.exporters.ImageExporter(self.p1)
             file_cross = os.path.join(tempdir, 'cross.png')
@@ -440,8 +442,41 @@ class Window(QMainWindow, Ui_MainWindow):
             file_in = os.path.join(tempdir, 'in.png')
             exporter.export(file_in)
 
-            create_pdf(r"d:\test.pdf", file_cross, file_in)
+            file_3D = os.path.join(tempdir,'3D.png')
+            self.openGLWidget.grabFramebuffer().save(file_3D)
 
+            create_pdf(r"d:\test.pdf", file_cross, file_in, file_3D, data_dict)
+
+    def create_data_dict(self):
+        energy_idx = self.find_checked_radiobutton()
+
+        data_dict = {
+            'Name': self.NameEdit.text(),
+            'Surname': self.SurnameEdit.text(),
+            'ID': self.IDEdit.text(),
+            'Site': self.SiteEdit.text(),
+            'Physicist': self.PhysicistEdit.text(),
+            'Oncologist': self.OncologistEdit.text(),
+            'TERt': self.TechnologistEdit.text(),
+
+            'Applicator': self.combo_applicator.currentText(),
+            'Bevel': self.combo_bevel.currentText(),
+            'Dose': self.DoseEdit.text(),
+
+            'Energy': self.energies[energy_idx],
+            'Output': self.output_label.text(),
+            'UM': self.UM_label.text(),
+
+            'Pitch': self.PitchEdit.text(),
+            'Roll': self.RollEdit.text(),
+            'Vertical': self.VerticalEdit.text(),
+
+            'IORT_number': self.IORTnumberEdit.text(),
+            'Date': datetime.date.today(),
+
+            'Comments': self.CommentsEdit.text()
+        }
+        return data_dict
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
