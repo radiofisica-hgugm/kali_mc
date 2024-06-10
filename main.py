@@ -442,6 +442,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
             create_pdf(r"d:\test.pdf", file_cross, file_in)
 
+
 if __name__ == "__main__":
     multiprocessing.freeze_support()
     app = QApplication(sys.argv)

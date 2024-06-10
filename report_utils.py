@@ -23,7 +23,7 @@ def create_pdf(output_path, cross_img, in_img):
     c.setFont('LucidaSans', 14)  # Set default font size
 
     # Define sizes in centimeters
-    title_font_size = 24
+    title_font_size = 20
     desired_width = 8.5 * cm  # Desired width for image
     padding = 1.27 * cm  # Padding in centimeters
 
@@ -43,15 +43,33 @@ def create_pdf(output_path, cross_img, in_img):
     c.drawString(text_x, text_y - 1 *cm, "Informe de tratamiento")
 
     # Reset font size for the rest of the document
-    c.setFont('LucidaSans', 14)
+    c.setFont('LucidaSans', 12)
+
+    # Patient data:
+    pat_name = ""
+    pat_surname = ""
+    pat_nhist = ""
+    t = c.beginText()
+    t.setTextOrigin(padding, text_y - 2 *cm)
+    t.textLines(f"""
+    Nombre:{pat_name}
+    Apellidos: {pat_surname}
+    Nº de historia: {pat_nhist}
+    """)
+    c.drawText(t)
+
+    c.line(padding, text_y - 4 *cm, width - padding, text_y - 4 *cm)
+    c.setFont('LucidaSans', 16)
+    c.drawString(padding,  text_y - 5 *cm, "Prescripción:")
+    c.setFont('LucidaSans', 12)
 
     # Image coordinates (top-left corner)
-    y_pos_img = height - 16 * cm
+    y_pos_img = height - 22 * cm
     positions = [
         (padding, y_pos_img),
         (2 * padding + desired_width, y_pos_img),
-        (padding, height - 2 * (desired_width + padding)),
-        (2 * padding + desired_width, height - 2 * (desired_width + padding)),
+        (padding, y_pos_img -3.5 *cm),
+        (2 * padding + desired_width, y_pos_img -3.5 *cm),
     ]
     images = [cross_img, in_img, cross_img, in_img]
     # Draw images with aspect ratio preserved
