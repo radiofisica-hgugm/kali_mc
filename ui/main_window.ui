@@ -1225,6 +1225,9 @@
                   <pointsize>10</pointsize>
                  </font>
                 </property>
+                <property name="plainText">
+                 <string/>
+                </property>
                </widget>
               </item>
               <item>

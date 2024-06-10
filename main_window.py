@@ -825,6 +825,7 @@ class Ui_MainWindow(object):
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"Esc. vert. (cm):", None))
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"N\u00ba de RIO:", None))
         self.label_26.setText(QCoreApplication.translate("MainWindow", u"Incidencias:", None))
+        self.CommentsEdit.setPlainText("")
         self.pushreport.setText(QCoreApplication.translate("MainWindow", u"Generar Informe", None))
         self.pushreport_2.setText(QCoreApplication.translate("MainWindow", u"Enviar RTPlan", None))
     # retranslateUi

@@ -474,7 +474,7 @@ class Window(QMainWindow, Ui_MainWindow):
             'IORT_number': self.IORTnumberEdit.text(),
             'Date': datetime.date.today(),
 
-            'Comments': self.CommentsEdit.text()
+            'Comments': self.CommentsEdit.toPlainText()
         }
         return data_dict
 
