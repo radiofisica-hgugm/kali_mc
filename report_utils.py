@@ -39,7 +39,11 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
     pdfmetrics.registerFont(TTFont('LucidaSans', 'report/LSANS.ttf'))
 
     # Document setup
-    doc = SimpleDocTemplate(output_path, pagesize=A4, topMargin=1.0*cm, leftMargin=2*cm, rightMargin=2*cm, bottomMargin=1.0*cm)
+    doc = SimpleDocTemplate(output_path,
+                            pagesize=A4, topMargin=1.0*cm, leftMargin=2*cm, rightMargin=2*cm, bottomMargin=1.0*cm,
+                            title="Kali MC - Informe de radioterapia intraoperatoria",  # exchange with your title
+                            author="Servicio de Dosimetría y Radioprotección",  # exchange with your authors name
+                            )
     elements = []
 
     styles = getSampleStyleSheet()

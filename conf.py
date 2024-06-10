@@ -15,6 +15,10 @@ tol_table_label = ''
 
 # MÁQUINA
 machine = 'LIAC'
+
+# Ruta por defecto para informes
+pdf_path = r''
+
 try:
     import local_conf
 except ModuleNotFoundError:

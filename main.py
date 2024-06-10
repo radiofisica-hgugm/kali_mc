@@ -1,6 +1,6 @@
 import multiprocessing
 import sys
-from PySide2.QtWidgets import QApplication
+from PySide2.QtWidgets import QApplication, QFileDialog
 from PySide2 import QtGui
 
 import numpy as np
@@ -429,10 +429,14 @@ class Window(QMainWindow, Ui_MainWindow):
         self.label_linac_applicator.setText(f'{int(applicator)*10} mm')
 
     def generate_report(self):
+        data_dict = self.create_data_dict()
+        pdf_path = os.path.join(conf.pdf_path, f"{data_dict['Date']} {data_dict['Name']} {data_dict['Surname']}.pdf")
+        name = QFileDialog.getSaveFileName(self, 'Guardar informe pdf',
+                                           pdf_path,
+                                           "Archivos pdf (*.pdf)")
         print('Generating report ..........')
         self.p1.autoRange()
         self.p2.autoRange()
-        data_dict = self.create_data_dict()
         with tempfile.TemporaryDirectory() as tempdir:
             exporter = pg.exporters.ImageExporter(self.p1)
             file_cross = os.path.join(tempdir, 'cross.png')
@@ -445,7 +449,7 @@ class Window(QMainWindow, Ui_MainWindow):
             file_3D = os.path.join(tempdir,'3D.png')
             self.openGLWidget.grabFramebuffer().save(file_3D)
 
-            create_pdf(r"d:\test.pdf", file_cross, file_in, file_3D, data_dict)
+            create_pdf(name[0], file_cross, file_in, file_3D, data_dict)
 
     def create_data_dict(self):
         energy_idx = self.find_checked_radiobutton()
