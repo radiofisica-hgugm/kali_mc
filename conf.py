@@ -25,3 +25,5 @@ try:
 except ImportError:
     print("local_conf ignored")
     pass
+
+version = '1.0.0'

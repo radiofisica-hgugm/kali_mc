@@ -1,5 +1,5 @@
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, Flowable
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, Flowable, BaseDocTemplate, PageTemplate, Frame
 from reportlab.lib.units import cm
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
@@ -7,6 +7,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib import colors
 from PIL import Image as PILImage
+import conf
 
 
 def get_image_size(path, desired_width):
@@ -34,16 +35,32 @@ class RectText(Flowable):
         self.canv.drawString(3, self.height - self.style.fontSize - 2, self.text)
 
 
+def footer(canvas, doc):
+    canvas.saveState()
+    width, height = A4
+    footer_text = f"Kali MC v. {conf.version}"
+    canvas.setFont('LucidaSans', 8)
+    canvas.drawString(width - 4*cm, 0.5*cm, footer_text)
+    canvas.restoreState()
+
+
 def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
     # Register Lucida Sans font
     pdfmetrics.registerFont(TTFont('LucidaSans', 'report/LSANS.ttf'))
 
     # Document setup
-    doc = SimpleDocTemplate(output_path,
+    doc = BaseDocTemplate(output_path,
                             pagesize=A4, topMargin=1.0*cm, leftMargin=2*cm, rightMargin=2*cm, bottomMargin=1.0*cm,
                             title="Kali MC - Informe de radioterapia intraoperatoria",  # exchange with your title
                             author="Servicio de Dosimetría y Radioprotección",  # exchange with your authors name
                             )
+
+    # Define the Frame
+    frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id='normal')
+    # Define the PageTemplate with footer
+    page_template = PageTemplate(id='PageWithFooter', frames=frame, onPage=footer)
+    doc.addPageTemplates([page_template])
+
     elements = []
 
     styles = getSampleStyleSheet()
@@ -136,29 +153,86 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
         ["Long. X R90 (cm):", ""],
         ["Long. Y R90 (cm):", ""]
     ]
-    plan_table = Table(plan_data, colWidths=[7 * cm, 10 * cm])
+    plan_table = Table(plan_data, colWidths=[7 * cm, 2 * cm])
     plan_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
         ('FONTSIZE', (0, 0), (-1, -1), 10),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.0),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
     ]))
-    elements.append(plan_table)
+
+    linac_data = [
+        ["PITCH (º):", data_dict['Pitch']],
+        ["ROLL (º):", data_dict['Roll']],
+        ["VERTICAL (cm):", data_dict['Vertical']],
+     ]
+    linac_table = Table(linac_data, colWidths=[5 * cm, 1 * cm])
+    linac_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.0),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
+    ]))
+
+
+    comments = Paragraph(data_dict['Comments'])
+    subtitle = Paragraph("Incidencias", styles['LucidaSubtitle'])
+    bordered_table_data = [
+        [subtitle],
+        [comments]
+    ]
+    bordered_table = Table(bordered_table_data, colWidths=[7 * cm])
+    bordered_table.setStyle(TableStyle([
+        ('BOX', (0, 0), (-1, -1), 0.5, colors.black),
+       #('INNERGRID', (0, 0), (-1, -1), 0.5, colors.black),
+        # ('BACKGROUND', (0, 0), (0, 0), colors.lightgrey),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
+    ]))
+    right_table = Table([[linac_table], [bordered_table]])
+    big_table = Table([[plan_table, right_table]], colWidths=[9 * cm, 8 * cm])
+    big_table.setStyle(TableStyle([
+        #('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('FONTNAME', (0, 0), (-1, 0), 'LucidaSans'),
+        ('LEFTPADDING', (0, 0), (-1, 0), 5),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 0),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+    ]))
+    elements.append(big_table)
     elements.append(Spacer(1, 0.1 * cm))
 
     # UM section
-    um_title = Paragraph("UM:", styles['LucidaSubtitle'])
-    elements.append(um_title)
-    elements.append(Spacer(1, 0.2 * cm))
-    um_data = [
+    UM_data = [
+        ["UM", data_dict['UM']],
+            ]
+    UM_table = Table(UM_data, colWidths=[7 * cm, 10 * cm])
+    UM_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 16),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
+    ]))
+    elements.append(UM_table)
+    # um_title = Paragraph("UM:", styles['LucidaSubtitle'])
+    # elements.append(um_title)
+    elements.append(Spacer(1, 0.3 * cm))
+    calc2_data = [
         ["UM segundo cálculo:", data_dict['Energy']],
         ["Desviación (%):", ""]
     ]
-    um_table = Table(um_data, colWidths=[7 * cm, 10 * cm])
-    um_table.setStyle(TableStyle([
+    calc2_table = Table(calc2_data, colWidths=[7 * cm, 10 * cm])
+    calc2_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
         ('FONTSIZE', (0, 0), (-1, -1), 10),
@@ -167,7 +241,7 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
         ('TOPPADDING', (0, 0), (-1, -1), 0.5),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
     ]))
-    elements.append(um_table)
+    elements.append(calc2_table)
     elements.append(Spacer(1, 0.2 * cm))
 
     # Images
