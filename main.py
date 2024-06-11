@@ -434,22 +434,26 @@ class Window(QMainWindow, Ui_MainWindow):
         name = QFileDialog.getSaveFileName(self, 'Guardar informe pdf',
                                            pdf_path,
                                            "Archivos pdf (*.pdf)")
-        print('Generating report ..........')
-        self.p1.autoRange()
-        self.p2.autoRange()
-        with tempfile.TemporaryDirectory() as tempdir:
-            exporter = pg.exporters.ImageExporter(self.p1)
-            file_cross = os.path.join(tempdir, 'cross.png')
-            exporter.export(file_cross)
+        if name[0] != "":
+            print('Generating report ..........')
+            self.p1.autoRange()
+            self.p2.autoRange()
+            with tempfile.TemporaryDirectory() as tempdir:
+                exporter = pg.exporters.ImageExporter(self.p1)
+                file_cross = os.path.join(tempdir, 'cross.png')
+                exporter.export(file_cross)
 
-            exporter = pg.exporters.ImageExporter(self.p2)
-            file_in = os.path.join(tempdir, 'in.png')
-            exporter.export(file_in)
+                exporter = pg.exporters.ImageExporter(self.p2)
+                file_in = os.path.join(tempdir, 'in.png')
+                exporter.export(file_in)
 
-            file_3D = os.path.join(tempdir,'3D.png')
-            self.openGLWidget.grabFramebuffer().save(file_3D)
+                file_3D = os.path.join(tempdir,'3D.png')
+                self.openGLWidget.grabFramebuffer().save(file_3D)
 
-            create_pdf(name[0], file_cross, file_in, file_3D, data_dict)
+                create_pdf(name[0], file_cross, file_in, file_3D, data_dict)
+                print('Report saved')
+        else:
+            print('Report cancelled')
 
     def create_data_dict(self):
         energy_idx = self.find_checked_radiobutton()
@@ -481,6 +485,7 @@ class Window(QMainWindow, Ui_MainWindow):
             'Comments': self.CommentsEdit.toPlainText()
         }
         return data_dict
+
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()

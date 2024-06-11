@@ -1327,6 +1327,7 @@
   <tabstop>calcular</tabstop>
   <tabstop>lineEdit_4</tabstop>
   <tabstop>NameEdit</tabstop>
+  <tabstop>SurnameEdit</tabstop>
   <tabstop>IDEdit</tabstop>
   <tabstop>SiteEdit</tabstop>
   <tabstop>PhysicistEdit</tabstop>
@@ -1335,6 +1336,7 @@
   <tabstop>PitchEdit</tabstop>
   <tabstop>RollEdit</tabstop>
   <tabstop>VerticalEdit</tabstop>
+  <tabstop>IORTnumberEdit</tabstop>
   <tabstop>CommentsEdit</tabstop>
   <tabstop>pushreport</tabstop>
   <tabstop>pushreport_2</tabstop>

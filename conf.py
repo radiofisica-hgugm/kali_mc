@@ -20,6 +20,8 @@ machine = 'LIAC'
 pdf_path = r''
 
 try:
-    import local_conf
-except ModuleNotFoundError:
-    print('local configuration file not found')
+    from local_conf import *
+    print("local_conf imported")
+except ImportError:
+    print("local_conf ignored")
+    pass
