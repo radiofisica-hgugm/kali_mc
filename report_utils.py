@@ -80,7 +80,7 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
 
     # Add department
     department = Paragraph("Servicio de Dosimetría y Radioprotección", styles['LucidaBody'])
-    header_table = Table([[logo_img, department]], colWidths=[8 * cm, 9 * cm])
+    header_table = Table([[logo_img, department]], colWidths=[9.5 * cm, 7.5 * cm])
 
     elements.append(header_table)
     elements.append(Spacer(1, 0.3 * cm))
@@ -105,7 +105,7 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
         ["Fecha:", data_dict['Date']],
         ["Nº DE RIO:", data_dict['IORT_number']]
     ]
-    admin_table = Table(admin_data, colWidths=[7 * cm, 10 * cm])
+    admin_table = Table(admin_data, colWidths=[6 * cm, 11 * cm])
     admin_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
@@ -119,42 +119,32 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
     elements.append(Spacer(1, 0.3 * cm))
 
     # Prescription section
-    prescription_title = RectText(width=16 * cm, height=0.8 * cm, text="Prescripción:", style=styles['LucidaSubtitle'])
+    prescription_title = RectText(width=17 * cm, height=0.8 * cm, text="Prescripción:", style=styles['LucidaSubtitle'])
     elements.append(prescription_title)
-    elements.append(Spacer(1, 0.3 * cm))
+    elements.append(Spacer(1, 0.1 * cm))
     prescription_data = [
         ["DIÁMETRO CONO (cm):", data_dict['Applicator']],
         ["BISEL (º):", data_dict['Bevel']],
         ["DOSIS PRESCRITA (cGy):", data_dict['Dose']],
-        ["PROF. TRATAMIENTO AL 90%:", ""]
+        ["PROF. TRATAMIENTO AL 90%:", data_dict['R90']]
     ]
-    prescription_table = Table(prescription_data, colWidths=[7 * cm, 10 * cm])
-    prescription_table.setStyle(TableStyle([
+    presc_left_table = Table(prescription_data, colWidths=[6 * cm, 2.5 * cm])
+    presc_left_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
         ('FONTSIZE', (0, 0), (-1, -1), 10),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.0),
+        ('LEFTPADDING', (0, 0), (-1, -1), 0),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
     ]))
-    elements.append(prescription_table)
-    elements.append(Spacer(1, 0.3 * cm))
-
-    # Treatment plan section
-    plan_title = RectText(width=16 * cm, height=0.8 * cm, text="Planificación:", style=styles['LucidaSubtitle'])
-    elements.append(plan_title)
-    elements.append(Spacer(1, 0.4 * cm))
-    plan_data = [
-        ["ENERGÍA (MeV):", data_dict['Energy']],
-        ["PROFUNDIDAD R90 (cm):", ""],
-        ["zmax (cm):", ""],
-        ["cGy/UM @ zmax:", data_dict['Output']],
-        ["Long. X R90 (cm):", ""],
-        ["Long. Y R90 (cm):", ""]
+    presc_right_data = [
+        ["PRESIÓN DE HOY (hPa):", data_dict['Pressure']],
+        ["PRESIÓN DE REFERENCIA (hPa):", data_dict['RefPressure']]
     ]
-    plan_table = Table(plan_data, colWidths=[7 * cm, 2 * cm])
-    plan_table.setStyle(TableStyle([
+    presc_right_table = Table(presc_right_data, colWidths=[5.5 * cm, 3.0 * cm])
+    presc_right_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
         ('FONTSIZE', (0, 0), (-1, -1), 10),
@@ -163,13 +153,72 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
         ('TOPPADDING', (0, 0), (-1, -1), 0.0),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
     ]))
+    prescription_table = Table([[presc_left_table, presc_right_table]], colWidths=[8.5 * cm, 8.5 * cm])
+    elements.append(prescription_table)
+    elements.append(Spacer(1, 0.3 * cm))
+
+    # Treatment plan section
+    plan_title = RectText(width=17 * cm, height=0.8 * cm, text="Planificación:", style=styles['LucidaSubtitle'])
+    elements.append(plan_title)
+    elements.append(Spacer(1, 0.1 * cm))
+    plan_data = [
+        ["ENERGÍA (MeV):", data_dict['Energy']],
+        ["PROFUNDIDAD R90 (cm):", ""],
+        ["zmax (cm):", ""],
+        ["cGy/UM @ zmax:", data_dict['Output']],
+        ["Long. X R90 (cm):", ""],
+        ["Long. Y R90 (cm):", ""]
+    ]
+    plan_table = Table(plan_data, colWidths=[6 * cm, 2.5 * cm])
+    plan_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.0),
+        ('LEFTPADDING', (0, 0), (-1, -1), 0),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
+    ]))
+    # UM section
+    UM_data = [
+        ["UM", data_dict['UM']],
+    ]
+    UM_table = Table(UM_data, colWidths=[6 * cm, 2.5 * cm])
+    UM_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 16),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), -0.6),
+        ('LEFTPADDING', (0, 0), (-1, -1), 0),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
+    ]))
+    calc2_data = [
+        ["UM segundo cálculo:", data_dict['Energy']],
+        ["Desviación (%):", ""]
+    ]
+    calc2_table = Table(calc2_data, colWidths=[6 * cm, 2.5 * cm])
+    calc2_table.setStyle(TableStyle([
+        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
+        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5),
+        ('LEFTPADDING', (0, 0), (-1, -1), 0),
+    ]))
+    left_table = Table([[plan_table], [UM_table], [calc2_table]], colWidths=[8.5 * cm])
 
     linac_data = [
+        ["ACELERADOR:", data_dict['Linac']],
         ["PITCH (º):", data_dict['Pitch']],
         ["ROLL (º):", data_dict['Roll']],
         ["VERTICAL (cm):", data_dict['Vertical']],
      ]
-    linac_table = Table(linac_data, colWidths=[5 * cm, 1 * cm])
+    linac_table = Table(linac_data, colWidths=[5.5 * cm, 3.0 * cm])
     linac_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
@@ -180,69 +229,27 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
     ]))
 
-
     comments = Paragraph(data_dict['Comments'])
     subtitle = Paragraph("Incidencias", styles['LucidaSubtitle'])
-    bordered_table_data = [
-        [subtitle],
-        [comments]
-    ]
-    bordered_table = Table(bordered_table_data, colWidths=[7 * cm])
+    bordered_table = Table([[subtitle], [comments]], colWidths=[8.5 * cm])
     bordered_table.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.5, colors.black),
-       #('INNERGRID', (0, 0), (-1, -1), 0.5, colors.black),
-        # ('BACKGROUND', (0, 0), (0, 0), colors.lightgrey),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
     ]))
     right_table = Table([[linac_table], [bordered_table]])
-    big_table = Table([[plan_table, right_table]], colWidths=[9 * cm, 8 * cm])
+    big_table = Table([[left_table, right_table]], colWidths=[8.5 * cm, 8.5 * cm])
     big_table.setStyle(TableStyle([
         #('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('FONTNAME', (0, 0), (-1, 0), 'LucidaSans'),
-        ('LEFTPADDING', (0, 0), (-1, 0), 5),
+        ('LEFTPADDING', (0, 0), (-1, 0), 0),
         ('BOTTOMPADDING', (0, 0), (-1, 0), 0),
         ('BACKGROUND', (0, 1), (-1, -1), colors.white),
     ]))
     elements.append(big_table)
-    elements.append(Spacer(1, 0.1 * cm))
-
-    # UM section
-    UM_data = [
-        ["UM", data_dict['UM']],
-            ]
-    UM_table = Table(UM_data, colWidths=[7 * cm, 10 * cm])
-    UM_table.setStyle(TableStyle([
-        ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor("#2A82C0")),
-        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 16),
-        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
-    ]))
-    elements.append(UM_table)
-    # um_title = Paragraph("UM:", styles['LucidaSubtitle'])
-    # elements.append(um_title)
-    elements.append(Spacer(1, 0.3 * cm))
-    calc2_data = [
-        ["UM segundo cálculo:", data_dict['Energy']],
-        ["Desviación (%):", ""]
-    ]
-    calc2_table = Table(calc2_data, colWidths=[7 * cm, 10 * cm])
-    calc2_table.setStyle(TableStyle([
-        ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
-        ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
-        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('TOPPADDING', (0, 0), (-1, -1), 0.5),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
-    ]))
-    elements.append(calc2_table)
-    elements.append(Spacer(1, 0.2 * cm))
+    elements.append(Spacer(1, 0.0 * cm))
 
     # Images
     images = [cross_img, in_img, tri_img, in_img]
@@ -260,7 +267,7 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
         ('FONTSIZE', (0, 0), (-1, -1), 5),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('TOPPADDING', (0, 0), (-1, -1), 0),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 3)
     ]))
     elements.append(img_table)

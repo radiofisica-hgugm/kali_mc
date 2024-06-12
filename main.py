@@ -19,6 +19,21 @@ from main_window import Ui_MainWindow, QMainWindow
 import conf
 from report_utils import create_pdf
 
+
+def find_text_position(data, level):
+    """
+    Find a suitable position to place the text label for a given iso level.
+    """
+    mask = data >= level
+    y, x = np.where(mask)
+    if len(x) > 0 and len(y) > 0:
+        # Use the center of the largest cluster of points as the position
+        x_center = np.min(x) + (np.max(x) - np.min(x)) * 0.75
+        y_center = np.max(y)
+        return x_center, y_center
+    return None
+
+
 class Window(QMainWindow, Ui_MainWindow):
 
     def __init__(self, parent=None):
@@ -255,7 +270,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.p1.addItem(iso_curve)
             iso_curve.setParentItem(self.img1)
             # Find a position to place the text
-            pos = self.find_text_position(data, level)
+            pos = find_text_position(data, level)
             if pos is not None:
                 text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
                 text.setPos(pos[0], pos[1])
@@ -317,7 +332,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.p2.addItem(iso_curve)
             iso_curve.setParentItem(self.img2)
             # Find a position to place the text
-            pos = self.find_text_position(data, level)
+            pos = find_text_position(data, level)
             if pos is not None:
                 text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
                 text.setPos(pos[0], pos[1])
@@ -326,21 +341,6 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.img2.setTransform(tr)
         self.p2.autoRange()
-
-
-
-    def find_text_position(self, data, level):
-        """
-        Find a suitable position to place the text label for a given iso level.
-        """
-        mask = data >= level
-        y, x = np.where(mask)
-        if len(x) > 0 and len(y) > 0:
-            # Use the center of the largest cluster of points as the position
-            x_center = np.min(x) + (np.max(x) - np.min(x)) * 0.75
-            y_center = np.max(y)
-            return x_center, y_center
-        return None
 
     def add_inclined_cylinder(self):
         # Define the cylinder parameters
@@ -457,6 +457,15 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def create_data_dict(self):
         energy_idx = self.find_checked_radiobutton()
+        if energy_idx == 0:
+            R90 = self.label_6MeV.text()
+        elif energy_idx == 1:
+            R90 = self.label_8MeV.text()
+        elif energy_idx == 2:
+            R90 = self.label_10MeV.text()
+        elif energy_idx == 3:
+            R90 = self.label_12MeV.text()
+
 
         data_dict = {
             'Name': self.NameEdit.text(),
@@ -470,11 +479,15 @@ class Window(QMainWindow, Ui_MainWindow):
             'Applicator': self.combo_applicator.currentText(),
             'Bevel': self.combo_bevel.currentText(),
             'Dose': self.DoseEdit.text(),
+            'Pressure': self.phoy_edit.text(),
+            'RefPressure': self.label_pref.text(),
+            'R90': R90,
 
             'Energy': self.energies[energy_idx],
             'Output': self.output_label.text(),
             'UM': self.UM_label.text(),
 
+            'Linac': conf.machine + '' + conf.serial_number,
             'Pitch': self.PitchEdit.text(),
             'Roll': self.RollEdit.text(),
             'Vertical': self.VerticalEdit.text(),

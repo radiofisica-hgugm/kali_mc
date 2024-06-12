@@ -17,18 +17,23 @@ def create_fake_data_dict():
         'Applicator': '10',
         'Bevel': '45',
         'Dose': '1250',
+        'R90': '1.45',
+        'Pressure': '942',
+        'RefPressure': '934.7',
 
         'Energy': 10,
         'Output': 1.1,
         'UM': 2500,
 
+        'Linac': 'LIAC HWL 0000',
         'Pitch': '3',
         'Roll': '10',
         'Vertical': '220',
 
         'IORT_number': '2999',
 
-        'Comments': 'No habido problemas con la irradiación, Si la línea es muy larga es posible que se salga de el recuadro.'
+        'Comments': 'No habido problemas con la irradiación, Si la línea es muy larga es posible que '
+                    'se salga del recuadro. Un poco más de información para ver cómo se rellena'
     }
     return data_dict
 
