@@ -73,10 +73,13 @@ class Window(QMainWindow, Ui_MainWindow):
         self.calcular.setEnabled(False)
         self.img1 = pg.ImageItem()
         self.img2 = pg.ImageItem()
+        self.img3 = pg.ImageItem()
         self.data_cross = None
         self.data_in = None
+        self.data_coronal = None
         self.colorbar_cross = None
         self.colorbar_in = None
+        self.colorbar_coronal = None
 
         self.pref = conf.PREF  # Reference Pressure
         self.label_pref.setText(str(self.pref))
@@ -91,6 +94,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.extent_cross = [1, 1]
         self.extent_in = [1, 1]
+        self.extent_coronal = [1,1]
         self.extent3D = [1, 1, 1]
         self.d_x = 0.0
         self.d_y = 0.0
@@ -179,7 +183,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.d_z = d_z
         self.extent_cross = [-d_x / 2 + x_start, x_end + d_x / 2, z_start - d_z / 2, z_end + d_z / 2]
         self.extent_in = [-d_y / 2 + y_start, y_end + d_y / 2, z_start - d_z / 2, z_end + d_z / 2]
-        # print(f'extent crossline: {self.extent_cross}')
+        self.extent_coronal = [-d_x / 2 + x_start, x_end + d_x / 2, -d_y / 2 + y_start, y_end + d_y / 2]
         self.extent3D = [x_start, x_end, y_start, y_end, z_start, z_end]
         # print(f'3D extent: {self.extent3D}')
 
@@ -195,12 +199,16 @@ class Window(QMainWindow, Ui_MainWindow):
         depth_dose = interpolator(points)
         self.clinical_max = np.max(depth_dose)
         self.z_clinical_max = z_vals[np.argmax(depth_dose)]
+        self.label_zmax.setText(f"{self.z_clinical_max:.2f}")
 
         # plot cross plane
         self.plot_crossplane(interpolator)
 
         # plot inline plane
         self.plot_inplane(interpolator)
+
+        # plot coronal zmax plane
+        self.plot_coronal(interpolator)
 
         # 3D
         self.openGLWidget.clear()
@@ -342,6 +350,68 @@ class Window(QMainWindow, Ui_MainWindow):
         self.img2.setTransform(tr)
         self.p2.autoRange()
 
+    def plot_coronal(self, interpolator):
+        plot_relative = True
+
+        self.p3.clear()
+        self.img3 = pg.ImageItem()
+        self.p3.addItem(self.img3)
+
+        # Define the points on the y=0 plane for interpolation
+        x_vals = np.linspace(self.x_scale[0], self.x_scale[-1], int(len(self.x_scale) * (1 / self.grid_factor)))
+        y_vals = np.linspace(self.y_scale[0], self.y_scale[-1], int(len(self.y_scale) * (1 / self.grid_factor)))
+        z_vals = self.z_clinical_max
+        X_plane, Y_plane = np.meshgrid(x_vals, y_vals, indexing='ij')
+
+        # Create the grid points for the y=0 plane
+        points_plane = np.vstack([X_plane.ravel(), Y_plane.ravel(), z_vals * np.ones_like(Y_plane.ravel())]).T
+
+        # Interpolate the data on the y=0 plane
+        D_plane = interpolator(points_plane).reshape(Y_plane.shape)
+        self.data_coronal = np.rot90(D_plane)
+        self.p3.addItem(pg.GridItem())
+        self.p3.getViewBox().invertY(True)
+        self.p3.getViewBox().setAspectLocked(lock=True, ratio=1)
+        self.p3.getAxis('bottom').setLabel('cm')
+
+        if plot_relative:
+            data = self.data_coronal / self.clinical_max * 100
+            levels = self.levels
+        else:
+            data = self.data_coronal
+            levels = self.levels * self.clinical_max / 100
+        self.img3.setImage(data)
+
+        # Colorbar
+        if self.colorbar_coronal:
+            self.colorbar_coronal.setParentItem(None)
+            self.colorbar_coronal = None
+
+        self.colorbar_coronal = pg.ColorBarItem(values=(data.min(), data.max()), colorMap='turbo')
+        self.colorbar_coronal.setImageItem(self.img3, insert_in=self.p3)
+
+        tr = QtGui.QTransform()  # prepare ImageItem transformation:
+        extent = self.extent_coronal
+        tr.translate(extent[0], extent[3])
+        tr.scale((extent[1] - extent[0]) / len(x_vals),
+                 (extent[3] - extent[2]) / len(y_vals))  # scale horizontal and vertical axes
+
+        for level in levels:
+            iso_curve = pg.IsocurveItem(level=level, pen='k')
+            iso_curve.setData(data)
+            self.p3.addItem(iso_curve)
+            iso_curve.setParentItem(self.img3)
+            # Find a position to place the text
+            pos = find_text_position(data, level)
+            if pos is not None:
+                text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
+                text.setPos(pos[0], pos[1])
+                self.p3.addItem(text)
+                text.setParentItem(self.img3)
+
+        self.img3.setTransform(tr)
+        self.p3.autoRange()
+
     def add_inclined_cylinder(self):
         # Define the cylinder parameters
         height = 5
@@ -447,10 +517,14 @@ class Window(QMainWindow, Ui_MainWindow):
                 file_in = os.path.join(tempdir, 'in.png')
                 exporter.export(file_in)
 
+                exporter = pg.exporters.ImageExporter(self.p3)
+                file_coronal = os.path.join(tempdir, 'coronal.png')
+                exporter.export(file_coronal)
+
                 file_3D = os.path.join(tempdir,'3D.png')
                 self.openGLWidget.grabFramebuffer().save(file_3D)
 
-                create_pdf(name[0], file_cross, file_in, file_3D, data_dict)
+                create_pdf(name[0], file_cross, file_in, file_coronal, file_3D, data_dict)
                 print('Report saved')
         else:
             print('Report cancelled')
@@ -487,7 +561,7 @@ class Window(QMainWindow, Ui_MainWindow):
             'Output': self.output_label.text(),
             'UM': self.UM_label.text(),
 
-            'Linac': conf.machine + '' + conf.serial_number,
+            'Linac': conf.machine + ' ' + conf.serial_number,
             'Pitch': self.PitchEdit.text(),
             'Roll': self.RollEdit.text(),
             'Vertical': self.VerticalEdit.text(),

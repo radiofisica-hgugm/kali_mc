@@ -44,7 +44,7 @@ def footer(canvas, doc):
     canvas.restoreState()
 
 
-def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
+def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     # Register Lucida Sans font
     pdfmetrics.registerFont(TTFont('LucidaSans', 'report/LSANS.ttf'))
 
@@ -252,7 +252,7 @@ def create_pdf(output_path, cross_img, in_img, tri_img, data_dict):
     elements.append(Spacer(1, 0.0 * cm))
 
     # Images
-    images = [cross_img, in_img, tri_img, in_img]
+    images = [cross_img, in_img, tri_img, coronal_img]
     desired_width = 8.5 * cm  # Desired width for image
 
     imgs = []

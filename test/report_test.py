@@ -40,4 +40,4 @@ def create_fake_data_dict():
 
 os.chdir('..')
 data_dict = create_fake_data_dict()
-create_pdf('test/report_test.pdf', 'test/cross.png', 'test/in.png','test/3D.png', data_dict)
+create_pdf('test/report_test.pdf', 'test/cross.png', 'test/in.png','test/coronal.png', 'test/3D.png', data_dict)

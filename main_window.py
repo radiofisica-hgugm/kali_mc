@@ -455,14 +455,39 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.graphWidget2)
 
+        self.horizontalLayout_7 = QHBoxLayout()
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.graphWidget3 = GraphicsLayoutWidget(self.centralwidget)
         self.graphWidget3.setObjectName(u"graphWidget3")
 
-        self.verticalLayout_3.addWidget(self.graphWidget3)
+        self.horizontalLayout_7.addWidget(self.graphWidget3)
+
+        self.formLayout = QFormLayout()
+        self.formLayout.setObjectName(u"formLayout")
+        self.label_13 = QLabel(self.centralwidget)
+        self.label_13.setObjectName(u"label_13")
+        font8 = QFont()
+        font8.setFamily(u"Lucida Sans")
+        self.label_13.setFont(font8)
+
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_13)
+
+        self.label_zmax = QLabel(self.centralwidget)
+        self.label_zmax.setObjectName(u"label_zmax")
+
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.label_zmax)
+
+
+        self.horizontalLayout_7.addLayout(self.formLayout)
+
+        self.horizontalLayout_7.setStretch(0, 5)
+        self.horizontalLayout_7.setStretch(1, 1)
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_7)
 
         self.verticalLayout_3.setStretch(0, 3)
         self.verticalLayout_3.setStretch(1, 3)
-        self.verticalLayout_3.setStretch(2, 3)
+        self.verticalLayout_3.setStretch(2, 4)
 
         self.horizontalLayout.addLayout(self.verticalLayout_3)
 
@@ -476,10 +501,10 @@ class Ui_MainWindow(object):
 
         self.groupBox_6 = QGroupBox(self.centralwidget)
         self.groupBox_6.setObjectName(u"groupBox_6")
-        font8 = QFont()
-        font8.setFamily(u"Lucida Sans")
-        font8.setPointSize(13)
-        self.groupBox_6.setFont(font8)
+        font9 = QFont()
+        font9.setFamily(u"Lucida Sans")
+        font9.setPointSize(13)
+        self.groupBox_6.setFont(font9)
         self.groupBox_6.setAutoFillBackground(False)
         self.verticalLayoutWidget_4 = QWidget(self.groupBox_6)
         self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
@@ -493,88 +518,88 @@ class Ui_MainWindow(object):
         self.formLayout_9.setObjectName(u"formLayout_9")
         self.label_18 = QLabel(self.verticalLayoutWidget_4)
         self.label_18.setObjectName(u"label_18")
-        font9 = QFont()
-        font9.setFamily(u"Lucida Sans")
-        font9.setPointSize(10)
-        self.label_18.setFont(font9)
+        font10 = QFont()
+        font10.setFamily(u"Lucida Sans")
+        font10.setPointSize(10)
+        self.label_18.setFont(font10)
 
         self.formLayout_9.setWidget(0, QFormLayout.LabelRole, self.label_18)
 
         self.NameEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.NameEdit.setObjectName(u"NameEdit")
-        self.NameEdit.setFont(font9)
+        self.NameEdit.setFont(font10)
 
         self.formLayout_9.setWidget(0, QFormLayout.FieldRole, self.NameEdit)
 
         self.label_20 = QLabel(self.verticalLayoutWidget_4)
         self.label_20.setObjectName(u"label_20")
-        self.label_20.setFont(font9)
+        self.label_20.setFont(font10)
 
         self.formLayout_9.setWidget(2, QFormLayout.LabelRole, self.label_20)
 
         self.IDEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.IDEdit.setObjectName(u"IDEdit")
-        self.IDEdit.setFont(font9)
+        self.IDEdit.setFont(font10)
 
         self.formLayout_9.setWidget(2, QFormLayout.FieldRole, self.IDEdit)
 
         self.label_21 = QLabel(self.verticalLayoutWidget_4)
         self.label_21.setObjectName(u"label_21")
-        self.label_21.setFont(font9)
+        self.label_21.setFont(font10)
 
         self.formLayout_9.setWidget(3, QFormLayout.LabelRole, self.label_21)
 
         self.SiteEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.SiteEdit.setObjectName(u"SiteEdit")
-        self.SiteEdit.setFont(font9)
+        self.SiteEdit.setFont(font10)
 
         self.formLayout_9.setWidget(3, QFormLayout.FieldRole, self.SiteEdit)
 
         self.label_22 = QLabel(self.verticalLayoutWidget_4)
         self.label_22.setObjectName(u"label_22")
-        self.label_22.setFont(font9)
+        self.label_22.setFont(font10)
 
         self.formLayout_9.setWidget(4, QFormLayout.LabelRole, self.label_22)
 
         self.PhysicistEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.PhysicistEdit.setObjectName(u"PhysicistEdit")
-        self.PhysicistEdit.setFont(font9)
+        self.PhysicistEdit.setFont(font10)
 
         self.formLayout_9.setWidget(4, QFormLayout.FieldRole, self.PhysicistEdit)
 
         self.label_23 = QLabel(self.verticalLayoutWidget_4)
         self.label_23.setObjectName(u"label_23")
-        self.label_23.setFont(font9)
+        self.label_23.setFont(font10)
 
         self.formLayout_9.setWidget(5, QFormLayout.LabelRole, self.label_23)
 
         self.OncologistEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.OncologistEdit.setObjectName(u"OncologistEdit")
-        self.OncologistEdit.setFont(font9)
+        self.OncologistEdit.setFont(font10)
 
         self.formLayout_9.setWidget(5, QFormLayout.FieldRole, self.OncologistEdit)
 
         self.label_24 = QLabel(self.verticalLayoutWidget_4)
         self.label_24.setObjectName(u"label_24")
-        self.label_24.setFont(font9)
+        self.label_24.setFont(font10)
 
         self.formLayout_9.setWidget(6, QFormLayout.LabelRole, self.label_24)
 
         self.TechnologistEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.TechnologistEdit.setObjectName(u"TechnologistEdit")
-        self.TechnologistEdit.setFont(font9)
+        self.TechnologistEdit.setFont(font10)
 
         self.formLayout_9.setWidget(6, QFormLayout.FieldRole, self.TechnologistEdit)
 
         self.label_31 = QLabel(self.verticalLayoutWidget_4)
         self.label_31.setObjectName(u"label_31")
-        self.label_31.setFont(font9)
+        self.label_31.setFont(font10)
 
         self.formLayout_9.setWidget(1, QFormLayout.LabelRole, self.label_31)
 
         self.SurnameEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.SurnameEdit.setObjectName(u"SurnameEdit")
-        self.SurnameEdit.setFont(font9)
+        self.SurnameEdit.setFont(font10)
 
         self.formLayout_9.setWidget(1, QFormLayout.FieldRole, self.SurnameEdit)
 
@@ -592,37 +617,37 @@ class Ui_MainWindow(object):
         self.formLayout_10.setObjectName(u"formLayout_10")
         self.label_27 = QLabel(self.verticalLayoutWidget_4)
         self.label_27.setObjectName(u"label_27")
-        self.label_27.setFont(font9)
+        self.label_27.setFont(font10)
 
         self.formLayout_10.setWidget(0, QFormLayout.LabelRole, self.label_27)
 
         self.PitchEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.PitchEdit.setObjectName(u"PitchEdit")
-        self.PitchEdit.setFont(font9)
+        self.PitchEdit.setFont(font10)
 
         self.formLayout_10.setWidget(0, QFormLayout.FieldRole, self.PitchEdit)
 
         self.label_28 = QLabel(self.verticalLayoutWidget_4)
         self.label_28.setObjectName(u"label_28")
-        self.label_28.setFont(font9)
+        self.label_28.setFont(font10)
 
         self.formLayout_10.setWidget(1, QFormLayout.LabelRole, self.label_28)
 
         self.RollEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.RollEdit.setObjectName(u"RollEdit")
-        self.RollEdit.setFont(font9)
+        self.RollEdit.setFont(font10)
 
         self.formLayout_10.setWidget(1, QFormLayout.FieldRole, self.RollEdit)
 
         self.label_29 = QLabel(self.verticalLayoutWidget_4)
         self.label_29.setObjectName(u"label_29")
-        self.label_29.setFont(font9)
+        self.label_29.setFont(font10)
 
         self.formLayout_10.setWidget(2, QFormLayout.LabelRole, self.label_29)
 
         self.VerticalEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.VerticalEdit.setObjectName(u"VerticalEdit")
-        self.VerticalEdit.setFont(font9)
+        self.VerticalEdit.setFont(font10)
 
         self.formLayout_10.setWidget(2, QFormLayout.FieldRole, self.VerticalEdit)
 
@@ -636,13 +661,13 @@ class Ui_MainWindow(object):
 
         self.label_25 = QLabel(self.verticalLayoutWidget_4)
         self.label_25.setObjectName(u"label_25")
-        self.label_25.setFont(font9)
+        self.label_25.setFont(font10)
 
         self.formLayout_10.setWidget(4, QFormLayout.LabelRole, self.label_25)
 
         self.IORTnumberEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.IORTnumberEdit.setObjectName(u"IORTnumberEdit")
-        self.IORTnumberEdit.setFont(font9)
+        self.IORTnumberEdit.setFont(font10)
 
         self.formLayout_10.setWidget(4, QFormLayout.FieldRole, self.IORTnumberEdit)
 
@@ -670,7 +695,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.CommentsEdit = QPlainTextEdit(self.verticalLayoutWidget_4)
         self.CommentsEdit.setObjectName(u"CommentsEdit")
-        self.CommentsEdit.setFont(font9)
+        self.CommentsEdit.setFont(font10)
 
         self.horizontalLayout_4.addWidget(self.CommentsEdit)
 
@@ -814,6 +839,8 @@ class Ui_MainWindow(object):
         self.label_linac_dose.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">0</span></p></body></html>", None))
         self.label_linac_energy.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">0 MeV</span></p></body></html>", None))
         self.label_linac_applicator.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Appl</span></p></body></html>", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindow", u"zmax (cm):", None))
+        self.label_zmax.setText("")
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Datos Administrativos", None))
         self.label_18.setText(QCoreApplication.translate("MainWindow", u"Nombre:", None))
         self.label_20.setText(QCoreApplication.translate("MainWindow", u"N\u00ba de Historia:", None))
