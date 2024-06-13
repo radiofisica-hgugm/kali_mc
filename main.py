@@ -370,7 +370,7 @@ class Window(QMainWindow, Ui_MainWindow):
         D_plane = interpolator(points_plane).reshape(Y_plane.shape)
         self.data_coronal = np.rot90(D_plane)
         self.p3.addItem(pg.GridItem())
-        self.p3.getViewBox().invertY(True)
+        # self.p3.getViewBox().invertY(True)
         self.p3.getViewBox().setAspectLocked(lock=True, ratio=1)
         self.p3.getAxis('bottom').setLabel('cm')
 
@@ -392,7 +392,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
         extent = self.extent_coronal
-        tr.translate(extent[0], extent[3])
+        tr.translate(extent[0], extent[2])
         tr.scale((extent[1] - extent[0]) / len(x_vals),
                  (extent[3] - extent[2]) / len(y_vals))  # scale horizontal and vertical axes
 

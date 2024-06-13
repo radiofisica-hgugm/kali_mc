@@ -1,3 +1,4 @@
+altgraph==0.17.4
 chardet==5.2.0
 numpy==1.26.4
 pillow==10.3.0
@@ -5,4 +6,5 @@ PyOpenGL==3.1.7
 pyqtgraph==0.13.7
 PySide2==5.15.2.1
 reportlab==4.2.0
+scipy==1.13.1
 shiboken2==5.15.2.1
