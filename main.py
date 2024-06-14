@@ -59,6 +59,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.Zbin = 0
         self.levels = np.array([10, 30, 50, 70, 80, 90, 100, 110])
         self.grid_factor = 0.5  # Finer grid
+        self.dose_max = 0
+        self.dose_min = 0
 
         # Callbacks:
         self.combo_applicator.activated.connect(self.refresh)
@@ -188,6 +190,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.extent_in = [-d_y / 2 + y_start, y_end + d_y / 2, z_start - d_z / 2, z_end + d_z / 2]
         self.extent_coronal = [-d_x / 2 + x_start, x_end + d_x / 2, -d_y / 2 + y_start, y_end + d_y / 2]
         self.extent3D = [x_start, x_end, y_start, y_end, z_start, z_end]
+        self.dose_max = np.max(D)
+        self.dose_min = np.min(D)
 
         # Create the interpolator
         interpolator = RegularGridInterpolator((self.x_scale, self.y_scale, self.z_scale), D)
@@ -201,7 +205,7 @@ class Window(QMainWindow, Ui_MainWindow):
         depth_dose = interpolator(points)
         self.clinical_max = np.max(depth_dose)
         self.z_clinical_max = z_vals[np.argmax(depth_dose)]
-        self.label_zmax.setText(f"{self.z_clinical_max:.2f}")
+        self.label_zmax.setText(f"{-self.z_clinical_max:.2f}")
 
         # plot cross plane
         self.plot_crossplane(interpolator)
@@ -257,8 +261,10 @@ class Window(QMainWindow, Ui_MainWindow):
         if plot_relative:
             data = data / self.clinical_max * 100
             levels = self.levels
+            color_limits = (self.dose_min / self.clinical_max * 100, self.dose_max / self.clinical_max * 100)
         else:
             levels = self.levels * self.clinical_max / 100
+            color_limits = (self.dose_min, self.dose_max)
         self.img1.setImage(data)
 
         # Colorbar
@@ -266,7 +272,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.colorbar_cross.setParentItem(None)
             self.colorbar_cross = None
 
-        self.colorbar_cross = pg.ColorBarItem(values=(data.min(), data.max()), colorMap='turbo')
+        self.colorbar_cross = pg.ColorBarItem(values=color_limits, colorMap='turbo')
         self.colorbar_cross.setImageItem(self.img1, insert_in=self.p1)
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
@@ -317,9 +323,11 @@ class Window(QMainWindow, Ui_MainWindow):
         if plot_relative:
             data = self.data_in / self.clinical_max * 100
             levels = self.levels
+            color_limits = (self.dose_min / self.clinical_max * 100, self.dose_max / self.clinical_max * 100)
         else:
             data = self.data_in
             levels = self.levels * self.clinical_max / 100
+            color_limits = (self.dose_min, self.dose_max)
         self.img2.setImage(data)
 
         # Colorbar
@@ -327,7 +335,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.colorbar_in.setParentItem(None)
             self.colorbar_in = None
 
-        self.colorbar_in = pg.ColorBarItem(values=(data.min(), data.max()), colorMap='turbo')
+        self.colorbar_in = pg.ColorBarItem(values=color_limits, colorMap='turbo')
         self.colorbar_in.setImageItem(self.img2, insert_in=self.p2)
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
@@ -379,9 +387,11 @@ class Window(QMainWindow, Ui_MainWindow):
         if plot_relative:
             data = self.data_coronal / self.clinical_max * 100
             levels = self.levels
+            color_limits = (self.dose_min / self.clinical_max * 100, self.dose_max / self.clinical_max * 100)
         else:
             data = self.data_coronal
             levels = self.levels * self.clinical_max / 100
+            color_limits = (self.dose_min, self.dose_max)
         self.img3.setImage(data)
 
         # Colorbar
@@ -389,7 +399,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.colorbar_coronal.setParentItem(None)
             self.colorbar_coronal = None
 
-        self.colorbar_coronal = pg.ColorBarItem(values=(data.min(), data.max()), colorMap='turbo')
+        self.colorbar_coronal = pg.ColorBarItem(values=color_limits, colorMap='turbo')
         self.colorbar_coronal.setImageItem(self.img3, insert_in=self.p3)
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:

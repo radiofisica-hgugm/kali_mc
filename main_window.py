@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1489, 847)
+        MainWindow.resize(1456, 886)
         icon = QIcon()
         icon.addFile(u":/icons/res/science-atom-icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -190,74 +190,79 @@ class Ui_MainWindow(object):
         self.groupBox_3 = QGroupBox(self.centralwidget)
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.groupBox_3.setFont(font3)
-        self.formLayoutWidget_3 = QWidget(self.groupBox_3)
-        self.formLayoutWidget_3.setObjectName(u"formLayoutWidget_3")
-        self.formLayoutWidget_3.setGeometry(QRect(19, 29, 201, 136))
-        self.formLayout_6 = QFormLayout(self.formLayoutWidget_3)
-        self.formLayout_6.setObjectName(u"formLayout_6")
-        self.formLayout_6.setHorizontalSpacing(16)
-        self.formLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.radio2 = QRadioButton(self.formLayoutWidget_3)
-        self.radio2.setObjectName(u"radio2")
+        self.gridLayoutWidget = QWidget(self.groupBox_3)
+        self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
+        self.gridLayoutWidget.setGeometry(QRect(10, 20, 231, 150))
+        self.gridLayout = QGridLayout(self.gridLayoutWidget)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.label_10MeV = QLabel(self.gridLayoutWidget)
+        self.label_10MeV.setObjectName(u"label_10MeV")
         font4 = QFont()
         font4.setFamily(u"Lucida Sans")
         font4.setPointSize(11)
-        self.radio2.setFont(font4)
+        self.label_10MeV.setFont(font4)
+        self.label_10MeV.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_6.setWidget(2, QFormLayout.LabelRole, self.radio2)
+        self.gridLayout.addWidget(self.label_10MeV, 3, 1, 1, 1)
 
-        self.label_8MeV = QLabel(self.formLayoutWidget_3)
-        self.label_8MeV.setObjectName(u"label_8MeV")
-        self.label_8MeV.setFont(font4)
-        self.label_8MeV.setAlignment(Qt.AlignCenter)
+        self.radio3 = QRadioButton(self.gridLayoutWidget)
+        self.radio3.setObjectName(u"radio3")
+        self.radio3.setFont(font4)
 
-        self.formLayout_6.setWidget(2, QFormLayout.FieldRole, self.label_8MeV)
+        self.gridLayout.addWidget(self.radio3, 3, 0, 1, 1)
 
-        self.label_6MeV = QLabel(self.formLayoutWidget_3)
+        self.label_6MeV = QLabel(self.gridLayoutWidget)
         self.label_6MeV.setObjectName(u"label_6MeV")
         self.label_6MeV.setFont(font4)
         self.label_6MeV.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_6.setWidget(1, QFormLayout.FieldRole, self.label_6MeV)
+        self.gridLayout.addWidget(self.label_6MeV, 1, 1, 1, 1)
 
-        self.radio1 = QRadioButton(self.formLayoutWidget_3)
-        self.radio1.setObjectName(u"radio1")
-        self.radio1.setFont(font4)
-
-        self.formLayout_6.setWidget(1, QFormLayout.LabelRole, self.radio1)
-
-        self.radio3 = QRadioButton(self.formLayoutWidget_3)
-        self.radio3.setObjectName(u"radio3")
-        self.radio3.setFont(font4)
-
-        self.formLayout_6.setWidget(3, QFormLayout.LabelRole, self.radio3)
-
-        self.radio4 = QRadioButton(self.formLayoutWidget_3)
+        self.radio4 = QRadioButton(self.gridLayoutWidget)
         self.radio4.setObjectName(u"radio4")
         self.radio4.setFont(font4)
 
-        self.formLayout_6.setWidget(4, QFormLayout.LabelRole, self.radio4)
+        self.gridLayout.addWidget(self.radio4, 4, 0, 1, 1)
 
-        self.label_10MeV = QLabel(self.formLayoutWidget_3)
-        self.label_10MeV.setObjectName(u"label_10MeV")
-        self.label_10MeV.setFont(font4)
-        self.label_10MeV.setAlignment(Qt.AlignCenter)
-
-        self.formLayout_6.setWidget(3, QFormLayout.FieldRole, self.label_10MeV)
-
-        self.label_12MeV = QLabel(self.formLayoutWidget_3)
+        self.label_12MeV = QLabel(self.gridLayoutWidget)
         self.label_12MeV.setObjectName(u"label_12MeV")
         self.label_12MeV.setFont(font4)
         self.label_12MeV.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_6.setWidget(4, QFormLayout.FieldRole, self.label_12MeV)
+        self.gridLayout.addWidget(self.label_12MeV, 4, 1, 1, 1)
 
-        self.label_10 = QLabel(self.formLayoutWidget_3)
-        self.label_10.setObjectName(u"label_10")
+        self.radio1 = QRadioButton(self.gridLayoutWidget)
+        self.radio1.setObjectName(u"radio1")
+        self.radio1.setFont(font4)
 
-        self.formLayout_6.setWidget(0, QFormLayout.LabelRole, self.label_10)
+        self.gridLayout.addWidget(self.radio1, 1, 0, 1, 1)
 
-        self.label_11 = QLabel(self.formLayoutWidget_3)
+        self.label_8MeV = QLabel(self.gridLayoutWidget)
+        self.label_8MeV.setObjectName(u"label_8MeV")
+        self.label_8MeV.setFont(font4)
+        self.label_8MeV.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.label_8MeV, 2, 1, 1, 1)
+
+        self.radio2 = QRadioButton(self.gridLayoutWidget)
+        self.radio2.setObjectName(u"radio2")
+        self.radio2.setFont(font4)
+
+        self.gridLayout.addWidget(self.radio2, 2, 0, 1, 1)
+
+        self.label_33 = QLabel(self.gridLayoutWidget)
+        self.label_33.setObjectName(u"label_33")
+        self.label_33.setEnabled(True)
+        sizePolicy.setHeightForWidth(self.label_33.sizePolicy().hasHeightForWidth())
+        self.label_33.setSizePolicy(sizePolicy)
+        self.label_33.setMaximumSize(QSize(16, 16))
+        self.label_33.setPixmap(QPixmap(u":/icons/res/red-alert-icon.png"))
+        self.label_33.setScaledContents(True)
+
+        self.gridLayout.addWidget(self.label_33, 2, 2, 1, 1)
+
+        self.label_11 = QLabel(self.gridLayoutWidget)
         self.label_11.setObjectName(u"label_11")
         font5 = QFont()
         font5.setFamily(u"Lucida Sans")
@@ -267,8 +272,12 @@ class Ui_MainWindow(object):
         self.label_11.setFont(font5)
         self.label_11.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_6.setWidget(0, QFormLayout.FieldRole, self.label_11)
+        self.gridLayout.addWidget(self.label_11, 0, 1, 1, 1)
 
+        self.gridLayout.setColumnStretch(0, 2)
+        self.gridLayout.setColumnMinimumWidth(0, 2)
+        self.gridLayout.setColumnMinimumWidth(1, 1)
+        self.gridLayout.setColumnMinimumWidth(2, 1)
 
         self.verticalLayout.addWidget(self.groupBox_3)
 
@@ -474,8 +483,33 @@ class Ui_MainWindow(object):
 
         self.label_zmax = QLabel(self.centralwidget)
         self.label_zmax.setObjectName(u"label_zmax")
+        self.label_zmax.setFont(font8)
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.label_zmax)
+
+        self.label_34 = QLabel(self.centralwidget)
+        self.label_34.setObjectName(u"label_34")
+        self.label_34.setFont(font8)
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_34)
+
+        self.label_R90X = QLabel(self.centralwidget)
+        self.label_R90X.setObjectName(u"label_R90X")
+        self.label_R90X.setFont(font8)
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.label_R90X)
+
+        self.label_32 = QLabel(self.centralwidget)
+        self.label_32.setObjectName(u"label_32")
+        self.label_32.setFont(font8)
+
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_32)
+
+        self.label_R90Y = QLabel(self.centralwidget)
+        self.label_R90Y.setObjectName(u"label_R90Y")
+        self.label_R90Y.setFont(font8)
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.label_R90Y)
 
 
         self.horizontalLayout_7.addLayout(self.formLayout)
@@ -508,7 +542,7 @@ class Ui_MainWindow(object):
         self.groupBox_6.setAutoFillBackground(False)
         self.verticalLayoutWidget_4 = QWidget(self.groupBox_6)
         self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
-        self.verticalLayoutWidget_4.setGeometry(QRect(10, 20, 481, 361))
+        self.verticalLayoutWidget_4.setGeometry(QRect(10, 20, 481, 381))
         self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_4)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 6, 0, 0)
@@ -746,7 +780,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1489, 21))
+        self.menubar.setGeometry(QRect(0, 0, 1456, 21))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -754,11 +788,7 @@ class Ui_MainWindow(object):
         QWidget.setTabOrder(self.combo_applicator, self.combo_bevel)
         QWidget.setTabOrder(self.combo_bevel, self.DoseEdit)
         QWidget.setTabOrder(self.DoseEdit, self.lineEdit_2)
-        QWidget.setTabOrder(self.lineEdit_2, self.radio1)
-        QWidget.setTabOrder(self.radio1, self.radio2)
-        QWidget.setTabOrder(self.radio2, self.radio3)
-        QWidget.setTabOrder(self.radio3, self.radio4)
-        QWidget.setTabOrder(self.radio4, self.phoy_edit)
+        QWidget.setTabOrder(self.lineEdit_2, self.phoy_edit)
         QWidget.setTabOrder(self.phoy_edit, self.calcular)
         QWidget.setTabOrder(self.calcular, self.lineEdit_4)
         QWidget.setTabOrder(self.lineEdit_4, self.NameEdit)
@@ -810,15 +840,21 @@ class Ui_MainWindow(object):
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Dosis (cGy)", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Profundidad (cm)", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Energ\u00edas", None))
-        self.radio2.setText(QCoreApplication.translate("MainWindow", u"8 MeV", None))
-        self.label_8MeV.setText("")
-        self.label_6MeV.setText("")
-        self.radio1.setText(QCoreApplication.translate("MainWindow", u"6 MeV", None))
-        self.radio3.setText(QCoreApplication.translate("MainWindow", u"10 MeV", None))
-        self.radio4.setText(QCoreApplication.translate("MainWindow", u"12 MeV", None))
         self.label_10MeV.setText("")
+        self.radio3.setText(QCoreApplication.translate("MainWindow", u"10 MeV", None))
+        self.label_6MeV.setText("")
+        self.radio4.setText(QCoreApplication.translate("MainWindow", u"12 MeV", None))
         self.label_12MeV.setText("")
-        self.label_10.setText("")
+        self.radio1.setText(QCoreApplication.translate("MainWindow", u"6 MeV", None))
+        self.label_8MeV.setText("")
+        self.radio2.setText(QCoreApplication.translate("MainWindow", u"8 MeV", None))
+#if QT_CONFIG(tooltip)
+        self.label_33.setToolTip(QCoreApplication.translate("MainWindow", u"CUIDADO! No se recomienda usar esta combinaci\u00f3n de cono/bisel y energ\u00eda", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(whatsthis)
+        self.label_33.setWhatsThis("")
+#endif // QT_CONFIG(whatsthis)
+        self.label_33.setText("")
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"R90 (cm)", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"C\u00e1lculo de UM", None))
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"Pref (hPa):", None))
@@ -841,6 +877,10 @@ class Ui_MainWindow(object):
         self.label_linac_applicator.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Appl</span></p></body></html>", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"zmax (cm):", None))
         self.label_zmax.setText("")
+        self.label_34.setText(QCoreApplication.translate("MainWindow", u"X R90 (cm):", None))
+        self.label_R90X.setText("")
+        self.label_32.setText(QCoreApplication.translate("MainWindow", u"Y R90 (cm):", None))
+        self.label_R90Y.setText("")
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Datos Administrativos", None))
         self.label_18.setText(QCoreApplication.translate("MainWindow", u"Nombre:", None))
         self.label_20.setText(QCoreApplication.translate("MainWindow", u"N\u00ba de Historia:", None))
