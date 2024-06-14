@@ -9,7 +9,8 @@ import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 import pyqtgraph.exporters
 import datetime
-import tempfile, os
+import tempfile
+import os
 
 try:
     import pyi_splash
@@ -18,6 +19,7 @@ except ModuleNotFoundError:
 from main_window import Ui_MainWindow, QMainWindow
 import conf
 from report_utils import create_pdf
+from dicom_utils import send_rtplan
 
 
 def find_text_position(data, level):
@@ -69,6 +71,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.phoy_edit.textChanged.connect(self.refresh)
         self.calcular.clicked.connect(self.calculate_UM)
         self.pushreport.clicked.connect(self.generate_report)
+        self.pushsend.clicked.connect(self.send_dicom)
 
         self.calcular.setEnabled(False)
         self.img1 = pg.ImageItem()
@@ -185,7 +188,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.extent_in = [-d_y / 2 + y_start, y_end + d_y / 2, z_start - d_z / 2, z_end + d_z / 2]
         self.extent_coronal = [-d_x / 2 + x_start, x_end + d_x / 2, -d_y / 2 + y_start, y_end + d_y / 2]
         self.extent3D = [x_start, x_end, y_start, y_end, z_start, z_end]
-        # print(f'3D extent: {self.extent3D}')
 
         # Create the interpolator
         interpolator = RegularGridInterpolator((self.x_scale, self.y_scale, self.z_scale), D)
@@ -540,7 +542,6 @@ class Window(QMainWindow, Ui_MainWindow):
         elif energy_idx == 3:
             R90 = self.label_12MeV.text()
 
-
         data_dict = {
             'Name': self.NameEdit.text(),
             'Surname': self.SurnameEdit.text(),
@@ -572,6 +573,10 @@ class Window(QMainWindow, Ui_MainWindow):
             'Comments': self.CommentsEdit.toPlainText()
         }
         return data_dict
+
+    def send_dicom(self):
+        data_dict = self.create_data_dict()
+        send_rtplan(data_dict)
 
 
 if __name__ == "__main__":

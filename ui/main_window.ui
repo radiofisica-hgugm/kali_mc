@@ -1286,7 +1286,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushreport_2">
+                 <widget class="QPushButton" name="pushsend">
                   <property name="font">
                    <font>
                     <family>Lucida Sans</family>
@@ -1366,7 +1366,7 @@
   <tabstop>IORTnumberEdit</tabstop>
   <tabstop>CommentsEdit</tabstop>
   <tabstop>pushreport</tabstop>
-  <tabstop>pushreport_2</tabstop>
+  <tabstop>pushsend</tabstop>
  </tabstops>
  <resources>
   <include location="main.qrc"/>
