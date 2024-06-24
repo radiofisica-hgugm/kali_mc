@@ -133,30 +133,28 @@ class Window(QMainWindow, Ui_MainWindow):
         bevel = self.combo_bevel.currentText()
         pressure = self.phoy_edit.text()
 
-        # print(self.npzfile)
-        if (
-                (a_idx >= 0) and
-                (b_idx >= 0) and
-                (self.DoseEdit.text() != '') and
-                (self.radio1.isChecked() or
-                 self.radio2.isChecked() or
-                 self.radio3.isChecked() or
-                 self.radio4.isChecked()
-                )
-        ):
-            energy_idx = self.find_checked_radiobutton()
-            self.npzfile = rf'data\sim\C{applicator}\B{bevel}\C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz'
-            results = np.load(self.npzfile, allow_pickle=True)
-            self.dose_distrib = results['SpatialDoseDistrib'][()]
+        if (a_idx >= 0) and (b_idx >= 0):
+
             R90_array = np.load(rf'data/R90_C{applicator}.npz')['R90'][:, b_idx]  # load R90 data
             self.label_6MeV.setText(f'{R90_array[0]:.1f}')
             self.label_8MeV.setText(f'{R90_array[1]:.1f}')
             self.label_10MeV.setText(f'{R90_array[2]:.1f}')
             self.label_12MeV.setText(f'{R90_array[3]:.1f}')
 
-            if pressure != '':
-                self.calcular.setEnabled(True)
-            self.plot_distribs()
+            if (
+                (self.radio1.isChecked() or
+                 self.radio2.isChecked() or
+                 self.radio3.isChecked() or
+                 self.radio4.isChecked()
+                 )
+            ):
+                energy_idx = self.find_checked_radiobutton()
+                self.npzfile = rf'data\sim\C{applicator}\B{bevel}\C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz'
+                results = np.load(self.npzfile, allow_pickle=True)
+                self.dose_distrib = results['SpatialDoseDistrib'][()]
+                self.plot_distribs()
+                if self.DoseEdit.text() != '' and pressure != '':
+                    self.calcular.setEnabled(True)
         else:
             self.npzfile = ''
             self.dose_distrib = None
