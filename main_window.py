@@ -257,7 +257,6 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label_33.sizePolicy().hasHeightForWidth())
         self.label_33.setSizePolicy(sizePolicy)
         self.label_33.setMaximumSize(QSize(16, 16))
-        self.label_33.setPixmap(QPixmap(u":/icons/res/red-alert-icon.png"))
         self.label_33.setScaledContents(True)
 
         self.gridLayout.addWidget(self.label_33, 2, 2, 1, 1)
@@ -356,12 +355,12 @@ class Ui_MainWindow(object):
 
         self.formLayout_8.setWidget(1, QFormLayout.FieldRole, self.phoy_edit)
 
-        self.lineEdit_4 = QLineEdit(self.formLayoutWidget_5)
-        self.lineEdit_4.setObjectName(u"lineEdit_4")
-        self.lineEdit_4.setFont(font7)
-        self.lineEdit_4.setAlignment(Qt.AlignCenter)
+        self.SecondEdit = QLineEdit(self.formLayoutWidget_5)
+        self.SecondEdit.setObjectName(u"SecondEdit")
+        self.SecondEdit.setFont(font7)
+        self.SecondEdit.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_8.setWidget(5, QFormLayout.FieldRole, self.lineEdit_4)
+        self.formLayout_8.setWidget(5, QFormLayout.FieldRole, self.SecondEdit)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -788,10 +787,14 @@ class Ui_MainWindow(object):
         QWidget.setTabOrder(self.combo_applicator, self.combo_bevel)
         QWidget.setTabOrder(self.combo_bevel, self.DoseEdit)
         QWidget.setTabOrder(self.DoseEdit, self.lineEdit_2)
-        QWidget.setTabOrder(self.lineEdit_2, self.phoy_edit)
+        QWidget.setTabOrder(self.lineEdit_2, self.radio1)
+        QWidget.setTabOrder(self.radio1, self.radio2)
+        QWidget.setTabOrder(self.radio2, self.radio3)
+        QWidget.setTabOrder(self.radio3, self.radio4)
+        QWidget.setTabOrder(self.radio4, self.phoy_edit)
         QWidget.setTabOrder(self.phoy_edit, self.calcular)
-        QWidget.setTabOrder(self.calcular, self.lineEdit_4)
-        QWidget.setTabOrder(self.lineEdit_4, self.NameEdit)
+        QWidget.setTabOrder(self.calcular, self.SecondEdit)
+        QWidget.setTabOrder(self.SecondEdit, self.NameEdit)
         QWidget.setTabOrder(self.NameEdit, self.SurnameEdit)
         QWidget.setTabOrder(self.SurnameEdit, self.IDEdit)
         QWidget.setTabOrder(self.IDEdit, self.SiteEdit)

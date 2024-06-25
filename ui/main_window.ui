@@ -496,9 +496,6 @@
               <property name="text">
                <string/>
               </property>
-              <property name="pixmap">
-               <pixmap resource="main.qrc">:/icons/res/red-alert-icon.png</pixmap>
-              </property>
               <property name="scaledContents">
                <bool>true</bool>
               </property>
@@ -681,7 +678,7 @@
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QLineEdit" name="lineEdit_4">
+             <widget class="QLineEdit" name="SecondEdit">
               <property name="font">
                <font>
                 <family>Lucida Sans</family>
@@ -1423,9 +1420,13 @@
   <tabstop>combo_bevel</tabstop>
   <tabstop>DoseEdit</tabstop>
   <tabstop>lineEdit_2</tabstop>
+  <tabstop>radio1</tabstop>
+  <tabstop>radio2</tabstop>
+  <tabstop>radio3</tabstop>
+  <tabstop>radio4</tabstop>
   <tabstop>phoy_edit</tabstop>
   <tabstop>calcular</tabstop>
-  <tabstop>lineEdit_4</tabstop>
+  <tabstop>SecondEdit</tabstop>
   <tabstop>NameEdit</tabstop>
   <tabstop>SurnameEdit</tabstop>
   <tabstop>IDEdit</tabstop>

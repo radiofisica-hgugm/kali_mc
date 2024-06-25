@@ -65,15 +65,16 @@ class Window(QMainWindow, Ui_MainWindow):
         # Callbacks:
         self.combo_applicator.activated.connect(self.refresh)
         self.combo_bevel.activated.connect(self.refresh)
-        self.DoseEdit.textChanged.connect(self.refresh)
+        self.DoseEdit.editingFinished.connect(self.refresh)
         self.radio1.toggled.connect(self.refresh)
         self.radio2.toggled.connect(self.refresh)
         self.radio3.toggled.connect(self.refresh)
         self.radio4.toggled.connect(self.refresh)
-        self.phoy_edit.textChanged.connect(self.refresh)
+        self.phoy_edit.editingFinished.connect(self.refresh)
         self.calcular.clicked.connect(self.calculate_UM)
         self.pushreport.clicked.connect(self.generate_report)
         self.pushsend.clicked.connect(self.send_dicom)
+        self.SecondEdit.editingFinished.connect(self.calc_UM_diff)
 
         self.calcular.setEnabled(False)
         self.img1 = pg.ImageItem()
@@ -585,6 +586,11 @@ class Window(QMainWindow, Ui_MainWindow):
     def send_dicom(self):
         data_dict = self.create_data_dict()
         send_rtplan(data_dict)
+
+    def calc_UM_diff(self):
+        if self.UM_label.text() !='' and self.SecondEdit.text() != '':
+            desv = (float(self.SecondEdit.text()) - float(self.UM_label.text())) / float(self.UM_label.text()) * 100
+            self.desv_label.setText(f'{desv:.1f}')
 
 
 if __name__ == "__main__":
