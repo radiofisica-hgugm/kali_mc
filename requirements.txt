@@ -9,5 +9,5 @@ reportlab==4.2.0
 scipy==1.13.1
 shiboken2==5.15.2.1
 pydicom==2.4.4
-pynetdicom==2.1.0
+pynetdicom>=2.0.2
 
