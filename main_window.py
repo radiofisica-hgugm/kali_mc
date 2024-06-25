@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1456, 886)
+        MainWindow.resize(1468, 886)
         icon = QIcon()
         icon.addFile(u":/icons/res/science-atom-icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(11, -1, -1, -1)
+        self.verticalLayout.setContentsMargins(11, -1, -1, 5)
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
         font = QFont()
@@ -290,9 +290,10 @@ class Ui_MainWindow(object):
         self.groupBox_4.setFont(font6)
         self.formLayoutWidget_5 = QWidget(self.groupBox_4)
         self.formLayoutWidget_5.setObjectName(u"formLayoutWidget_5")
-        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 246, 181))
+        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 231, 191))
         self.formLayout_8 = QFormLayout(self.formLayoutWidget_5)
         self.formLayout_8.setObjectName(u"formLayout_8")
+        self.formLayout_8.setVerticalSpacing(7)
         self.formLayout_8.setContentsMargins(0, 0, 15, 0)
         self.label_14 = QLabel(self.formLayoutWidget_5)
         self.label_14.setObjectName(u"label_14")
@@ -396,54 +397,54 @@ class Ui_MainWindow(object):
         self.groupBox_5.setStyleSheet(u"background-color:rgb(85, 170, 255)")
         self.formLayoutWidget_4 = QWidget(self.groupBox_5)
         self.formLayoutWidget_4.setObjectName(u"formLayoutWidget_4")
-        self.formLayoutWidget_4.setGeometry(QRect(10, 10, 211, 111))
+        self.formLayoutWidget_4.setGeometry(QRect(10, 30, 231, 91))
         self.formLayout_7 = QFormLayout(self.formLayoutWidget_4)
         self.formLayout_7.setObjectName(u"formLayout_7")
         self.formLayout_7.setFormAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.formLayout_7.setHorizontalSpacing(6)
         self.formLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.label_6 = QLabel(self.formLayoutWidget_4)
-        self.label_6.setObjectName(u"label_6")
-        self.label_6.setFont(font3)
-
-        self.formLayout_7.setWidget(0, QFormLayout.LabelRole, self.label_6)
-
         self.label_7 = QLabel(self.formLayoutWidget_4)
         self.label_7.setObjectName(u"label_7")
         self.label_7.setFont(font3)
 
-        self.formLayout_7.setWidget(1, QFormLayout.LabelRole, self.label_7)
-
-        self.label_8 = QLabel(self.formLayoutWidget_4)
-        self.label_8.setObjectName(u"label_8")
-        self.label_8.setFont(font3)
-
-        self.formLayout_7.setWidget(2, QFormLayout.LabelRole, self.label_8)
-
-        self.label_linac_dose = QLabel(self.formLayoutWidget_4)
-        self.label_linac_dose.setObjectName(u"label_linac_dose")
-        self.label_linac_dose.setFont(font3)
-        self.label_linac_dose.setAlignment(Qt.AlignCenter)
-
-        self.formLayout_7.setWidget(0, QFormLayout.FieldRole, self.label_linac_dose)
+        self.formLayout_7.setWidget(0, QFormLayout.LabelRole, self.label_7)
 
         self.label_linac_energy = QLabel(self.formLayoutWidget_4)
         self.label_linac_energy.setObjectName(u"label_linac_energy")
         self.label_linac_energy.setFont(font3)
         self.label_linac_energy.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_7.setWidget(1, QFormLayout.FieldRole, self.label_linac_energy)
+        self.formLayout_7.setWidget(0, QFormLayout.FieldRole, self.label_linac_energy)
 
         self.label_linac_applicator = QLabel(self.formLayoutWidget_4)
         self.label_linac_applicator.setObjectName(u"label_linac_applicator")
         self.label_linac_applicator.setFont(font3)
         self.label_linac_applicator.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_7.setWidget(2, QFormLayout.FieldRole, self.label_linac_applicator)
+        self.formLayout_7.setWidget(1, QFormLayout.FieldRole, self.label_linac_applicator)
+
+        self.label_8 = QLabel(self.formLayoutWidget_4)
+        self.label_8.setObjectName(u"label_8")
+        self.label_8.setFont(font3)
+
+        self.formLayout_7.setWidget(1, QFormLayout.LabelRole, self.label_8)
+
+        self.label_linac_dose = QLabel(self.formLayoutWidget_4)
+        self.label_linac_dose.setObjectName(u"label_linac_dose")
+        self.label_linac_dose.setFont(font3)
+        self.label_linac_dose.setAlignment(Qt.AlignCenter)
+
+        self.formLayout_7.setWidget(2, QFormLayout.FieldRole, self.label_linac_dose)
+
+        self.label_6 = QLabel(self.formLayoutWidget_4)
+        self.label_6.setObjectName(u"label_6")
+        self.label_6.setFont(font3)
+
+        self.formLayout_7.setWidget(2, QFormLayout.LabelRole, self.label_6)
 
 
         self.verticalLayout.addWidget(self.groupBox_5)
 
-        self.verticalLayout.setStretch(0, 1)
         self.verticalLayout.setStretch(2, 2)
         self.verticalLayout.setStretch(3, 4)
         self.verticalLayout.setStretch(4, 5)
@@ -779,7 +780,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1456, 21))
+        self.menubar.setGeometry(QRect(0, 0, 1468, 21))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -872,12 +873,12 @@ class Ui_MainWindow(object):
         self.label_30.setText(QCoreApplication.translate("MainWindow", u"Desv. (%):", None))
         self.desv_label.setText("")
         self.groupBox_5.setTitle("")
-        self.label_6.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt; color:#ffffff;\">Dose</span></p></body></html>", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Energy</span></p></body></html>", None))
-        self.label_8.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Appl</span></p></body></html>", None))
-        self.label_linac_dose.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">0</span></p></body></html>", None))
         self.label_linac_energy.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">0 MeV</span></p></body></html>", None))
         self.label_linac_applicator.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Appl</span></p></body></html>", None))
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Appl</span></p></body></html>", None))
+        self.label_linac_dose.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">0</span></p></body></html>", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt; color:#ffffff;\">Dose</span></p></body></html>", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"zmax (cm):", None))
         self.label_zmax.setText("")
         self.label_34.setText(QCoreApplication.translate("MainWindow", u"X R90 (cm):", None))

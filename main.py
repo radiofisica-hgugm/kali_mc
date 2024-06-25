@@ -90,6 +90,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.pref = conf.PREF  # Reference Pressure
         self.label_pref.setText(str(self.pref))
 
+        self.label_linac_energy.setStyleSheet('color: white')
+        self.label_linac_dose.setStyleSheet('color: white')
+        self.label_linac_applicator.setStyleSheet('color: white')
+
         # Pyqtgraph image_____________________________________
         self.p1 = self.graphWidget1.addPlot(colspan=1, title="Crossline")
         self.p1.addItem(self.img1)
@@ -505,7 +509,7 @@ class Window(QMainWindow, Ui_MainWindow):
         prescription_isodose = 90
         self.UM = int(np.round(self.dose/self.cGy_UM/(prescription_isodose/100)/self.pref*p_today))
         self.UM_label.setText(str(self.UM))
-        self.label_linac_dose.setText(str(self.UM))
+        self.label_linac_dose.setText(f'{self.UM} UM')
         self.label_linac_energy.setText(f'{self.energies[energy_idx]} MeV')
         self.label_linac_applicator.setText(f'{int(applicator)*10} mm')
 
