@@ -1,16 +1,16 @@
+import datetime
 import multiprocessing
+import os
 import sys
-from PySide2.QtWidgets import QApplication, QFileDialog
-from PySide2 import QtGui
+import tempfile
 
 import numpy as np
-from scipy.interpolate import RegularGridInterpolator
 import pyqtgraph as pg
-import pyqtgraph.opengl as gl
 import pyqtgraph.exporters
-import datetime
-import tempfile
-import os
+import pyqtgraph.opengl as gl
+from PySide2 import QtGui
+from PySide2.QtWidgets import QApplication, QFileDialog
+from scipy.interpolate import RegularGridInterpolator
 
 try:
     import pyi_splash
@@ -44,7 +44,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.initial_title = self.windowTitle()
         self.energies = [6, 8, 10, 12]
-        self.npzfile = ''
+        self.npzfile = ""
         self.dose_distrib = None
         self.dose = 0
         self.cGy_UM = 0
@@ -90,9 +90,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.pref = conf.PREF  # Reference Pressure
         self.label_pref.setText(str(self.pref))
 
-        self.label_linac_energy.setStyleSheet('color: white')
-        self.label_linac_dose.setStyleSheet('color: white')
-        self.label_linac_applicator.setStyleSheet('color: white')
+        self.label_linac_energy.setStyleSheet("color: white")
+        self.label_linac_dose.setStyleSheet("color: white")
+        self.label_linac_applicator.setStyleSheet("color: white")
 
         # Pyqtgraph image_____________________________________
         self.p1 = self.graphWidget1.addPlot(colspan=1, title="Crossline")
@@ -104,7 +104,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.extent_cross = [1, 1]
         self.extent_in = [1, 1]
-        self.extent_coronal = [1,1]
+        self.extent_coronal = [1, 1]
         self.extent3D = [1, 1, 1]
         self.d_x = 0.0
         self.d_y = 0.0
@@ -113,17 +113,17 @@ class Window(QMainWindow, Ui_MainWindow):
         g = gl.GLGridItem()
         self.openGLWidget.addItem(g)
 
-        self.graphWidget1.setBackground('w')
-        self.graphWidget2.setBackground('w')
-        self.graphWidget3.setBackground('w')
-        self.openGLWidget.opts['bgcolor'] = (0.3, 0.3, 0.3, 1)
+        self.graphWidget1.setBackground("w")
+        self.graphWidget2.setBackground("w")
+        self.graphWidget3.setBackground("w")
+        self.openGLWidget.opts["bgcolor"] = (0.3, 0.3, 0.3, 1)
 
         # Interpret image data as row-major instead of col-major
         # Otherwise, image shows rotated 90ยบ
-        pg.setConfigOptions(imageAxisOrder='row-major')
+        pg.setConfigOptions(imageAxisOrder="row-major")
 
     def find_checked_radiobutton(self):
-        """ find the checked radiobutton, returns energy index """
+        """find the checked radiobutton, returns energy index"""
         radiobuttons = [self.radio1, self.radio2, self.radio3, self.radio4]
         checked_radiobutton_idx = -1
         for e_idx, rb in enumerate(radiobuttons):
@@ -140,47 +140,48 @@ class Window(QMainWindow, Ui_MainWindow):
 
         if (a_idx >= 0) and (b_idx >= 0):
 
-            R90_array = np.load(rf'data/R90_C{applicator}.npz')['R90'][:, b_idx]  # load R90 data
-            self.label_6MeV.setText(f'{R90_array[0]:.1f}')
-            self.label_8MeV.setText(f'{R90_array[1]:.1f}')
-            self.label_10MeV.setText(f'{R90_array[2]:.1f}')
-            self.label_12MeV.setText(f'{R90_array[3]:.1f}')
+            R90_array = np.load(rf"data/R90_C{applicator}.npz")["R90"][
+                :, b_idx
+            ]  # load R90 data
+            self.label_6MeV.setText(f"{R90_array[0]:.1f}")
+            self.label_8MeV.setText(f"{R90_array[1]:.1f}")
+            self.label_10MeV.setText(f"{R90_array[2]:.1f}")
+            self.label_12MeV.setText(f"{R90_array[3]:.1f}")
 
             if (
-                (self.radio1.isChecked() or
-                 self.radio2.isChecked() or
-                 self.radio3.isChecked() or
-                 self.radio4.isChecked()
-                 )
+                self.radio1.isChecked()
+                or self.radio2.isChecked()
+                or self.radio3.isChecked()
+                or self.radio4.isChecked()
             ):
                 energy_idx = self.find_checked_radiobutton()
-                self.npzfile = rf'data\sim\C{applicator}\B{bevel}\C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz'
+                self.npzfile = rf"data\sim\C{applicator}\B{bevel}\C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz"
                 results = np.load(self.npzfile, allow_pickle=True)
-                self.dose_distrib = results['SpatialDoseDistrib'][()]
+                self.dose_distrib = results["SpatialDoseDistrib"][()]
                 self.plot_distribs()
-                if self.DoseEdit.text() != '' and pressure != '':
+                if self.DoseEdit.text() != "" and pressure != "":
                     self.calcular.setEnabled(True)
         else:
-            self.npzfile = ''
+            self.npzfile = ""
             self.dose_distrib = None
             self.calcular.setEnabled(False)
-        self.output_label.setText('')
-        self.UM_label.setText('')
-        self.label_linac_dose.setText('')
-        self.label_linac_energy.setText('')
-        self.label_linac_applicator.setText('')
+        self.output_label.setText("")
+        self.UM_label.setText("")
+        self.label_linac_dose.setText("")
+        self.label_linac_energy.setText("")
+        self.label_linac_applicator.setText("")
 
     def plot_distribs(self):
         results = self.dose_distrib
-        D = results['Dose']
+        D = results["Dose"]
         self.Xbin, self.Ybin, self.Zbin = D.shape
-        self.x_scale = np.unique(results['X'])
+        self.x_scale = np.unique(results["X"])
         x_start = self.x_scale[0]
         x_end = self.x_scale[-1]
-        self.y_scale = np.unique(results['Y'])
+        self.y_scale = np.unique(results["Y"])
         y_start = self.y_scale[0]
         y_end = self.y_scale[-1]
-        self.z_scale = np.unique(results['Z'])
+        self.z_scale = np.unique(results["Z"])
         z_start = self.z_scale[0]
         z_end = self.z_scale[-1]
         d_x = self.x_scale[1] - self.x_scale[0]
@@ -189,16 +190,32 @@ class Window(QMainWindow, Ui_MainWindow):
         self.d_x = d_x
         self.d_y = d_y
         self.d_z = d_z
-        self.extent_cross = [-d_x / 2 + x_start, x_end + d_x / 2, z_start - d_z / 2, z_end + d_z / 2]
-        self.extent_in = [-d_y / 2 + y_start, y_end + d_y / 2, z_start - d_z / 2, z_end + d_z / 2]
-        self.extent_coronal = [-d_x / 2 + x_start, x_end + d_x / 2, -d_y / 2 + y_start, y_end + d_y / 2]
+        self.extent_cross = [
+            -d_x / 2 + x_start,
+            x_end + d_x / 2,
+            z_start - d_z / 2,
+            z_end + d_z / 2,
+        ]
+        self.extent_in = [
+            -d_y / 2 + y_start,
+            y_end + d_y / 2,
+            z_start - d_z / 2,
+            z_end + d_z / 2,
+        ]
+        self.extent_coronal = [
+            -d_x / 2 + x_start,
+            x_end + d_x / 2,
+            -d_y / 2 + y_start,
+            y_end + d_y / 2,
+        ]
         self.extent3D = [x_start, x_end, y_start, y_end, z_start, z_end]
         self.dose_max = np.max(D)
         self.dose_min = np.min(D)
 
         # Create the interpolator
-        interpolator = RegularGridInterpolator((self.x_scale, self.y_scale, self.z_scale), D)
-
+        interpolator = RegularGridInterpolator(
+            (self.x_scale, self.y_scale, self.z_scale), D
+        )
 
         # Interpolate to get max in clinical axis  ____________________________________________________________________
         x_val = 0
@@ -230,7 +247,9 @@ class Window(QMainWindow, Ui_MainWindow):
         greens = [0.0, 0.4, 0]
         alphas = [0.2, 0.3, 255]
         for idx, level in enumerate(levels):
-            self.create_3D_isodose(level=level, red=reds[idx], green=greens[idx], alpha=alphas[idx])
+            self.create_3D_isodose(
+                level=level, red=reds[idx], green=greens[idx], alpha=alphas[idx]
+            )
 
         # 3D Cylinder
         self.add_inclined_cylinder()
@@ -243,13 +262,23 @@ class Window(QMainWindow, Ui_MainWindow):
         self.p1.addItem(self.img1)
 
         # Define the points on the y=0 plane for interpolation
-        x_vals = np.linspace(self.x_scale[0], self.x_scale[-1], int(len(self.x_scale) * (1 / self.grid_factor)))
+        x_vals = np.linspace(
+            self.x_scale[0],
+            self.x_scale[-1],
+            int(len(self.x_scale) * (1 / self.grid_factor)),
+        )
         y_val = 0
-        z_vals = np.linspace(self.z_scale[0], self.z_scale[-1], int(len(self.z_scale) * (1 / self.grid_factor)))
-        X_plane, Z_plane = np.meshgrid(x_vals, z_vals, indexing='ij')
+        z_vals = np.linspace(
+            self.z_scale[0],
+            self.z_scale[-1],
+            int(len(self.z_scale) * (1 / self.grid_factor)),
+        )
+        X_plane, Z_plane = np.meshgrid(x_vals, z_vals, indexing="ij")
 
         # Create the grid points for the y=0 plane
-        points_plane = np.vstack([X_plane.ravel(), y_val * np.ones_like(X_plane.ravel()), Z_plane.ravel()]).T
+        points_plane = np.vstack(
+            [X_plane.ravel(), y_val * np.ones_like(X_plane.ravel()), Z_plane.ravel()]
+        ).T
 
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(X_plane.shape)
@@ -258,13 +287,16 @@ class Window(QMainWindow, Ui_MainWindow):
         self.p1.addItem(pg.GridItem())
         self.p1.getViewBox().invertY(True)
         self.p1.getViewBox().setAspectLocked(lock=True, ratio=1)
-        self.p1.getAxis('bottom').setLabel('cm')
+        self.p1.getAxis("bottom").setLabel("cm")
         extent = self.extent_cross
 
         if plot_relative:
             data = data / self.clinical_max * 100
             levels = self.levels
-            color_limits = (self.dose_min / self.clinical_max * 100, self.dose_max / self.clinical_max * 100)
+            color_limits = (
+                self.dose_min / self.clinical_max * 100,
+                self.dose_max / self.clinical_max * 100,
+            )
         else:
             levels = self.levels * self.clinical_max / 100
             color_limits = (self.dose_min, self.dose_max)
@@ -275,23 +307,24 @@ class Window(QMainWindow, Ui_MainWindow):
             self.colorbar_cross.setParentItem(None)
             self.colorbar_cross = None
 
-        self.colorbar_cross = pg.ColorBarItem(values=color_limits, colorMap='turbo')
+        self.colorbar_cross = pg.ColorBarItem(values=color_limits, colorMap="turbo")
         self.colorbar_cross.setImageItem(self.img1, insert_in=self.p1)
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
         tr.translate(extent[0], extent[3])
-        tr.scale((extent[1] - extent[0]) / len(x_vals),
-                 (extent[3] - extent[2]) / len(z_vals))  # scale horizontal and vertical axes
+        tr.scale(
+            (extent[1] - extent[0]) / len(x_vals), (extent[3] - extent[2]) / len(z_vals)
+        )  # scale horizontal and vertical axes
 
         for level in levels:
-            iso_curve = pg.IsocurveItem(level=level, pen='k')
+            iso_curve = pg.IsocurveItem(level=level, pen="k")
             iso_curve.setData(data)
             self.p1.addItem(iso_curve)
             iso_curve.setParentItem(self.img1)
             # Find a position to place the text
             pos = find_text_position(data, level)
             if pos is not None:
-                text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
+                text = pg.TextItem(f"{level:.2f}", anchor=(0.5, 0.5))
                 text.setPos(pos[0], pos[1])
                 self.p1.addItem(text)
                 text.setParentItem(self.img1)
@@ -308,12 +341,22 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # Define the points on the y=0 plane for interpolation
         x_vals = 0
-        y_vals = np.linspace(self.y_scale[0], self.y_scale[-1], int(len(self.y_scale) * (1 / self.grid_factor)))
-        z_vals = np.linspace(self.z_scale[0], self.z_scale[-1], int(len(self.z_scale) * (1 / self.grid_factor)))
-        Y_plane, Z_plane = np.meshgrid(y_vals, z_vals, indexing='ij')
+        y_vals = np.linspace(
+            self.y_scale[0],
+            self.y_scale[-1],
+            int(len(self.y_scale) * (1 / self.grid_factor)),
+        )
+        z_vals = np.linspace(
+            self.z_scale[0],
+            self.z_scale[-1],
+            int(len(self.z_scale) * (1 / self.grid_factor)),
+        )
+        Y_plane, Z_plane = np.meshgrid(y_vals, z_vals, indexing="ij")
 
         # Create the grid points for the y=0 plane
-        points_plane = np.vstack([x_vals * np.ones_like(Y_plane.ravel()), Y_plane.ravel(), Z_plane.ravel()]).T
+        points_plane = np.vstack(
+            [x_vals * np.ones_like(Y_plane.ravel()), Y_plane.ravel(), Z_plane.ravel()]
+        ).T
 
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(Y_plane.shape)
@@ -321,12 +364,15 @@ class Window(QMainWindow, Ui_MainWindow):
         self.p2.addItem(pg.GridItem())
         self.p2.getViewBox().invertY(True)
         self.p2.getViewBox().setAspectLocked(lock=True, ratio=1)
-        self.p2.getAxis('bottom').setLabel('cm')
+        self.p2.getAxis("bottom").setLabel("cm")
 
         if plot_relative:
             data = self.data_in / self.clinical_max * 100
             levels = self.levels
-            color_limits = (self.dose_min / self.clinical_max * 100, self.dose_max / self.clinical_max * 100)
+            color_limits = (
+                self.dose_min / self.clinical_max * 100,
+                self.dose_max / self.clinical_max * 100,
+            )
         else:
             data = self.data_in
             levels = self.levels * self.clinical_max / 100
@@ -338,24 +384,25 @@ class Window(QMainWindow, Ui_MainWindow):
             self.colorbar_in.setParentItem(None)
             self.colorbar_in = None
 
-        self.colorbar_in = pg.ColorBarItem(values=color_limits, colorMap='turbo')
+        self.colorbar_in = pg.ColorBarItem(values=color_limits, colorMap="turbo")
         self.colorbar_in.setImageItem(self.img2, insert_in=self.p2)
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
         extent = self.extent_in
         tr.translate(extent[0], extent[3])
-        tr.scale((extent[1] - extent[0]) / len(y_vals),
-                 (extent[3] - extent[2]) / len(z_vals))  # scale horizontal and vertical axes
+        tr.scale(
+            (extent[1] - extent[0]) / len(y_vals), (extent[3] - extent[2]) / len(z_vals)
+        )  # scale horizontal and vertical axes
 
         for level in levels:
-            iso_curve = pg.IsocurveItem(level=level, pen='k')
+            iso_curve = pg.IsocurveItem(level=level, pen="k")
             iso_curve.setData(data)
             self.p2.addItem(iso_curve)
             iso_curve.setParentItem(self.img2)
             # Find a position to place the text
             pos = find_text_position(data, level)
             if pos is not None:
-                text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
+                text = pg.TextItem(f"{level:.2f}", anchor=(0.5, 0.5))
                 text.setPos(pos[0], pos[1])
                 self.p2.addItem(text)
                 text.setParentItem(self.img2)
@@ -371,13 +418,23 @@ class Window(QMainWindow, Ui_MainWindow):
         self.p3.addItem(self.img3)
 
         # Define the points on the y=0 plane for interpolation
-        x_vals = np.linspace(self.x_scale[0], self.x_scale[-1], int(len(self.x_scale) * (1 / self.grid_factor)))
-        y_vals = np.linspace(self.y_scale[0], self.y_scale[-1], int(len(self.y_scale) * (1 / self.grid_factor)))
+        x_vals = np.linspace(
+            self.x_scale[0],
+            self.x_scale[-1],
+            int(len(self.x_scale) * (1 / self.grid_factor)),
+        )
+        y_vals = np.linspace(
+            self.y_scale[0],
+            self.y_scale[-1],
+            int(len(self.y_scale) * (1 / self.grid_factor)),
+        )
         z_vals = self.z_clinical_max
-        X_plane, Y_plane = np.meshgrid(x_vals, y_vals, indexing='ij')
+        X_plane, Y_plane = np.meshgrid(x_vals, y_vals, indexing="ij")
 
         # Create the grid points for the y=0 plane
-        points_plane = np.vstack([X_plane.ravel(), Y_plane.ravel(), z_vals * np.ones_like(Y_plane.ravel())]).T
+        points_plane = np.vstack(
+            [X_plane.ravel(), Y_plane.ravel(), z_vals * np.ones_like(Y_plane.ravel())]
+        ).T
 
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(Y_plane.shape)
@@ -385,12 +442,15 @@ class Window(QMainWindow, Ui_MainWindow):
         self.p3.addItem(pg.GridItem())
         # self.p3.getViewBox().invertY(True)
         self.p3.getViewBox().setAspectLocked(lock=True, ratio=1)
-        self.p3.getAxis('bottom').setLabel('cm')
+        self.p3.getAxis("bottom").setLabel("cm")
 
         if plot_relative:
             data = self.data_coronal / self.clinical_max * 100
             levels = self.levels
-            color_limits = (self.dose_min / self.clinical_max * 100, self.dose_max / self.clinical_max * 100)
+            color_limits = (
+                self.dose_min / self.clinical_max * 100,
+                self.dose_max / self.clinical_max * 100,
+            )
         else:
             data = self.data_coronal
             levels = self.levels * self.clinical_max / 100
@@ -402,24 +462,25 @@ class Window(QMainWindow, Ui_MainWindow):
             self.colorbar_coronal.setParentItem(None)
             self.colorbar_coronal = None
 
-        self.colorbar_coronal = pg.ColorBarItem(values=color_limits, colorMap='turbo')
+        self.colorbar_coronal = pg.ColorBarItem(values=color_limits, colorMap="turbo")
         self.colorbar_coronal.setImageItem(self.img3, insert_in=self.p3)
 
         tr = QtGui.QTransform()  # prepare ImageItem transformation:
         extent = self.extent_coronal
         tr.translate(extent[0], extent[2])
-        tr.scale((extent[1] - extent[0]) / len(x_vals),
-                 (extent[3] - extent[2]) / len(y_vals))  # scale horizontal and vertical axes
+        tr.scale(
+            (extent[1] - extent[0]) / len(x_vals), (extent[3] - extent[2]) / len(y_vals)
+        )  # scale horizontal and vertical axes
 
         for level in levels:
-            iso_curve = pg.IsocurveItem(level=level, pen='k')
+            iso_curve = pg.IsocurveItem(level=level, pen="k")
             iso_curve.setData(data)
             self.p3.addItem(iso_curve)
             iso_curve.setParentItem(self.img3)
             # Find a position to place the text
             pos = find_text_position(data, level)
             if pos is not None:
-                text = pg.TextItem(f'{level:.2f}', anchor=(0.5, 0.5))
+                text = pg.TextItem(f"{level:.2f}", anchor=(0.5, 0.5))
                 text.setPos(pos[0], pos[1])
                 self.p3.addItem(text)
                 text.setParentItem(self.img3)
@@ -433,7 +494,9 @@ class Window(QMainWindow, Ui_MainWindow):
         sectors = 50  # Number of sectors for the circular base
         angle = float(self.combo_bevel.currentText())  # Inclination angle in degrees
         inclination_radians = np.radians(-angle)
-        radius_y = float(self.combo_applicator.currentText()) / 2  # Scale y semi-minor axis
+        radius_y = (
+            float(self.combo_applicator.currentText()) / 2
+        )  # Scale y semi-minor axis
         radius_x = radius_y / np.cos(inclination_radians)  # Scale y semi-major axis
 
         # Create the cylinder mesh data
@@ -470,15 +533,15 @@ class Window(QMainWindow, Ui_MainWindow):
         colors = np.zeros((meshdata.faceCount(), 4), dtype=float)
         colors[:, 1] = 0.1  # 0.2
         colors[:, 3] = 100  # 0.2
-        colors[:, 2] = 0 # 0 -> green, 1-> blue
+        colors[:, 2] = 0  # 0 -> green, 1-> blue
         meshdata.setFaceColors(colors)
-        m = gl.GLMeshItem(meshdata=meshdata, smooth=True, shader='balloon')
-        m.setGLOptions('additive')
+        m = gl.GLMeshItem(meshdata=meshdata, smooth=True, shader="balloon")
+        m.setGLOptions("additive")
 
         self.openGLWidget.addItem(m)
 
     def create_3D_isodose(self, level, red, green, alpha):
-        D = self.dose_distrib['Dose']
+        D = self.dose_distrib["Dose"]
         Xbin, Ybin, Zbin = D.shape
         verts, faces = pg.isosurface(D, D.max() * level)
         md = gl.MeshData(vertexes=verts, faces=faces)
@@ -487,12 +550,19 @@ class Window(QMainWindow, Ui_MainWindow):
         colors[:, 3] = alpha  # 0.2
         colors[:, 2] = np.linspace(0, 1, colors.shape[0])
         md.setFaceColors(colors)
-        m = gl.GLMeshItem(meshdata=md, smooth=True, shader='balloon')
-        m.setGLOptions('additive')
+        m = gl.GLMeshItem(meshdata=md, smooth=True, shader="balloon")
+        m.setGLOptions("additive")
         self.openGLWidget.addItem(m)
-        m.translate(self.extent3D[0] + self.d_x / 2, self.extent3D[2] + self.d_y / 2, self.extent3D[4] + self.d_z / 2)
-        m.scale((self.extent3D[1] - self.extent3D[0]) / Xbin, (self.extent3D[3] - self.extent3D[2]) / Ybin,
-                (self.extent3D[5] - self.extent3D[4]) / Zbin)
+        m.translate(
+            self.extent3D[0] + self.d_x / 2,
+            self.extent3D[2] + self.d_y / 2,
+            self.extent3D[4] + self.d_z / 2,
+        )
+        m.scale(
+            (self.extent3D[1] - self.extent3D[0]) / Xbin,
+            (self.extent3D[3] - self.extent3D[2]) / Ybin,
+            (self.extent3D[5] - self.extent3D[4]) / Zbin,
+        )
 
     def calculate_UM(self):
         # Retrieve data from gui:
@@ -503,46 +573,59 @@ class Window(QMainWindow, Ui_MainWindow):
         p_today = float(self.phoy_edit.text())  # Pressure correction
 
         # Load output from file and calculate
-        OFs = np.load(rf'data\OF_C{applicator}.npz', allow_pickle=True)['arr_0']
+        OFs = np.load(rf"data\OF_C{applicator}.npz", allow_pickle=True)["arr_0"]
         self.cGy_UM = OFs[b_idx, energy_idx]
-        self.output_label.setText(f'{self.cGy_UM:.3f}')
+        self.output_label.setText(f"{self.cGy_UM:.3f}")
         prescription_isodose = 90
-        self.UM = int(np.round(self.dose/self.cGy_UM/(prescription_isodose/100)/self.pref*p_today))
+        self.UM = int(
+            np.round(
+                self.dose
+                / self.cGy_UM
+                / (prescription_isodose / 100)
+                / self.pref
+                * p_today
+            )
+        )
         self.UM_label.setText(str(self.UM))
-        self.label_linac_dose.setText(f'{self.UM} UM')
-        self.label_linac_energy.setText(f'{self.energies[energy_idx]} MeV')
-        self.label_linac_applicator.setText(f'{int(applicator)*10} mm')
+        self.label_linac_dose.setText(f"{self.UM} UM")
+        self.label_linac_energy.setText(f"{self.energies[energy_idx]} MeV")
+        self.label_linac_applicator.setText(f"{int(applicator)*10} mm")
 
     def generate_report(self):
         data_dict = self.create_data_dict()
-        pdf_path = os.path.join(conf.pdf_path, f"{data_dict['Date']} {data_dict['Name']} {data_dict['Surname']}.pdf")
-        name = QFileDialog.getSaveFileName(self, 'Guardar informe pdf',
-                                           pdf_path,
-                                           "Archivos pdf (*.pdf)")
+        pdf_path = os.path.join(
+            conf.pdf_path,
+            f"{data_dict['Date']} {data_dict['Name']} {data_dict['Surname']}.pdf",
+        )
+        name = QFileDialog.getSaveFileName(
+            self, "Guardar informe pdf", pdf_path, "Archivos pdf (*.pdf)"
+        )
         if name[0] != "":
-            print('Generating report ..........')
+            print("Generating report ..........")
             self.p1.autoRange()
             self.p2.autoRange()
             with tempfile.TemporaryDirectory() as tempdir:
                 exporter = pg.exporters.ImageExporter(self.p1)
-                file_cross = os.path.join(tempdir, 'cross.png')
+                file_cross = os.path.join(tempdir, "cross.png")
                 exporter.export(file_cross)
 
                 exporter = pg.exporters.ImageExporter(self.p2)
-                file_in = os.path.join(tempdir, 'in.png')
+                file_in = os.path.join(tempdir, "in.png")
                 exporter.export(file_in)
 
                 exporter = pg.exporters.ImageExporter(self.p3)
-                file_coronal = os.path.join(tempdir, 'coronal.png')
+                file_coronal = os.path.join(tempdir, "coronal.png")
                 exporter.export(file_coronal)
 
-                file_3D = os.path.join(tempdir,'3D.png')
+                file_3D = os.path.join(tempdir, "3D.png")
                 self.openGLWidget.grabFramebuffer().save(file_3D)
 
-                create_pdf(name[0], file_cross, file_in, file_coronal, file_3D, data_dict)
-                print('Report saved')
+                create_pdf(
+                    name[0], file_cross, file_in, file_coronal, file_3D, data_dict
+                )
+                print("Report saved")
         else:
-            print('Report cancelled')
+            print("Report cancelled")
 
     def create_data_dict(self):
         energy_idx = self.find_checked_radiobutton()
@@ -556,34 +639,29 @@ class Window(QMainWindow, Ui_MainWindow):
             R90 = self.label_12MeV.text()
 
         data_dict = {
-            'Name': self.NameEdit.text(),
-            'Surname': self.SurnameEdit.text(),
-            'ID': self.IDEdit.text(),
-            'Site': self.SiteEdit.text(),
-            'Physicist': self.PhysicistEdit.text(),
-            'Oncologist': self.OncologistEdit.text(),
-            'TERt': self.TechnologistEdit.text(),
-
-            'Applicator': self.combo_applicator.currentText(),
-            'Bevel': self.combo_bevel.currentText(),
-            'Dose': self.DoseEdit.text(),
-            'Pressure': self.phoy_edit.text(),
-            'RefPressure': self.label_pref.text(),
-            'R90': R90,
-
-            'Energy': self.energies[energy_idx],
-            'Output': self.output_label.text(),
-            'UM': self.UM_label.text(),
-
-            'Linac': conf.machine + ' ' + conf.serial_number,
-            'Pitch': self.PitchEdit.text(),
-            'Roll': self.RollEdit.text(),
-            'Vertical': self.VerticalEdit.text(),
-
-            'IORT_number': self.IORTnumberEdit.text(),
-            'Date': datetime.date.today(),
-
-            'Comments': self.CommentsEdit.toPlainText()
+            "Name": self.NameEdit.text(),
+            "Surname": self.SurnameEdit.text(),
+            "ID": self.IDEdit.text(),
+            "Site": self.SiteEdit.text(),
+            "Physicist": self.PhysicistEdit.text(),
+            "Oncologist": self.OncologistEdit.text(),
+            "TERt": self.TechnologistEdit.text(),
+            "Applicator": self.combo_applicator.currentText(),
+            "Bevel": self.combo_bevel.currentText(),
+            "Dose": self.DoseEdit.text(),
+            "Pressure": self.phoy_edit.text(),
+            "RefPressure": self.label_pref.text(),
+            "R90": R90,
+            "Energy": self.energies[energy_idx],
+            "Output": self.output_label.text(),
+            "UM": self.UM_label.text(),
+            "Linac": conf.machine + " " + conf.serial_number,
+            "Pitch": self.PitchEdit.text(),
+            "Roll": self.RollEdit.text(),
+            "Vertical": self.VerticalEdit.text(),
+            "IORT_number": self.IORTnumberEdit.text(),
+            "Date": datetime.date.today(),
+            "Comments": self.CommentsEdit.toPlainText(),
         }
         return data_dict
 
@@ -592,9 +670,13 @@ class Window(QMainWindow, Ui_MainWindow):
         send_rtplan(data_dict)
 
     def calc_UM_diff(self):
-        if self.UM_label.text() !='' and self.SecondEdit.text() != '':
-            desv = (float(self.SecondEdit.text()) - float(self.UM_label.text())) / float(self.UM_label.text()) * 100
-            self.desv_label.setText(f'{desv:.1f}')
+        if self.UM_label.text() != "" and self.SecondEdit.text() != "":
+            desv = (
+                (float(self.SecondEdit.text()) - float(self.UM_label.text()))
+                / float(self.UM_label.text())
+                * 100
+            )
+            self.desv_label.setText(f"{desv:.1f}")
 
 
 if __name__ == "__main__":
