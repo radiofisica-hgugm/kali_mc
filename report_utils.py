@@ -163,8 +163,8 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     elements.append(Spacer(1, 0.1 * cm))
     plan_data = [
         ["ENERGÍA (MeV):", data_dict['Energy']],
-        ["PROFUNDIDAD R90 (cm):", ""],
-        ["zmax (cm):", ""],
+        ["PROFUNDIDAD R90 (cm):", data_dict['Beam_R90']],
+        ["zmax (cm):", data_dict['Beam_zmax']],
         ["cGy/UM @ zmax:", data_dict['Output']],
         ["Long. X R90 (cm):", ""],
         ["Long. Y R90 (cm):", ""]
@@ -197,7 +197,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     ]))
     calc2_data = [
         ["UM segundo cálculo:", data_dict['Energy']],
-        ["Desviación (%):", ""]
+        ["Desviación (%):", data_dict['UM_dev']]
     ]
     calc2_table = Table(calc2_data, colWidths=[6 * cm, 2.5 * cm])
     calc2_table.setStyle(TableStyle([

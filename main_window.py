@@ -178,11 +178,11 @@ class Ui_MainWindow(object):
 
         self.formLayout_5.setWidget(1, QFormLayout.LabelRole, self.label_5)
 
-        self.lineEdit_2 = QLineEdit(self.formLayoutWidget_2)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
-        self.lineEdit_2.setAlignment(Qt.AlignCenter)
+        self.depth_edit = QLineEdit(self.formLayoutWidget_2)
+        self.depth_edit.setObjectName(u"depth_edit")
+        self.depth_edit.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_5.setWidget(1, QFormLayout.FieldRole, self.lineEdit_2)
+        self.formLayout_5.setWidget(1, QFormLayout.FieldRole, self.depth_edit)
 
 
         self.verticalLayout.addWidget(self.groupBox_2)
@@ -290,7 +290,7 @@ class Ui_MainWindow(object):
         self.groupBox_4.setFont(font6)
         self.formLayoutWidget_5 = QWidget(self.groupBox_4)
         self.formLayoutWidget_5.setObjectName(u"formLayoutWidget_5")
-        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 231, 191))
+        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 241, 191))
         self.formLayout_8 = QFormLayout(self.formLayoutWidget_5)
         self.formLayout_8.setObjectName(u"formLayout_8")
         self.formLayout_8.setVerticalSpacing(7)
@@ -349,12 +349,12 @@ class Ui_MainWindow(object):
 
         self.formLayout_8.setWidget(3, QFormLayout.FieldRole, self.output_label)
 
-        self.phoy_edit = QLineEdit(self.formLayoutWidget_5)
-        self.phoy_edit.setObjectName(u"phoy_edit")
-        self.phoy_edit.setFont(font7)
-        self.phoy_edit.setAlignment(Qt.AlignCenter)
+        self.ptoday_edit = QLineEdit(self.formLayoutWidget_5)
+        self.ptoday_edit.setObjectName(u"ptoday_edit")
+        self.ptoday_edit.setFont(font7)
+        self.ptoday_edit.setAlignment(Qt.AlignCenter)
 
-        self.formLayout_8.setWidget(1, QFormLayout.FieldRole, self.phoy_edit)
+        self.formLayout_8.setWidget(1, QFormLayout.FieldRole, self.ptoday_edit)
 
         self.SecondEdit = QLineEdit(self.formLayoutWidget_5)
         self.SecondEdit.setObjectName(u"SecondEdit")
@@ -787,13 +787,13 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         QWidget.setTabOrder(self.combo_applicator, self.combo_bevel)
         QWidget.setTabOrder(self.combo_bevel, self.DoseEdit)
-        QWidget.setTabOrder(self.DoseEdit, self.lineEdit_2)
-        QWidget.setTabOrder(self.lineEdit_2, self.radio1)
+        QWidget.setTabOrder(self.DoseEdit, self.depth_edit)
+        QWidget.setTabOrder(self.depth_edit, self.radio1)
         QWidget.setTabOrder(self.radio1, self.radio2)
         QWidget.setTabOrder(self.radio2, self.radio3)
         QWidget.setTabOrder(self.radio3, self.radio4)
-        QWidget.setTabOrder(self.radio4, self.phoy_edit)
-        QWidget.setTabOrder(self.phoy_edit, self.calcular)
+        QWidget.setTabOrder(self.radio4, self.ptoday_edit)
+        QWidget.setTabOrder(self.ptoday_edit, self.calcular)
         QWidget.setTabOrder(self.calcular, self.SecondEdit)
         QWidget.setTabOrder(self.SecondEdit, self.NameEdit)
         QWidget.setTabOrder(self.NameEdit, self.SurnameEdit)

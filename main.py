@@ -1,10 +1,10 @@
 import multiprocessing
 import sys
-from PySide2.QtWidgets import QApplication, QFileDialog
+from PySide2.QtWidgets import QApplication, QFileDialog, QMessageBox
 from PySide2 import QtGui
 
 import numpy as np
-from scipy.interpolate import RegularGridInterpolator
+from scipy.interpolate import RegularGridInterpolator, interp1d
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 import pyqtgraph.exporters
@@ -70,7 +70,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.radio2.toggled.connect(self.refresh)
         self.radio3.toggled.connect(self.refresh)
         self.radio4.toggled.connect(self.refresh)
-        self.phoy_edit.editingFinished.connect(self.refresh)
+        self.ptoday_edit.editingFinished.connect(self.refresh)
         self.calcular.clicked.connect(self.calculate_UM)
         self.pushreport.clicked.connect(self.generate_report)
         self.pushsend.clicked.connect(self.send_dicom)
@@ -136,7 +136,7 @@ class Window(QMainWindow, Ui_MainWindow):
         applicator = self.combo_applicator.currentText()
         b_idx = self.combo_bevel.currentIndex() - 1  # bevel index
         bevel = self.combo_bevel.currentText()
-        pressure = self.phoy_edit.text()
+        pressure = self.ptoday_edit.text()
 
         if (a_idx >= 0) and (b_idx >= 0):
 
@@ -199,7 +199,6 @@ class Window(QMainWindow, Ui_MainWindow):
         # Create the interpolator
         interpolator = RegularGridInterpolator((self.x_scale, self.y_scale, self.z_scale), D)
 
-
         # Interpolate to get max in clinical axis  ____________________________________________________________________
         x_val = 0
         y_val = 0
@@ -209,6 +208,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.clinical_max = np.max(depth_dose)
         self.z_clinical_max = z_vals[np.argmax(depth_dose)]
         self.label_zmax.setText(f"{-self.z_clinical_max:.2f}")
+
+
 
         # plot cross plane
         self.plot_crossplane(interpolator)
@@ -373,11 +374,11 @@ class Window(QMainWindow, Ui_MainWindow):
         # Define the points on the y=0 plane for interpolation
         x_vals = np.linspace(self.x_scale[0], self.x_scale[-1], int(len(self.x_scale) * (1 / self.grid_factor)))
         y_vals = np.linspace(self.y_scale[0], self.y_scale[-1], int(len(self.y_scale) * (1 / self.grid_factor)))
-        z_vals = self.z_clinical_max
+        z_val = self.z_clinical_max
         X_plane, Y_plane = np.meshgrid(x_vals, y_vals, indexing='ij')
 
         # Create the grid points for the y=0 plane
-        points_plane = np.vstack([X_plane.ravel(), Y_plane.ravel(), z_vals * np.ones_like(Y_plane.ravel())]).T
+        points_plane = np.vstack([X_plane.ravel(), Y_plane.ravel(), z_val * np.ones_like(Y_plane.ravel())]).T
 
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(Y_plane.shape)
@@ -426,6 +427,59 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.img3.setTransform(tr)
         self.p3.autoRange()
+
+        # Interpolate to get crossplane OAR at zmax
+        y_val_cross = 0
+        points = np.array([[x, y_val_cross, z_val] for x in x_vals])
+        OAR_cross = interpolator(points)
+        OAR_cross_norm = OAR_cross / self.clinical_max * 100
+        x_positive = x_vals[x_vals > 0]
+        cross_positive = OAR_cross_norm[x_vals > 0]
+        f_plus = interp1d(np.flip(cross_positive), np.flip(x_positive))
+
+        x_negative = x_vals[x_vals < 0]
+        cross_negative = OAR_cross_norm[x_vals < 0]
+        f_minus = interp1d(cross_negative, x_negative)
+
+        x_90 = f_plus(90) - f_minus(90)
+        self.label_R90X.setText(f"{x_90:.2f}")
+        # Arrow right
+        a_r = pg.ArrowItem(angle=180, tipAngle=30, baseAngle=0, headLen=f_plus(90) * 1 / 4, tailLen=f_plus(90) * 3 / 4,
+                           tailWidth=0.05, pen=None, brush='b', pxMode=False)
+        a_r.setPos(f_plus(90), 0)
+        self.p3.addItem(a_r)
+        # Arrow left
+        a_l = pg.ArrowItem(angle=0, tipAngle=30, baseAngle=0, headLen=f_plus(90) * 1 / 4, tailLen=np.abs(f_minus(90) - f_plus(90) * 1 / 4),
+                           tailWidth=0.05, pen=None, brush='b', pxMode=False)
+        a_l.setPos(f_minus(90), 0)
+        self.p3.addItem(a_l)
+
+        # Interpolate to get inplane OAR at zmax
+        x_val_cross = 0
+        points = np.array([[x_val_cross, y, z_val] for y in y_vals])
+        OAR_in = interpolator(points)
+        OAR_in_norm = OAR_in / self.clinical_max * 100
+        y_positive = y_vals[y_vals > 0]
+        in_positive = OAR_in_norm[y_vals > 0]
+        f_plus = interp1d(np.flip(in_positive), np.flip(y_positive))
+
+        y_negative = y_vals[y_vals < 0]
+        in_negative = OAR_in_norm[y_vals < 0]
+        f_minus = interp1d(in_negative, y_negative)
+
+        y_90 = f_plus(90) - f_minus(90)
+        self.label_R90Y.setText(f"{y_90:.2f}")
+        # Arrow top
+        a_t = pg.ArrowItem(angle=-90, tipAngle=30, baseAngle=0, headLen=f_plus(90) * 1 / 4, tailLen=f_plus(90) * 3 / 4,
+                           tailWidth=0.05, pen=None, brush='b', pxMode=False)
+        a_t.setPos(0, f_plus(90))
+        self.p3.addItem(a_t)
+        # Arrow bottom
+        a_b = pg.ArrowItem(angle=90, tipAngle=30, baseAngle=0, headLen=f_plus(90) * 1 / 4,
+                           tailLen=np.abs(f_minus(90) - f_plus(90) * 1 / 4),
+                           tailWidth=0.05, pen=None, brush='b', pxMode=False)
+        a_b.setPos(0, f_minus(90))
+        self.p3.addItem(a_b)
 
     def add_inclined_cylinder(self):
         # Define the cylinder parameters
@@ -496,12 +550,38 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def calculate_UM(self):
         # Retrieve data from gui:
-        self.dose = float(self.DoseEdit.text())
+        dose_msg = ''
+        try:
+            self.dose = float(self.DoseEdit.text())
+            if self.dose > 3000:
+                dose_msg = 'La dosis prescrita es demasiado alta!'
+                raise ValueError
+        except ValueError:
+            if dose_msg == '':
+                QMessageBox.critical(self, 'Valor de dosis erróneo',
+                                     'Error en valor de dosis introducida! Recuerda usar . como separador decimal', )
+            else:
+                QMessageBox.critical(self, 'Valor de dosis erróneo',
+                                     dose_msg, )
+            return
+
         applicator = self.combo_applicator.currentText()
         b_idx = self.combo_bevel.currentIndex() - 1  # bevel index
         energy_idx = self.find_checked_radiobutton()
-        p_today = float(self.phoy_edit.text())  # Pressure correction
-
+        p_msg = ''
+        try:
+            p_today = float(self.ptoday_edit.text())  # Pressure correction
+            if p_today < 870 or p_today > 1085: # Earth's record low and high
+                p_msg = 'La presión introducida es incorrecta'
+                raise ValueError
+        except ValueError:
+            if p_msg == '':
+                QMessageBox.critical(self, 'Valor de presión erróneo',
+                                     'Error en valor de presión introducida! Recuerda usar . como separador decimal', )
+            else:
+                QMessageBox.critical(self, 'Valor de presión erróneo',
+                                     p_msg, )
+            return
         # Load output from file and calculate
         OFs = np.load(rf'data\OF_C{applicator}.npz', allow_pickle=True)['arr_0']
         self.cGy_UM = OFs[b_idx, energy_idx]
@@ -536,7 +616,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 file_coronal = os.path.join(tempdir, 'coronal.png')
                 exporter.export(file_coronal)
 
-                file_3D = os.path.join(tempdir,'3D.png')
+                file_3D = os.path.join(tempdir, '3D.png')
                 self.openGLWidget.grabFramebuffer().save(file_3D)
 
                 create_pdf(name[0], file_cross, file_in, file_coronal, file_3D, data_dict)
@@ -556,6 +636,7 @@ class Window(QMainWindow, Ui_MainWindow):
             R90 = self.label_12MeV.text()
 
         data_dict = {
+            # Administrative data
             'Name': self.NameEdit.text(),
             'Surname': self.SurnameEdit.text(),
             'ID': self.IDEdit.text(),
@@ -564,16 +645,21 @@ class Window(QMainWindow, Ui_MainWindow):
             'Oncologist': self.OncologistEdit.text(),
             'TERt': self.TechnologistEdit.text(),
 
+            # Prescription data
             'Applicator': self.combo_applicator.currentText(),
             'Bevel': self.combo_bevel.currentText(),
             'Dose': self.DoseEdit.text(),
-            'Pressure': self.phoy_edit.text(),
+            'Pressure': self.ptoday_edit.text(),
             'RefPressure': self.label_pref.text(),
-            'R90': R90,
+            'R90': self.depth_edit.text(),
 
+            # Irradiation data
             'Energy': self.energies[energy_idx],
+            'Beam_R90': R90,
+            'Beam_zmax': self.label_zmax.text(),
             'Output': self.output_label.text(),
             'UM': self.UM_label.text(),
+            'UM_dev': self.desv_label.text(),
 
             'Linac': conf.machine + ' ' + conf.serial_number,
             'Pitch': self.PitchEdit.text(),
