@@ -659,7 +659,10 @@ class Window(QMainWindow, Ui_MainWindow):
             'Beam_zmax': self.label_zmax.text(),
             'Output': self.output_label.text(),
             'UM': self.UM_label.text(),
+            'UM2': self.SecondEdit.text(),
             'UM_dev': self.desv_label.text(),
+            'R90X': self.label_R90X.text(),
+            'R90Y': self.label_R90Y.text(),
 
             'Linac': conf.machine + ' ' + conf.serial_number,
             'Pitch': self.PitchEdit.text(),

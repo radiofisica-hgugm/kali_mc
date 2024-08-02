@@ -166,8 +166,8 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         ["PROFUNDIDAD R90 (cm):", data_dict['Beam_R90']],
         ["zmax (cm):", data_dict['Beam_zmax']],
         ["cGy/UM @ zmax:", data_dict['Output']],
-        ["Long. X R90 (cm):", ""],
-        ["Long. Y R90 (cm):", ""]
+        ["Long. X R90 (cm):", data_dict['R90X']],
+        ["Long. Y R90 (cm):", data_dict['R90Y']]
     ]
     plan_table = Table(plan_data, colWidths=[6 * cm, 2.5 * cm])
     plan_table.setStyle(TableStyle([
@@ -196,7 +196,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         ('BOTTOMPADDING', (0, 0), (-1, -1), 0.5)
     ]))
     calc2_data = [
-        ["UM segundo cálculo:", data_dict['Energy']],
+        ["UM segundo cálculo:", data_dict['UM2']],
         ["Desviación (%):", data_dict['UM_dev']]
     ]
     calc2_table = Table(calc2_data, colWidths=[6 * cm, 2.5 * cm])
