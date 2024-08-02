@@ -1,2 +1,41 @@
 echo on
-pyinstaller --noconsole --name kali_mc --noconfirm --icon .\ui\res\science-atom-icon.png main.py --paths ./ --splash .\ui\res\science-atom-icon.png --add-data "data/*.*;data/"
+pyinstaller --name kali_mc --hiddenimport=pydicom.encoders.gdcm --hiddenimport=pydicom.encoders.pylibjpeg ^
+--noconfirm --icon .\ui\res\science-atom-icon.png main.py --paths ./ --splash .\ui\res\science-atom-icon.png ^
+--exclude-module local_conf ^
+--add-data "data/*.*;data/" --add-data "data/sim/*.*;data/sim/" --add-data "report/*.*;report/" ^
+--add-data "data/sim/C3/B0/*.*;data/sim/C3/B0" ^
+--add-data "data/sim/C4/B0/*.*;data/sim/C4/B0" ^
+--add-data "data/sim/C5/B0/*.*;data/sim/C5/B0" ^
+--add-data "data/sim/C6/B0/*.*;data/sim/C6/B0" ^
+--add-data "data/sim/C7/B0/*.*;data/sim/C7/B0" ^
+--add-data "data/sim/C8/B0/*.*;data/sim/C8/B0" ^
+--add-data "data/sim/C9/B0/*.*;data/sim/C9/B0" ^
+--add-data "data/sim/C10/B0/*.*;data/sim/C10/B0" ^
+--add-data "data/sim/C12/B0/*.*;data/sim/C12/B0" ^
+--add-data "data/sim/C3/B15/*.*;data/sim/C3/B15" ^
+--add-data "data/sim/C4/B15/*.*;data/sim/C4/B15" ^
+--add-data "data/sim/C5/B15/*.*;data/sim/C5/B15" ^
+--add-data "data/sim/C6/B15/*.*;data/sim/C6/B15" ^
+--add-data "data/sim/C7/B15/*.*;data/sim/C7/B15" ^
+--add-data "data/sim/C8/B15/*.*;data/sim/C8/B15" ^
+--add-data "data/sim/C9/B15/*.*;data/sim/C9/B15" ^
+--add-data "data/sim/C10/B15/*.*;data/sim/C10/B15" ^
+--add-data "data/sim/C12/B15/*.*;data/sim/C12/B15" ^
+--add-data "data/sim/C3/B30/*.*;data/sim/C3/B30" ^
+--add-data "data/sim/C4/B30/*.*;data/sim/C4/B30" ^
+--add-data "data/sim/C5/B30/*.*;data/sim/C5/B30" ^
+--add-data "data/sim/C6/B30/*.*;data/sim/C6/B30" ^
+--add-data "data/sim/C7/B30/*.*;data/sim/C7/B30" ^
+--add-data "data/sim/C8/B30/*.*;data/sim/C8/B30" ^
+--add-data "data/sim/C9/B30/*.*;data/sim/C9/B30" ^
+--add-data "data/sim/C10/B30/*.*;data/sim/C10/B30" ^
+--add-data "data/sim/C12/B30/*.*;data/sim/C12/B30" ^
+--add-data "data/sim/C3/B45/*.*;data/sim/C3/B45" ^
+--add-data "data/sim/C4/B45/*.*;data/sim/C4/B45" ^
+--add-data "data/sim/C5/B45/*.*;data/sim/C5/B45" ^
+--add-data "data/sim/C6/B45/*.*;data/sim/C6/B45" ^
+--add-data "data/sim/C7/B45/*.*;data/sim/C7/B45" ^
+--add-data "data/sim/C8/B45/*.*;data/sim/C8/B45" ^
+--add-data "data/sim/C9/B45/*.*;data/sim/C9/B45" ^
+--add-data "data/sim/C10/B45/*.*;data/sim/C10/B45" ^
+--add-data "data/sim/C12/B45/*.*;data/sim/C12/B45" 

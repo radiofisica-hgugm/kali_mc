@@ -4,22 +4,25 @@ PREF = 934.70  # Reference Pressure at calibration time (hPa)
 
 DepartmentName = ''
 
-# MOSAIQ
+DepartmentLogo_path = r'report/logo_gregoriomaranon.png'
+
+# RECORD AND VERIFY DICOM SERVER SETTINGS ______________________________________________________________________________
 destination_server = ''
 destination_port = 104
 destination_AETitle = ''
 PatientSetupLabel = ''
 
-# Tolerancias
+# Tolerances
 tol_table_ID = ''
 tol_table_label = ''
 
-# MÁQUINA
+# Machine
 machine = 'LIAC'
 serial_number = '0000'
-SSD = 645 # mm
+SSD = 645  # mm
+# ______________________________________________________________________________________________________________________
 
-# Ruta por defecto para informes
+# Default path for saving reports
 pdf_path = r''
 
 try:

@@ -16,6 +16,7 @@ def generate_uid(prefix='1.2.392.200036.9116.2.6.1.48.'):
 
 
 def send_rtplan(data_dict):
+    # TODO: remove dicom file and code all fields
     rtplan = dcmread(os.path.join('dcm', 'test.dcm'), force=True)
     rtplan.file_meta.TransferSyntaxUID = ImplicitVRLittleEndian
 
