@@ -7,6 +7,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib import colors
 from PIL import Image as PILImage
+import datetime
 import conf
 
 
@@ -38,9 +39,9 @@ class RectText(Flowable):
 def footer(canvas, doc):
     canvas.saveState()
     width, height = A4
-    footer_text = f"Kali MC v. {conf.version}"
+    footer_text = f"Kali MC v. {conf.version} -  {datetime.datetime.now()}"
     canvas.setFont('LucidaSans', 8)
-    canvas.drawString(width - 4*cm, 0.5*cm, footer_text)
+    canvas.drawString(width - 8*cm, 0.5*cm, footer_text)
     canvas.restoreState()
 
 
@@ -68,6 +69,8 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         ParagraphStyle(name='LucidaTitle', fontName='LucidaSans', fontSize=20, textColor=colors.HexColor("#2A82C0")))
     styles.add(
         ParagraphStyle(name='LucidaSubtitle', fontName='LucidaSans', fontSize=16, textColor=colors.HexColor("#2A82C0")))
+    styles.add(
+        ParagraphStyle(name='LucidaComments', fontName='LucidaSans', fontSize=14, textColor=colors.HexColor("#2A82C0")))
     styles.add(ParagraphStyle(name='LucidaBody', fontName='LucidaSans', fontSize=10, leading=18))
 
 
@@ -109,7 +112,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     admin_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('TOPPADDING', (0, 0), (-1, -1), 0.5),
@@ -132,7 +135,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     presc_left_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('TOPPADDING', (0, 0), (-1, -1), 0.0),
@@ -147,7 +150,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     presc_right_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('TOPPADDING', (0, 0), (-1, -1), 0.0),
@@ -173,7 +176,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     plan_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('TOPPADDING', (0, 0), (-1, -1), 0.0),
@@ -203,7 +206,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     calc2_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('TOPPADDING', (0, 0), (-1, -1), 0.5),
@@ -222,7 +225,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     linac_table.setStyle(TableStyle([
         ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor("#2A82C0")),
         ('FONTNAME', (0, 0), (-1, -1), 'LucidaSans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('TOPPADDING', (0, 0), (-1, -1), 0.0),
@@ -230,7 +233,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     ]))
 
     comments = Paragraph(data_dict['Comments'])
-    subtitle = Paragraph("Incidencias", styles['LucidaSubtitle'])
+    subtitle = Paragraph("Incidencias", styles['LucidaComments'])
     bordered_table = Table([[subtitle], [comments]], colWidths=[8.5 * cm])
     bordered_table.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.5, colors.black),
