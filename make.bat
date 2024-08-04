@@ -1,6 +1,6 @@
 echo on
 pyinstaller --name kali_mc --hiddenimport=pydicom.encoders.gdcm --hiddenimport=pydicom.encoders.pylibjpeg ^
---noconfirm --icon .\ui\res\kali_ico.png main.py --paths ./ --splash .\ui\res\science-atom-icon.png ^
+--noconfirm --icon .\ui\res\kali_ico.png main.py --paths ./ --splash .\ui\res\splash-kali.png ^
 --exclude-module local_conf ^
 --add-data "data/*.*;data/" --add-data "data/sim/*.*;data/sim/" --add-data "report/*.*;report/" ^
 --add-data "data/sim/C3/B0/*.*;data/sim/C3/B0" ^
