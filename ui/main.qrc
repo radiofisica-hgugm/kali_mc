@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/kali_ico.png</file>
     <file>res/alert-icon.png</file>
     <file>res/red-alert-icon.png</file>
     <file>res/cylinder.svg</file>

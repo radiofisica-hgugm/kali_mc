@@ -16,7 +16,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="main.qrc">
-    <normaloff>:/icons/res/science-atom-icon.svg</normaloff>:/icons/res/science-atom-icon.svg</iconset>
+    <normaloff>:/icons/res/kali_ico.png</normaloff>:/icons/res/kali_ico.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
