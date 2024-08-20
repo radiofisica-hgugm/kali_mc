@@ -21,7 +21,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,5,4">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,6,5">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
@@ -29,7 +29,7 @@
        <number>4</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,2,4,5,3">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,2,5,5,3">
         <property name="spacing">
          <number>6</number>
         </property>
@@ -352,69 +352,11 @@
             <rect>
              <x>10</x>
              <y>20</y>
-             <width>231</width>
-             <height>150</height>
+             <width>271</width>
+             <height>182</height>
             </rect>
            </property>
-           <layout class="QGridLayout" name="gridLayout" columnstretch="2,0,0" columnminimumwidth="2,1,1">
-            <item row="3" column="1">
-             <widget class="QLabel" name="label_10MeV">
-              <property name="font">
-               <font>
-                <family>Lucida Sans</family>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QRadioButton" name="radio3">
-              <property name="font">
-               <font>
-                <family>Lucida Sans</family>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>10 MeV</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="label_6MeV">
-              <property name="font">
-               <font>
-                <family>Lucida Sans</family>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QRadioButton" name="radio4">
-              <property name="font">
-               <font>
-                <family>Lucida Sans</family>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>12 MeV</string>
-              </property>
-             </widget>
-            </item>
+           <layout class="QGridLayout" name="gridLayout" columnstretch="2,0,0,0">
             <item row="4" column="1">
              <widget class="QLabel" name="label_12MeV">
               <property name="font">
@@ -431,50 +373,8 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QRadioButton" name="radio1">
-              <property name="font">
-               <font>
-                <family>Lucida Sans</family>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>6 MeV</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="label_8MeV">
-              <property name="font">
-               <font>
-                <family>Lucida Sans</family>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QRadioButton" name="radio2">
-              <property name="font">
-               <font>
-                <family>Lucida Sans</family>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>8 MeV</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QLabel" name="label_33">
+            <item row="4" column="2">
+             <widget class="QLabel" name="label_rescale_ico_12">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -509,13 +409,296 @@
               <property name="font">
                <font>
                 <family>Lucida Sans</family>
-                <pointsize>12</pointsize>
+                <pointsize>11</pointsize>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
               <property name="text">
                <string>R90 (cm)</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="label_8MeV">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLabel" name="label_rescale_ico_6">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>16</horstretch>
+                <verstretch>16</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>CUIDADO! No se recomienda usar esta combinación de cono/bisel y energía</string>
+              </property>
+              <property name="whatsThis">
+               <string/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLabel" name="label_rescale_ico_10">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>16</horstretch>
+                <verstretch>16</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>CUIDADO! No se recomienda usar esta combinación de cono/bisel y energía</string>
+              </property>
+              <property name="whatsThis">
+               <string/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QRadioButton" name="radio4">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>12 MeV</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QRadioButton" name="radio1">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>6 MeV</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QRadioButton" name="radio3">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>10 MeV</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="label_6MeV">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="label_10MeV">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QRadioButton" name="radio2">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>8 MeV</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLabel" name="label_rescale_ico_8">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>16</horstretch>
+                <verstretch>16</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>CUIDADO! No se recomienda usar esta combinación de cono/bisel y energía</string>
+              </property>
+              <property name="whatsThis">
+               <string/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QLabel" name="label_rescale_f_8">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLabel" name="label_35">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>9</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Factor&lt;br/&gt;de&lt;br/&gt;reescalado&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLabel" name="label_rescale_f_6">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QLabel" name="label_rescale_f_10">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="3">
+             <widget class="QLabel" name="label_rescale_f_12">
+              <property name="font">
+               <font>
+                <family>Lucida Sans</family>
+                <pointsize>8</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -544,7 +727,7 @@
             <rect>
              <x>10</x>
              <y>30</y>
-             <width>241</width>
+             <width>271</width>
              <height>191</height>
             </rect>
            </property>
@@ -780,7 +963,7 @@
             <rect>
              <x>10</x>
              <y>30</y>
-             <width>231</width>
+             <width>271</width>
              <height>91</height>
             </rect>
            </property>

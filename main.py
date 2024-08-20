@@ -17,6 +17,7 @@ try:
 except ModuleNotFoundError:
     pass
 from main_window import Ui_MainWindow, QMainWindow
+import main_rc
 import conf
 from report_utils import create_pdf
 from dicom_utils import send_rtplan
@@ -64,10 +65,16 @@ class Window(QMainWindow, Ui_MainWindow):
         self.Xbin = 0
         self.Ybin = 0
         self.Zbin = 0
-        self.levels = np.array([10, 30, 50, 70, 80, 90, 100, 110])
+        self.levels = np.array([10, 30, 50, 70, 80, 90, 100, 105, 110])
         self.grid_factor = 0.5  # Finer grid
         self.dose_max = 0
         self.dose_min = 0
+
+        if conf.rescale_factors:
+            self.rescale_mat = np.load(os.path.join(self.bundle_dir, rf"data/rescale_factors.npy"))
+        else:
+            self.rescale_mat = np.ones([36, 4])
+        self.rescale_factor = 1.0
 
         # Callbacks:
         self.combo_applicator.activated.connect(self.refresh)
@@ -147,13 +154,28 @@ class Window(QMainWindow, Ui_MainWindow):
 
         if (a_idx >= 0) and (b_idx >= 0):
 
-            R90_array = np.load(os.path.join(self.bundle_dir,rf"data/R90_C{applicator}.npz"))["R90"][
+            R90_array = np.load(os.path.join(self.bundle_dir, rf"data/R90_C{applicator}.npz"))["R90"][
                 :, b_idx
             ]  # load R90 data
             self.label_6MeV.setText(f"{R90_array[0]:.1f}")
             self.label_8MeV.setText(f"{R90_array[1]:.1f}")
             self.label_10MeV.setText(f"{R90_array[2]:.1f}")
             self.label_12MeV.setText(f"{R90_array[3]:.1f}")
+
+            # Rescale factors available?
+            rescale_array = self.rescale_mat[a_idx*4:a_idx*4+4, b_idx]
+            labels = [self.label_rescale_ico_6, self.label_rescale_ico_8, self.label_rescale_ico_10, self.label_rescale_ico_12]
+            rescale_labels = [self.label_rescale_f_6, self.label_rescale_f_8, self.label_rescale_f_10, self.label_rescale_f_12]
+            for idx, item in enumerate(rescale_array):
+                if item > 1:
+                    labels[idx].setPixmap(QtGui.QPixmap(u":/icons/res/alert-icon.png"))
+                    rescale_labels[idx].setText(f"{item:.2f}")
+                elif item == 0:
+                    labels[idx].setPixmap(QtGui.QPixmap(u":/icons/res/red-alert-icon.png"))
+                    rescale_labels[idx].setText("")
+                else:
+                    labels[idx].setPixmap('')
+                    rescale_labels[idx].setText("")
 
             if (
                 self.radio1.isChecked()
@@ -166,6 +188,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 results = np.load(self.npzfile, allow_pickle=True)
                 self.dose_distrib = results["SpatialDoseDistrib"][()]
                 self.plot_distribs()
+                self.rescale_factor = rescale_array[energy_idx]
                 if self.DoseEdit.text() != "" and pressure != "":
                     self.calcular.setEnabled(True)
         else:
@@ -290,7 +313,7 @@ class Window(QMainWindow, Ui_MainWindow):
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(X_plane.shape)
         self.data_cross = np.rot90(D_plane)
-        data = self.data_cross
+        data = self.data_cross * self.rescale_factor
         self.p1.addItem(pg.GridItem())
         self.p1.getViewBox().invertY(True)
         self.p1.getViewBox().setAspectLocked(lock=True, ratio=1)
@@ -367,7 +390,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(Y_plane.shape)
-        self.data_in = np.rot90(D_plane)
+        self.data_in = np.rot90(D_plane) * self.rescale_factor
         self.p2.addItem(pg.GridItem())
         self.p2.getViewBox().invertY(True)
         self.p2.getViewBox().setAspectLocked(lock=True, ratio=1)
@@ -445,7 +468,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(Y_plane.shape)
-        self.data_coronal = np.rot90(D_plane)
+        self.data_coronal = np.rot90(D_plane) * self.rescale_factor
         self.p3.addItem(pg.GridItem())
         # self.p3.getViewBox().invertY(True)
         self.p3.getViewBox().setAspectLocked(lock=True, ratio=1)

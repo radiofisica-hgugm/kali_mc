@@ -192,19 +192,80 @@ class Ui_MainWindow(object):
         self.groupBox_3.setFont(font3)
         self.gridLayoutWidget = QWidget(self.groupBox_3)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
-        self.gridLayoutWidget.setGeometry(QRect(10, 20, 231, 150))
+        self.gridLayoutWidget.setGeometry(QRect(10, 20, 271, 182))
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.label_10MeV = QLabel(self.gridLayoutWidget)
-        self.label_10MeV.setObjectName(u"label_10MeV")
+        self.label_12MeV = QLabel(self.gridLayoutWidget)
+        self.label_12MeV.setObjectName(u"label_12MeV")
         font4 = QFont()
         font4.setFamily(u"Lucida Sans")
         font4.setPointSize(11)
-        self.label_10MeV.setFont(font4)
-        self.label_10MeV.setAlignment(Qt.AlignCenter)
+        self.label_12MeV.setFont(font4)
+        self.label_12MeV.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.label_10MeV, 3, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_12MeV, 4, 1, 1, 1)
+
+        self.label_rescale_ico_12 = QLabel(self.gridLayoutWidget)
+        self.label_rescale_ico_12.setObjectName(u"label_rescale_ico_12")
+        self.label_rescale_ico_12.setEnabled(True)
+        sizePolicy.setHeightForWidth(self.label_rescale_ico_12.sizePolicy().hasHeightForWidth())
+        self.label_rescale_ico_12.setSizePolicy(sizePolicy)
+        self.label_rescale_ico_12.setMaximumSize(QSize(16, 16))
+        self.label_rescale_ico_12.setScaledContents(True)
+
+        self.gridLayout.addWidget(self.label_rescale_ico_12, 4, 2, 1, 1)
+
+        self.label_11 = QLabel(self.gridLayoutWidget)
+        self.label_11.setObjectName(u"label_11")
+        font5 = QFont()
+        font5.setFamily(u"Lucida Sans")
+        font5.setPointSize(11)
+        font5.setBold(True)
+        font5.setWeight(75)
+        self.label_11.setFont(font5)
+        self.label_11.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.label_11, 0, 1, 1, 1)
+
+        self.label_8MeV = QLabel(self.gridLayoutWidget)
+        self.label_8MeV.setObjectName(u"label_8MeV")
+        self.label_8MeV.setFont(font4)
+        self.label_8MeV.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.label_8MeV, 2, 1, 1, 1)
+
+        self.label_rescale_ico_6 = QLabel(self.gridLayoutWidget)
+        self.label_rescale_ico_6.setObjectName(u"label_rescale_ico_6")
+        self.label_rescale_ico_6.setEnabled(True)
+        sizePolicy.setHeightForWidth(self.label_rescale_ico_6.sizePolicy().hasHeightForWidth())
+        self.label_rescale_ico_6.setSizePolicy(sizePolicy)
+        self.label_rescale_ico_6.setMaximumSize(QSize(16, 16))
+        self.label_rescale_ico_6.setScaledContents(True)
+
+        self.gridLayout.addWidget(self.label_rescale_ico_6, 1, 2, 1, 1)
+
+        self.label_rescale_ico_10 = QLabel(self.gridLayoutWidget)
+        self.label_rescale_ico_10.setObjectName(u"label_rescale_ico_10")
+        self.label_rescale_ico_10.setEnabled(True)
+        sizePolicy.setHeightForWidth(self.label_rescale_ico_10.sizePolicy().hasHeightForWidth())
+        self.label_rescale_ico_10.setSizePolicy(sizePolicy)
+        self.label_rescale_ico_10.setMaximumSize(QSize(16, 16))
+        self.label_rescale_ico_10.setScaledContents(True)
+
+        self.gridLayout.addWidget(self.label_rescale_ico_10, 3, 2, 1, 1)
+
+        self.radio4 = QRadioButton(self.gridLayoutWidget)
+        self.radio4.setObjectName(u"radio4")
+        self.radio4.setFont(font4)
+
+        self.gridLayout.addWidget(self.radio4, 4, 0, 1, 1)
+
+        self.radio1 = QRadioButton(self.gridLayoutWidget)
+        self.radio1.setObjectName(u"radio1")
+        self.radio1.setFont(font4)
+
+        self.gridLayout.addWidget(self.radio1, 1, 0, 1, 1)
 
         self.radio3 = QRadioButton(self.gridLayoutWidget)
         self.radio3.setObjectName(u"radio3")
@@ -219,31 +280,12 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.label_6MeV, 1, 1, 1, 1)
 
-        self.radio4 = QRadioButton(self.gridLayoutWidget)
-        self.radio4.setObjectName(u"radio4")
-        self.radio4.setFont(font4)
+        self.label_10MeV = QLabel(self.gridLayoutWidget)
+        self.label_10MeV.setObjectName(u"label_10MeV")
+        self.label_10MeV.setFont(font4)
+        self.label_10MeV.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.radio4, 4, 0, 1, 1)
-
-        self.label_12MeV = QLabel(self.gridLayoutWidget)
-        self.label_12MeV.setObjectName(u"label_12MeV")
-        self.label_12MeV.setFont(font4)
-        self.label_12MeV.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout.addWidget(self.label_12MeV, 4, 1, 1, 1)
-
-        self.radio1 = QRadioButton(self.gridLayoutWidget)
-        self.radio1.setObjectName(u"radio1")
-        self.radio1.setFont(font4)
-
-        self.gridLayout.addWidget(self.radio1, 1, 0, 1, 1)
-
-        self.label_8MeV = QLabel(self.gridLayoutWidget)
-        self.label_8MeV.setObjectName(u"label_8MeV")
-        self.label_8MeV.setFont(font4)
-        self.label_8MeV.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout.addWidget(self.label_8MeV, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_10MeV, 3, 1, 1, 1)
 
         self.radio2 = QRadioButton(self.gridLayoutWidget)
         self.radio2.setObjectName(u"radio2")
@@ -251,70 +293,100 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.radio2, 2, 0, 1, 1)
 
-        self.label_33 = QLabel(self.gridLayoutWidget)
-        self.label_33.setObjectName(u"label_33")
-        self.label_33.setEnabled(True)
-        sizePolicy.setHeightForWidth(self.label_33.sizePolicy().hasHeightForWidth())
-        self.label_33.setSizePolicy(sizePolicy)
-        self.label_33.setMaximumSize(QSize(16, 16))
-        self.label_33.setScaledContents(True)
+        self.label_rescale_ico_8 = QLabel(self.gridLayoutWidget)
+        self.label_rescale_ico_8.setObjectName(u"label_rescale_ico_8")
+        self.label_rescale_ico_8.setEnabled(True)
+        sizePolicy.setHeightForWidth(self.label_rescale_ico_8.sizePolicy().hasHeightForWidth())
+        self.label_rescale_ico_8.setSizePolicy(sizePolicy)
+        self.label_rescale_ico_8.setMaximumSize(QSize(16, 16))
+        self.label_rescale_ico_8.setScaledContents(True)
 
-        self.gridLayout.addWidget(self.label_33, 2, 2, 1, 1)
+        self.gridLayout.addWidget(self.label_rescale_ico_8, 2, 2, 1, 1)
 
-        self.label_11 = QLabel(self.gridLayoutWidget)
-        self.label_11.setObjectName(u"label_11")
-        font5 = QFont()
-        font5.setFamily(u"Lucida Sans")
-        font5.setPointSize(12)
-        font5.setBold(True)
-        font5.setWeight(75)
-        self.label_11.setFont(font5)
-        self.label_11.setAlignment(Qt.AlignCenter)
+        self.label_rescale_f_8 = QLabel(self.gridLayoutWidget)
+        self.label_rescale_f_8.setObjectName(u"label_rescale_f_8")
+        font6 = QFont()
+        font6.setFamily(u"Lucida Sans")
+        font6.setPointSize(8)
+        font6.setBold(False)
+        font6.setWeight(50)
+        self.label_rescale_f_8.setFont(font6)
+        self.label_rescale_f_8.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.label_11, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_rescale_f_8, 2, 3, 1, 1)
+
+        self.label_35 = QLabel(self.gridLayoutWidget)
+        self.label_35.setObjectName(u"label_35")
+        font7 = QFont()
+        font7.setFamily(u"Lucida Sans")
+        font7.setPointSize(9)
+        font7.setBold(True)
+        font7.setWeight(75)
+        self.label_35.setFont(font7)
+        self.label_35.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.label_35, 0, 3, 1, 1)
+
+        self.label_rescale_f_6 = QLabel(self.gridLayoutWidget)
+        self.label_rescale_f_6.setObjectName(u"label_rescale_f_6")
+        self.label_rescale_f_6.setFont(font6)
+        self.label_rescale_f_6.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.label_rescale_f_6, 1, 3, 1, 1)
+
+        self.label_rescale_f_10 = QLabel(self.gridLayoutWidget)
+        self.label_rescale_f_10.setObjectName(u"label_rescale_f_10")
+        self.label_rescale_f_10.setFont(font6)
+        self.label_rescale_f_10.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.label_rescale_f_10, 3, 3, 1, 1)
+
+        self.label_rescale_f_12 = QLabel(self.gridLayoutWidget)
+        self.label_rescale_f_12.setObjectName(u"label_rescale_f_12")
+        self.label_rescale_f_12.setFont(font6)
+        self.label_rescale_f_12.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.label_rescale_f_12, 4, 3, 1, 1)
 
         self.gridLayout.setColumnStretch(0, 2)
-        self.gridLayout.setColumnMinimumWidth(0, 2)
-        self.gridLayout.setColumnMinimumWidth(1, 1)
-        self.gridLayout.setColumnMinimumWidth(2, 1)
 
         self.verticalLayout.addWidget(self.groupBox_3)
 
         self.groupBox_4 = QGroupBox(self.centralwidget)
         self.groupBox_4.setObjectName(u"groupBox_4")
-        font6 = QFont()
-        font6.setFamily(u"Lucida Sans")
-        font6.setPointSize(13)
-        font6.setBold(True)
-        font6.setWeight(75)
-        self.groupBox_4.setFont(font6)
+        font8 = QFont()
+        font8.setFamily(u"Lucida Sans")
+        font8.setPointSize(13)
+        font8.setBold(True)
+        font8.setWeight(75)
+        self.groupBox_4.setFont(font8)
         self.formLayoutWidget_5 = QWidget(self.groupBox_4)
         self.formLayoutWidget_5.setObjectName(u"formLayoutWidget_5")
-        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 241, 191))
+        self.formLayoutWidget_5.setGeometry(QRect(10, 30, 271, 191))
         self.formLayout_8 = QFormLayout(self.formLayoutWidget_5)
         self.formLayout_8.setObjectName(u"formLayout_8")
         self.formLayout_8.setVerticalSpacing(7)
         self.formLayout_8.setContentsMargins(0, 0, 15, 0)
         self.label_14 = QLabel(self.formLayoutWidget_5)
         self.label_14.setObjectName(u"label_14")
-        font7 = QFont()
-        font7.setFamily(u"Lucida Sans")
-        font7.setPointSize(10)
-        font7.setBold(False)
-        font7.setWeight(50)
-        self.label_14.setFont(font7)
+        font9 = QFont()
+        font9.setFamily(u"Lucida Sans")
+        font9.setPointSize(10)
+        font9.setBold(False)
+        font9.setWeight(50)
+        self.label_14.setFont(font9)
 
         self.formLayout_8.setWidget(0, QFormLayout.LabelRole, self.label_14)
 
         self.label_15 = QLabel(self.formLayoutWidget_5)
         self.label_15.setObjectName(u"label_15")
-        self.label_15.setFont(font7)
+        self.label_15.setFont(font9)
 
         self.formLayout_8.setWidget(1, QFormLayout.LabelRole, self.label_15)
 
         self.label_16 = QLabel(self.formLayoutWidget_5)
         self.label_16.setObjectName(u"label_16")
-        self.label_16.setFont(font7)
+        self.label_16.setFont(font9)
 
         self.formLayout_8.setWidget(3, QFormLayout.LabelRole, self.label_16)
 
@@ -331,34 +403,34 @@ class Ui_MainWindow(object):
 
         self.label_19 = QLabel(self.formLayoutWidget_5)
         self.label_19.setObjectName(u"label_19")
-        self.label_19.setFont(font7)
+        self.label_19.setFont(font9)
 
         self.formLayout_8.setWidget(5, QFormLayout.LabelRole, self.label_19)
 
         self.label_pref = QLabel(self.formLayoutWidget_5)
         self.label_pref.setObjectName(u"label_pref")
-        self.label_pref.setFont(font7)
+        self.label_pref.setFont(font9)
         self.label_pref.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(0, QFormLayout.FieldRole, self.label_pref)
 
         self.output_label = QLabel(self.formLayoutWidget_5)
         self.output_label.setObjectName(u"output_label")
-        self.output_label.setFont(font7)
+        self.output_label.setFont(font9)
         self.output_label.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(3, QFormLayout.FieldRole, self.output_label)
 
         self.ptoday_edit = QLineEdit(self.formLayoutWidget_5)
         self.ptoday_edit.setObjectName(u"ptoday_edit")
-        self.ptoday_edit.setFont(font7)
+        self.ptoday_edit.setFont(font9)
         self.ptoday_edit.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(1, QFormLayout.FieldRole, self.ptoday_edit)
 
         self.SecondEdit = QLineEdit(self.formLayoutWidget_5)
         self.SecondEdit.setObjectName(u"SecondEdit")
-        self.SecondEdit.setFont(font7)
+        self.SecondEdit.setFont(font9)
         self.SecondEdit.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(5, QFormLayout.FieldRole, self.SecondEdit)
@@ -377,13 +449,13 @@ class Ui_MainWindow(object):
 
         self.label_30 = QLabel(self.formLayoutWidget_5)
         self.label_30.setObjectName(u"label_30")
-        self.label_30.setFont(font7)
+        self.label_30.setFont(font9)
 
         self.formLayout_8.setWidget(6, QFormLayout.LabelRole, self.label_30)
 
         self.desv_label = QLabel(self.formLayoutWidget_5)
         self.desv_label.setObjectName(u"desv_label")
-        self.desv_label.setFont(font7)
+        self.desv_label.setFont(font9)
         self.desv_label.setAlignment(Qt.AlignCenter)
 
         self.formLayout_8.setWidget(6, QFormLayout.FieldRole, self.desv_label)
@@ -393,11 +465,11 @@ class Ui_MainWindow(object):
 
         self.groupBox_5 = QGroupBox(self.centralwidget)
         self.groupBox_5.setObjectName(u"groupBox_5")
-        self.groupBox_5.setFont(font6)
+        self.groupBox_5.setFont(font8)
         self.groupBox_5.setStyleSheet(u"background-color:rgb(85, 170, 255)")
         self.formLayoutWidget_4 = QWidget(self.groupBox_5)
         self.formLayoutWidget_4.setObjectName(u"formLayoutWidget_4")
-        self.formLayoutWidget_4.setGeometry(QRect(10, 30, 231, 91))
+        self.formLayoutWidget_4.setGeometry(QRect(10, 30, 271, 91))
         self.formLayout_7 = QFormLayout(self.formLayoutWidget_4)
         self.formLayout_7.setObjectName(u"formLayout_7")
         self.formLayout_7.setFormAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
@@ -446,7 +518,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.groupBox_5)
 
         self.verticalLayout.setStretch(2, 2)
-        self.verticalLayout.setStretch(3, 4)
+        self.verticalLayout.setStretch(3, 5)
         self.verticalLayout.setStretch(4, 5)
         self.verticalLayout.setStretch(5, 3)
 
@@ -475,39 +547,39 @@ class Ui_MainWindow(object):
         self.formLayout.setObjectName(u"formLayout")
         self.label_13 = QLabel(self.centralwidget)
         self.label_13.setObjectName(u"label_13")
-        font8 = QFont()
-        font8.setFamily(u"Lucida Sans")
-        self.label_13.setFont(font8)
+        font10 = QFont()
+        font10.setFamily(u"Lucida Sans")
+        self.label_13.setFont(font10)
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_13)
 
         self.label_zmax = QLabel(self.centralwidget)
         self.label_zmax.setObjectName(u"label_zmax")
-        self.label_zmax.setFont(font8)
+        self.label_zmax.setFont(font10)
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.label_zmax)
 
         self.label_34 = QLabel(self.centralwidget)
         self.label_34.setObjectName(u"label_34")
-        self.label_34.setFont(font8)
+        self.label_34.setFont(font10)
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_34)
 
         self.label_R90X = QLabel(self.centralwidget)
         self.label_R90X.setObjectName(u"label_R90X")
-        self.label_R90X.setFont(font8)
+        self.label_R90X.setFont(font10)
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.label_R90X)
 
         self.label_32 = QLabel(self.centralwidget)
         self.label_32.setObjectName(u"label_32")
-        self.label_32.setFont(font8)
+        self.label_32.setFont(font10)
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_32)
 
         self.label_R90Y = QLabel(self.centralwidget)
         self.label_R90Y.setObjectName(u"label_R90Y")
-        self.label_R90Y.setFont(font8)
+        self.label_R90Y.setFont(font10)
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.label_R90Y)
 
@@ -535,10 +607,10 @@ class Ui_MainWindow(object):
 
         self.groupBox_6 = QGroupBox(self.centralwidget)
         self.groupBox_6.setObjectName(u"groupBox_6")
-        font9 = QFont()
-        font9.setFamily(u"Lucida Sans")
-        font9.setPointSize(13)
-        self.groupBox_6.setFont(font9)
+        font11 = QFont()
+        font11.setFamily(u"Lucida Sans")
+        font11.setPointSize(13)
+        self.groupBox_6.setFont(font11)
         self.groupBox_6.setAutoFillBackground(False)
         self.verticalLayoutWidget_4 = QWidget(self.groupBox_6)
         self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
@@ -552,88 +624,88 @@ class Ui_MainWindow(object):
         self.formLayout_9.setObjectName(u"formLayout_9")
         self.label_18 = QLabel(self.verticalLayoutWidget_4)
         self.label_18.setObjectName(u"label_18")
-        font10 = QFont()
-        font10.setFamily(u"Lucida Sans")
-        font10.setPointSize(10)
-        self.label_18.setFont(font10)
+        font12 = QFont()
+        font12.setFamily(u"Lucida Sans")
+        font12.setPointSize(10)
+        self.label_18.setFont(font12)
 
         self.formLayout_9.setWidget(0, QFormLayout.LabelRole, self.label_18)
 
         self.NameEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.NameEdit.setObjectName(u"NameEdit")
-        self.NameEdit.setFont(font10)
+        self.NameEdit.setFont(font12)
 
         self.formLayout_9.setWidget(0, QFormLayout.FieldRole, self.NameEdit)
 
         self.label_20 = QLabel(self.verticalLayoutWidget_4)
         self.label_20.setObjectName(u"label_20")
-        self.label_20.setFont(font10)
+        self.label_20.setFont(font12)
 
         self.formLayout_9.setWidget(2, QFormLayout.LabelRole, self.label_20)
 
         self.IDEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.IDEdit.setObjectName(u"IDEdit")
-        self.IDEdit.setFont(font10)
+        self.IDEdit.setFont(font12)
 
         self.formLayout_9.setWidget(2, QFormLayout.FieldRole, self.IDEdit)
 
         self.label_21 = QLabel(self.verticalLayoutWidget_4)
         self.label_21.setObjectName(u"label_21")
-        self.label_21.setFont(font10)
+        self.label_21.setFont(font12)
 
         self.formLayout_9.setWidget(3, QFormLayout.LabelRole, self.label_21)
 
         self.SiteEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.SiteEdit.setObjectName(u"SiteEdit")
-        self.SiteEdit.setFont(font10)
+        self.SiteEdit.setFont(font12)
 
         self.formLayout_9.setWidget(3, QFormLayout.FieldRole, self.SiteEdit)
 
         self.label_22 = QLabel(self.verticalLayoutWidget_4)
         self.label_22.setObjectName(u"label_22")
-        self.label_22.setFont(font10)
+        self.label_22.setFont(font12)
 
         self.formLayout_9.setWidget(4, QFormLayout.LabelRole, self.label_22)
 
         self.PhysicistEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.PhysicistEdit.setObjectName(u"PhysicistEdit")
-        self.PhysicistEdit.setFont(font10)
+        self.PhysicistEdit.setFont(font12)
 
         self.formLayout_9.setWidget(4, QFormLayout.FieldRole, self.PhysicistEdit)
 
         self.label_23 = QLabel(self.verticalLayoutWidget_4)
         self.label_23.setObjectName(u"label_23")
-        self.label_23.setFont(font10)
+        self.label_23.setFont(font12)
 
         self.formLayout_9.setWidget(5, QFormLayout.LabelRole, self.label_23)
 
         self.OncologistEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.OncologistEdit.setObjectName(u"OncologistEdit")
-        self.OncologistEdit.setFont(font10)
+        self.OncologistEdit.setFont(font12)
 
         self.formLayout_9.setWidget(5, QFormLayout.FieldRole, self.OncologistEdit)
 
         self.label_24 = QLabel(self.verticalLayoutWidget_4)
         self.label_24.setObjectName(u"label_24")
-        self.label_24.setFont(font10)
+        self.label_24.setFont(font12)
 
         self.formLayout_9.setWidget(6, QFormLayout.LabelRole, self.label_24)
 
         self.TechnologistEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.TechnologistEdit.setObjectName(u"TechnologistEdit")
-        self.TechnologistEdit.setFont(font10)
+        self.TechnologistEdit.setFont(font12)
 
         self.formLayout_9.setWidget(6, QFormLayout.FieldRole, self.TechnologistEdit)
 
         self.label_31 = QLabel(self.verticalLayoutWidget_4)
         self.label_31.setObjectName(u"label_31")
-        self.label_31.setFont(font10)
+        self.label_31.setFont(font12)
 
         self.formLayout_9.setWidget(1, QFormLayout.LabelRole, self.label_31)
 
         self.SurnameEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.SurnameEdit.setObjectName(u"SurnameEdit")
-        self.SurnameEdit.setFont(font10)
+        self.SurnameEdit.setFont(font12)
 
         self.formLayout_9.setWidget(1, QFormLayout.FieldRole, self.SurnameEdit)
 
@@ -651,37 +723,37 @@ class Ui_MainWindow(object):
         self.formLayout_10.setObjectName(u"formLayout_10")
         self.label_27 = QLabel(self.verticalLayoutWidget_4)
         self.label_27.setObjectName(u"label_27")
-        self.label_27.setFont(font10)
+        self.label_27.setFont(font12)
 
         self.formLayout_10.setWidget(0, QFormLayout.LabelRole, self.label_27)
 
         self.PitchEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.PitchEdit.setObjectName(u"PitchEdit")
-        self.PitchEdit.setFont(font10)
+        self.PitchEdit.setFont(font12)
 
         self.formLayout_10.setWidget(0, QFormLayout.FieldRole, self.PitchEdit)
 
         self.label_28 = QLabel(self.verticalLayoutWidget_4)
         self.label_28.setObjectName(u"label_28")
-        self.label_28.setFont(font10)
+        self.label_28.setFont(font12)
 
         self.formLayout_10.setWidget(1, QFormLayout.LabelRole, self.label_28)
 
         self.RollEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.RollEdit.setObjectName(u"RollEdit")
-        self.RollEdit.setFont(font10)
+        self.RollEdit.setFont(font12)
 
         self.formLayout_10.setWidget(1, QFormLayout.FieldRole, self.RollEdit)
 
         self.label_29 = QLabel(self.verticalLayoutWidget_4)
         self.label_29.setObjectName(u"label_29")
-        self.label_29.setFont(font10)
+        self.label_29.setFont(font12)
 
         self.formLayout_10.setWidget(2, QFormLayout.LabelRole, self.label_29)
 
         self.VerticalEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.VerticalEdit.setObjectName(u"VerticalEdit")
-        self.VerticalEdit.setFont(font10)
+        self.VerticalEdit.setFont(font12)
 
         self.formLayout_10.setWidget(2, QFormLayout.FieldRole, self.VerticalEdit)
 
@@ -695,13 +767,13 @@ class Ui_MainWindow(object):
 
         self.label_25 = QLabel(self.verticalLayoutWidget_4)
         self.label_25.setObjectName(u"label_25")
-        self.label_25.setFont(font10)
+        self.label_25.setFont(font12)
 
         self.formLayout_10.setWidget(4, QFormLayout.LabelRole, self.label_25)
 
         self.IORTnumberEdit = QLineEdit(self.verticalLayoutWidget_4)
         self.IORTnumberEdit.setObjectName(u"IORTnumberEdit")
-        self.IORTnumberEdit.setFont(font10)
+        self.IORTnumberEdit.setFont(font12)
 
         self.formLayout_10.setWidget(4, QFormLayout.FieldRole, self.IORTnumberEdit)
 
@@ -729,7 +801,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.CommentsEdit = QPlainTextEdit(self.verticalLayoutWidget_4)
         self.CommentsEdit.setObjectName(u"CommentsEdit")
-        self.CommentsEdit.setFont(font10)
+        self.CommentsEdit.setFont(font12)
 
         self.horizontalLayout_4.addWidget(self.CommentsEdit)
 
@@ -771,9 +843,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addLayout(self.verticalLayout_4)
 
-        self.horizontalLayout.setStretch(0, 2)
-        self.horizontalLayout.setStretch(1, 5)
-        self.horizontalLayout.setStretch(2, 4)
+        self.horizontalLayout.setStretch(0, 3)
+        self.horizontalLayout.setStretch(1, 6)
+        self.horizontalLayout.setStretch(2, 5)
 
         self.horizontalLayout_2.addLayout(self.horizontalLayout)
 
@@ -844,22 +916,48 @@ class Ui_MainWindow(object):
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Dosis (cGy)", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Profundidad (cm)", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Energ\u00edas", None))
-        self.label_10MeV.setText("")
-        self.radio3.setText(QCoreApplication.translate("MainWindow", u"10 MeV", None))
-        self.label_6MeV.setText("")
-        self.radio4.setText(QCoreApplication.translate("MainWindow", u"12 MeV", None))
         self.label_12MeV.setText("")
-        self.radio1.setText(QCoreApplication.translate("MainWindow", u"6 MeV", None))
-        self.label_8MeV.setText("")
-        self.radio2.setText(QCoreApplication.translate("MainWindow", u"8 MeV", None))
 #if QT_CONFIG(tooltip)
-        self.label_33.setToolTip(QCoreApplication.translate("MainWindow", u"CUIDADO! No se recomienda usar esta combinaci\u00f3n de cono/bisel y energ\u00eda", None))
+        self.label_rescale_ico_12.setToolTip(QCoreApplication.translate("MainWindow", u"CUIDADO! No se recomienda usar esta combinaci\u00f3n de cono/bisel y energ\u00eda", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(whatsthis)
-        self.label_33.setWhatsThis("")
+        self.label_rescale_ico_12.setWhatsThis("")
 #endif // QT_CONFIG(whatsthis)
-        self.label_33.setText("")
+        self.label_rescale_ico_12.setText("")
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"R90 (cm)", None))
+        self.label_8MeV.setText("")
+#if QT_CONFIG(tooltip)
+        self.label_rescale_ico_6.setToolTip(QCoreApplication.translate("MainWindow", u"CUIDADO! No se recomienda usar esta combinaci\u00f3n de cono/bisel y energ\u00eda", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(whatsthis)
+        self.label_rescale_ico_6.setWhatsThis("")
+#endif // QT_CONFIG(whatsthis)
+        self.label_rescale_ico_6.setText("")
+#if QT_CONFIG(tooltip)
+        self.label_rescale_ico_10.setToolTip(QCoreApplication.translate("MainWindow", u"CUIDADO! No se recomienda usar esta combinaci\u00f3n de cono/bisel y energ\u00eda", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(whatsthis)
+        self.label_rescale_ico_10.setWhatsThis("")
+#endif // QT_CONFIG(whatsthis)
+        self.label_rescale_ico_10.setText("")
+        self.radio4.setText(QCoreApplication.translate("MainWindow", u"12 MeV", None))
+        self.radio1.setText(QCoreApplication.translate("MainWindow", u"6 MeV", None))
+        self.radio3.setText(QCoreApplication.translate("MainWindow", u"10 MeV", None))
+        self.label_6MeV.setText("")
+        self.label_10MeV.setText("")
+        self.radio2.setText(QCoreApplication.translate("MainWindow", u"8 MeV", None))
+#if QT_CONFIG(tooltip)
+        self.label_rescale_ico_8.setToolTip(QCoreApplication.translate("MainWindow", u"CUIDADO! No se recomienda usar esta combinaci\u00f3n de cono/bisel y energ\u00eda", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(whatsthis)
+        self.label_rescale_ico_8.setWhatsThis("")
+#endif // QT_CONFIG(whatsthis)
+        self.label_rescale_ico_8.setText("")
+        self.label_rescale_f_8.setText("")
+        self.label_35.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\">Factor<br/>de<br/>reescalado</p></body></html>", None))
+        self.label_rescale_f_6.setText("")
+        self.label_rescale_f_10.setText("")
+        self.label_rescale_f_12.setText("")
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"C\u00e1lculo de UM", None))
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"Pref (hPa):", None))
         self.label_15.setText(QCoreApplication.translate("MainWindow", u"Phoy (hPa):", None))

@@ -24,6 +24,7 @@ SSD = 645  # mm
 
 # Default path for saving reports
 pdf_path = r''
+rescale_factors = False
 
 try:
     from local_conf import *
@@ -33,3 +34,5 @@ except ImportError:
     pass
 
 version = '1.0.0'
+
+
