@@ -1,10 +1,11 @@
 import multiprocessing
 import sys
 from PySide2.QtWidgets import QApplication, QFileDialog, QMessageBox
-from PySide2 import QtGui
+from PySide2 import QtGui, QtCore
 
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator, interp1d
+import OpenGL.GL as GL
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 import pyqtgraph.exporters
@@ -17,7 +18,6 @@ try:
 except ModuleNotFoundError:
     pass
 from main_window import Ui_MainWindow, QMainWindow
-import main_rc
 import conf
 from report_utils import create_pdf
 from dicom_utils import send_rtplan
@@ -71,7 +71,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.dose_min = 0
 
         if conf.rescale_factors:
-            self.rescale_mat = np.load(os.path.join(self.bundle_dir, rf"data/rescale_factors.npy"))
+            self.rescale_mat = np.load(
+                os.path.join(self.bundle_dir, rf"data/rescale_factors.npy")
+            )
         else:
             self.rescale_mat = np.ones([36, 4])
         self.rescale_factor = 1.0
@@ -80,10 +82,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.combo_applicator.activated.connect(self.refresh)
         self.combo_bevel.activated.connect(self.refresh)
         self.DoseEdit.editingFinished.connect(self.refresh)
-        self.radio1.toggled.connect(self.refresh)
-        self.radio2.toggled.connect(self.refresh)
-        self.radio3.toggled.connect(self.refresh)
-        self.radio4.toggled.connect(self.refresh)
+        self.radio1.clicked.connect(self.refresh)
+        self.radio2.clicked.connect(self.refresh)
+        self.radio3.clicked.connect(self.refresh)
+        self.radio4.clicked.connect(self.refresh)
         self.ptoday_edit.editingFinished.connect(self.refresh)
         self.calcular.clicked.connect(self.calculate_UM)
         self.pushreport.clicked.connect(self.generate_report)
@@ -154,7 +156,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
         if (a_idx >= 0) and (b_idx >= 0):
 
-            R90_array = np.load(os.path.join(self.bundle_dir, rf"data/R90_C{applicator}.npz"))["R90"][
+            R90_array = np.load(
+                os.path.join(self.bundle_dir, rf"data/R90_C{applicator}.npz")
+            )["R90"][
                 :, b_idx
             ]  # load R90 data
             self.label_6MeV.setText(f"{R90_array[0]:.1f}")
@@ -163,18 +167,38 @@ class Window(QMainWindow, Ui_MainWindow):
             self.label_12MeV.setText(f"{R90_array[3]:.1f}")
 
             # Rescale factors available?
-            rescale_array = self.rescale_mat[a_idx*4:a_idx*4+4, b_idx]
-            labels = [self.label_rescale_ico_6, self.label_rescale_ico_8, self.label_rescale_ico_10, self.label_rescale_ico_12]
-            rescale_labels = [self.label_rescale_f_6, self.label_rescale_f_8, self.label_rescale_f_10, self.label_rescale_f_12]
+            rescale_array = self.rescale_mat[a_idx * 4 : a_idx * 4 + 4, b_idx]
+            labels = [
+                self.label_rescale_ico_6,
+                self.label_rescale_ico_8,
+                self.label_rescale_ico_10,
+                self.label_rescale_ico_12,
+            ]
+            rescale_labels = [
+                self.label_rescale_f_6,
+                self.label_rescale_f_8,
+                self.label_rescale_f_10,
+                self.label_rescale_f_12,
+            ]
+            # Show alert and warning icons
             for idx, item in enumerate(rescale_array):
                 if item > 1:
-                    labels[idx].setPixmap(QtGui.QPixmap(u":/icons/res/alert-icon.png"))
+                    labels[idx].setPixmap(QtGui.QPixmap(":/icons/res/alert-icon.png"))
+                    labels[idx].setToolTip(
+                        "CUIDADO! se aplicará un factor de reescalado"
+                    )
                     rescale_labels[idx].setText(f"{item:.2f}")
                 elif item == 0:
-                    labels[idx].setPixmap(QtGui.QPixmap(u":/icons/res/red-alert-icon.png"))
+                    labels[idx].setPixmap(
+                        QtGui.QPixmap(":/icons/res/red-alert-icon.png")
+                    )
+                    labels[idx].setToolTip(
+                        "CUIDADO! No se recomienda usar esta combinación de cono/bisel y energía"
+                    )
                     rescale_labels[idx].setText("")
                 else:
-                    labels[idx].setPixmap('')
+                    labels[idx].setPixmap("")
+                    labels[idx].setToolTip("")
                     rescale_labels[idx].setText("")
 
             if (
@@ -184,11 +208,21 @@ class Window(QMainWindow, Ui_MainWindow):
                 or self.radio4.isChecked()
             ):
                 energy_idx = self.find_checked_radiobutton()
-                self.npzfile = os.path.join(self.bundle_dir,rf"data\sim\C{applicator}\B{bevel}\C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz")
+                self.rescale_factor = rescale_array[energy_idx]
+                if self.rescale_factor > 1:
+                    self.label_comments_warning.setText("Factor de reescalado aplicado")
+                    self.label_comments_ico.setPixmap(":/icons/res/alert-icon.png")
+                else:
+                    self.label_comments_warning.setText("")
+                    self.label_comments_ico.setPixmap("")
+                self.npzfile = os.path.join(
+                    self.bundle_dir,
+                    rf"data\sim\C{applicator}\B{bevel}\C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz",
+                )
                 results = np.load(self.npzfile, allow_pickle=True)
                 self.dose_distrib = results["SpatialDoseDistrib"][()]
                 self.plot_distribs()
-                self.rescale_factor = rescale_array[energy_idx]
+
                 if self.DoseEdit.text() != "" and pressure != "":
                     self.calcular.setEnabled(True)
         else:
@@ -257,32 +291,39 @@ class Window(QMainWindow, Ui_MainWindow):
         self.z_clinical_max = z_vals[np.argmax(depth_dose)]
         self.label_zmax.setText(f"{-self.z_clinical_max:.2f}")
 
-        # plot cross plane
-        self.plot_crossplane(interpolator)
+        if self.rescale_factor !=0:
+            # plot cross plane
+            self.plot_crossplane(interpolator)
 
-        # plot inline plane
-        self.plot_inplane(interpolator)
+            # plot inline plane
+            self.plot_inplane(interpolator)
 
-        # plot coronal zmax plane
-        self.plot_coronal(interpolator)
+            # plot coronal zmax plane
+            self.plot_coronal(interpolator)
 
-        # 3D
-        self.openGLWidget.clear()
-        self.openGLWidget.setCameraPosition(distance=20, azimuth=-55, elevation=15)
+            # 3D
+            self.openGLWidget.clear()
+            self.openGLWidget.setCameraPosition(distance=20, azimuth=-55, elevation=15)
+            g = gl.GLGridItem()
+            self.openGLWidget.addItem(g)
+            levels = [1.05, 0.9, 0.2]
+            reds = [1.0, 0.8, 0]
+            greens = [0.0, 0.4, 0]
+            alphas = [0.2, 0.3, 255]
+            for idx, level in enumerate(levels):
+                self.create_3D_isodose(
+                    level=level, red=reds[idx], green=greens[idx], alpha=alphas[idx]
+                )
 
-        g = gl.GLGridItem()
-        self.openGLWidget.addItem(g)
-        levels = [1.05, 0.9, 0.2]
-        reds = [1.0, 0.8, 0]
-        greens = [0.0, 0.4, 0]
-        alphas = [0.2, 0.3, 255]
-        for idx, level in enumerate(levels):
-            self.create_3D_isodose(
-                level=level, red=reds[idx], green=greens[idx], alpha=alphas[idx]
-            )
+            # 3D Cylinder
+            self.add_inclined_cylinder()
+            print("Plots updated")
 
-        # 3D Cylinder
-        self.add_inclined_cylinder()
+        else:
+            self.p1.clear()
+            self.p2.clear()
+            self.p3.clear()
+            self.openGLWidget.clear()
 
     def plot_crossplane(self, interpolator):
         plot_relative = True
@@ -521,7 +562,7 @@ class Window(QMainWindow, Ui_MainWindow):
         # Interpolate to get crossplane OAR at zmax
         y_val_cross = 0
         points = np.array([[x, y_val_cross, z_val] for x in x_vals])
-        OAR_cross = interpolator(points)
+        OAR_cross = interpolator(points) * self.rescale_factor
         OAR_cross_norm = OAR_cross / self.clinical_max * 100
         x_positive = x_vals[x_vals > 0]
         cross_positive = OAR_cross_norm[x_vals > 0]
@@ -565,7 +606,7 @@ class Window(QMainWindow, Ui_MainWindow):
         # Interpolate to get inplane OAR at zmax
         x_val_cross = 0
         points = np.array([[x_val_cross, y, z_val] for y in y_vals])
-        OAR_in = interpolator(points)
+        OAR_in = interpolator(points) * self.rescale_factor
         OAR_in_norm = OAR_in / self.clinical_max * 100
         y_positive = y_vals[y_vals > 0]
         in_positive = OAR_in_norm[y_vals > 0]
@@ -659,9 +700,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.openGLWidget.addItem(m)
 
     def create_3D_isodose(self, level, red, green, alpha):
-        D = self.dose_distrib["Dose"]
+        D = self.dose_distrib["Dose"] * self.rescale_factor
         Xbin, Ybin, Zbin = D.shape
-        verts, faces = pg.isosurface(D, D.max() * level)
+        verts, faces = pg.isosurface(D, self.clinical_max * level)
         md = gl.MeshData(vertexes=verts, faces=faces)
         colors = np.ones((md.faceCount(), 4), dtype=float) * red
         colors[:, 1] = green  # 0.2
@@ -729,7 +770,10 @@ class Window(QMainWindow, Ui_MainWindow):
                 )
             return
         # Load output from file and calculate
-        OFs = np.load(os.path.join(self.bundle_dir, rf"data\OF_C{applicator}.npz"), allow_pickle=True)["arr_0"]
+        OFs = np.load(
+            os.path.join(self.bundle_dir, rf"data\OF_C{applicator}.npz"),
+            allow_pickle=True,
+        )["arr_0"]
         self.cGy_UM = OFs[b_idx, energy_idx]
         self.output_label.setText(f"{self.cGy_UM:.3f}")
         prescription_isodose = 90
@@ -740,6 +784,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 / (prescription_isodose / 100)
                 / self.pref
                 * p_today
+                * self.rescale_factor
             )
         )
         self.UM_label.setText(str(self.UM))

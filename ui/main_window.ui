@@ -415,7 +415,7 @@
                </font>
               </property>
               <property name="text">
-               <string>R90 (cm)</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;R&lt;span style=&quot; vertical-align:sub;&quot;&gt;90&lt;/span&gt; (cm)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -456,7 +456,7 @@
                </size>
               </property>
               <property name="toolTip">
-               <string>CUIDADO! No se recomienda usar esta combinación de cono/bisel y energía</string>
+               <string/>
               </property>
               <property name="whatsThis">
                <string/>
@@ -1114,7 +1114,7 @@
                </font>
               </property>
               <property name="text">
-               <string>X R90 (cm):</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;X R&lt;span style=&quot; vertical-align:sub;&quot;&gt;90&lt;/span&gt; (cm):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
              </widget>
             </item>
@@ -1138,7 +1138,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Y R90 (cm):</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Y R&lt;span style=&quot; vertical-align:sub;&quot;&gt;90&lt;/span&gt; (cm):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
              </widget>
             </item>
@@ -1502,11 +1502,56 @@
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_26">
-              <property name="text">
-               <string>Incidencias:</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="3,1,6">
+              <item>
+               <widget class="QLabel" name="label_comments">
+                <property name="text">
+                 <string>Incidencias:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_comments_ico">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>16</horstretch>
+                  <verstretch>16</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_comments_warning">
+                <property name="font">
+                 <font>
+                  <family>Lucida Sans</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">

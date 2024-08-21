@@ -792,10 +792,34 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5.addWidget(self.line)
 
-        self.label_26 = QLabel(self.verticalLayoutWidget_4)
-        self.label_26.setObjectName(u"label_26")
+        self.horizontalLayout_8 = QHBoxLayout()
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.label_comments = QLabel(self.verticalLayoutWidget_4)
+        self.label_comments.setObjectName(u"label_comments")
 
-        self.verticalLayout_5.addWidget(self.label_26)
+        self.horizontalLayout_8.addWidget(self.label_comments)
+
+        self.label_comments_ico = QLabel(self.verticalLayoutWidget_4)
+        self.label_comments_ico.setObjectName(u"label_comments_ico")
+        sizePolicy.setHeightForWidth(self.label_comments_ico.sizePolicy().hasHeightForWidth())
+        self.label_comments_ico.setSizePolicy(sizePolicy)
+        self.label_comments_ico.setMinimumSize(QSize(16, 16))
+        self.label_comments_ico.setMaximumSize(QSize(20, 20))
+        self.label_comments_ico.setScaledContents(True)
+
+        self.horizontalLayout_8.addWidget(self.label_comments_ico)
+
+        self.label_comments_warning = QLabel(self.verticalLayoutWidget_4)
+        self.label_comments_warning.setObjectName(u"label_comments_warning")
+        self.label_comments_warning.setFont(font12)
+
+        self.horizontalLayout_8.addWidget(self.label_comments_warning)
+
+        self.horizontalLayout_8.setStretch(0, 3)
+        self.horizontalLayout_8.setStretch(1, 1)
+        self.horizontalLayout_8.setStretch(2, 6)
+
+        self.verticalLayout_5.addLayout(self.horizontalLayout_8)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -924,10 +948,10 @@ class Ui_MainWindow(object):
         self.label_rescale_ico_12.setWhatsThis("")
 #endif // QT_CONFIG(whatsthis)
         self.label_rescale_ico_12.setText("")
-        self.label_11.setText(QCoreApplication.translate("MainWindow", u"R90 (cm)", None))
+        self.label_11.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>R<span style=\" vertical-align:sub;\">90</span> (cm)</p></body></html>", None))
         self.label_8MeV.setText("")
 #if QT_CONFIG(tooltip)
-        self.label_rescale_ico_6.setToolTip(QCoreApplication.translate("MainWindow", u"CUIDADO! No se recomienda usar esta combinaci\u00f3n de cono/bisel y energ\u00eda", None))
+        self.label_rescale_ico_6.setToolTip("")
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(whatsthis)
         self.label_rescale_ico_6.setWhatsThis("")
@@ -979,9 +1003,9 @@ class Ui_MainWindow(object):
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt; color:#ffffff;\">Dose</span></p></body></html>", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"zmax (cm):", None))
         self.label_zmax.setText("")
-        self.label_34.setText(QCoreApplication.translate("MainWindow", u"X R90 (cm):", None))
+        self.label_34.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>X R<span style=\" vertical-align:sub;\">90</span> (cm):</p></body></html>", None))
         self.label_R90X.setText("")
-        self.label_32.setText(QCoreApplication.translate("MainWindow", u"Y R90 (cm):", None))
+        self.label_32.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Y R<span style=\" vertical-align:sub;\">90</span> (cm):</p></body></html>", None))
         self.label_R90Y.setText("")
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Datos Administrativos", None))
         self.label_18.setText(QCoreApplication.translate("MainWindow", u"Nombre:", None))
@@ -995,7 +1019,9 @@ class Ui_MainWindow(object):
         self.label_28.setText(QCoreApplication.translate("MainWindow", u"Roll (\u00ba):", None))
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"Esc. vert. (cm):", None))
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"N\u00ba de RIO:", None))
-        self.label_26.setText(QCoreApplication.translate("MainWindow", u"Incidencias:", None))
+        self.label_comments.setText(QCoreApplication.translate("MainWindow", u"Incidencias:", None))
+        self.label_comments_ico.setText("")
+        self.label_comments_warning.setText("")
         self.CommentsEdit.setPlainText("")
         self.pushreport.setText(QCoreApplication.translate("MainWindow", u"Generar Informe", None))
         self.pushsend.setText(QCoreApplication.translate("MainWindow", u"Enviar RTPlan", None))
