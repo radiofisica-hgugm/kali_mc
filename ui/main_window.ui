@@ -1090,7 +1090,7 @@
                </font>
               </property>
               <property name="text">
-               <string>zmax (cm):</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;z&lt;span style=&quot; vertical-align:sub;&quot;&gt;max&lt;/span&gt; (cm):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
              </widget>
             </item>

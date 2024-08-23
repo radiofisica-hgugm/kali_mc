@@ -863,6 +863,7 @@ class Window(QMainWindow, Ui_MainWindow):
             "UM": self.UM_label.text(),
             "UM2": self.SecondEdit.text(),
             "UM_dev": self.desv_label.text(),
+            "Rescale_factor": self.rescale_factor,
             "R90X": self.label_R90X.text(),
             "R90Y": self.label_R90Y.text(),
             "Linac": conf.machine + " " + conf.serial_number,

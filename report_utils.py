@@ -239,6 +239,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         ["PROFUNDIDAD R90 (cm):", data_dict["Beam_R90"]],
         ["zmax (cm):", data_dict["Beam_zmax"]],
         ["cGy/UM @ zmax:", data_dict["Output"]],
+        ["Factor de reescalado de dosis:", data_dict["Rescale_factor"]],
         ["Long. X R90 (cm):", data_dict["R90X"]],
         ["Long. Y R90 (cm):", data_dict["R90Y"]],
     ]
@@ -280,6 +281,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         ["UM segundo cálculo:", data_dict["UM2"]],
         ["Desviación (%):", data_dict["UM_dev"]],
     ]
+
     calc2_table = Table(calc2_data, colWidths=[6 * cm, 2.5 * cm])
     calc2_table.setStyle(
         TableStyle(

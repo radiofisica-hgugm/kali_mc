@@ -1001,7 +1001,7 @@ class Ui_MainWindow(object):
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">Appl</span></p></body></html>", None))
         self.label_linac_dose.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#ffffff;\">0</span></p></body></html>", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt; color:#ffffff;\">Dose</span></p></body></html>", None))
-        self.label_13.setText(QCoreApplication.translate("MainWindow", u"zmax (cm):", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>z<span style=\" vertical-align:sub;\">max</span> (cm):</p></body></html>", None))
         self.label_zmax.setText("")
         self.label_34.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>X R<span style=\" vertical-align:sub;\">90</span> (cm):</p></body></html>", None))
         self.label_R90X.setText("")
