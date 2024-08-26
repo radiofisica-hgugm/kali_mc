@@ -219,6 +219,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.bundle_dir,
                     rf"data\sim\C{applicator}\B{bevel}\C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz",
                 )
+                print(f"Loading file: {self.npzfile}")
                 results = np.load(self.npzfile, allow_pickle=True)
                 self.dose_distrib = results["SpatialDoseDistrib"][()]
                 self.plot_distribs()
@@ -291,7 +292,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.z_clinical_max = z_vals[np.argmax(depth_dose)]
         self.label_zmax.setText(f"{-self.z_clinical_max:.2f}")
 
-        if self.rescale_factor !=0:
+        if self.rescale_factor != 0:
             # plot cross plane
             self.plot_crossplane(interpolator)
 
@@ -839,6 +840,21 @@ class Window(QMainWindow, Ui_MainWindow):
         elif energy_idx == 3:
             R90 = self.label_12MeV.text()
 
+        try:
+            roll = float(self.RollEdit.text())
+        except ValueError:
+            roll = 0.0
+
+        try:
+            pitch = float(self.PitchEdit.text())
+        except ValueError:
+            pitch = 0.0
+
+        try:
+            vertical = float(self.VerticalEdit.text())
+        except ValueError:
+            vertical = 0.0
+
         data_dict = {
             # Administrative data
             "Name": self.NameEdit.text(),
@@ -867,9 +883,9 @@ class Window(QMainWindow, Ui_MainWindow):
             "R90X": self.label_R90X.text(),
             "R90Y": self.label_R90Y.text(),
             "Linac": conf.machine + " " + conf.serial_number,
-            "Pitch": self.PitchEdit.text(),
-            "Roll": self.RollEdit.text(),
-            "Vertical": self.VerticalEdit.text(),
+            "Pitch": pitch,
+            "Roll": roll,
+            "Vertical": vertical,
             "IORT_number": self.IORTnumberEdit.text(),
             "Date": datetime.date.today(),
             "Comments": self.CommentsEdit.toPlainText(),

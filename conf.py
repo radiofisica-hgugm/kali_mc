@@ -20,6 +20,7 @@ tol_table_label = ''
 machine = 'LIAC'
 serial_number = '0000'
 SSD = 645  # mm
+
 # ______________________________________________________________________________________________________________________
 
 # Default path for saving reports
