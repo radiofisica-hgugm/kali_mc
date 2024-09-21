@@ -22,8 +22,16 @@ def create_fake_data_dict():
         'RefPressure': '934.7',
 
         'Energy': 10,
+        'Beam_R90': 1.5,
+        'Beam_zmax': 0.94,
         'Output': 1.1,
+        'Rescale_factor': 1.0,
         'UM': 2500,
+        'R90X': 3.0,
+        'R90Y': 3.5,
+        'UM2': 2505,
+        'UM_dev': 0.5,
+
 
         'Linac': 'LIAC HWL 0000',
         'Pitch': '3',

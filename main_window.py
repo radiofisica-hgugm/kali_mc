@@ -913,7 +913,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Kali MC", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:16pt; color:#55aaff;\">SORDINA LIAC HWL</span></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:16pt; color:#55aaff;\">KALI MC - LIAC HWL</span></p></body></html>", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Aplicador", None))
         self.combo_applicator.setItemText(0, "")
         self.combo_applicator.setItemText(1, QCoreApplication.translate("MainWindow", u"12", None))
