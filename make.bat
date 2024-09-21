@@ -38,4 +38,5 @@ pyinstaller --name kali_mc --hiddenimport=pydicom.encoders.gdcm --hiddenimport=p
 --add-data "data/sim/C8/B45/*.*;data/sim/C8/B45" ^
 --add-data "data/sim/C9/B45/*.*;data/sim/C9/B45" ^
 --add-data "data/sim/C10/B45/*.*;data/sim/C10/B45" ^
---add-data "data/sim/C12/B45/*.*;data/sim/C12/B45" 
+--add-data "data/sim/C12/B45/*.*;data/sim/C12/B45" ^
+--add-data "translations/*.*;translations"
