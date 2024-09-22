@@ -41,13 +41,15 @@ def create_fake_data_dict():
     return data_dict
 
 
-filepath = os.path.dirname(__file__)
-data_dict = create_fake_data_dict()
-create_pdf(
-    os.path.join(filepath, "report_test.pdf"),
-    os.path.join(filepath, "cross.png"),
-    os.path.join(filepath, "in.png"),
-    os.path.join(filepath, "coronal.png"),
-    os.path.join(filepath, "3D.png"),
-    data_dict,
-)
+def test_report():
+    filepath = os.path.dirname(__file__)
+    data_dict = create_fake_data_dict()
+    create_pdf(
+        os.path.join(filepath, "report_test.pdf"),
+        os.path.join(filepath, "cross.png"),
+        os.path.join(filepath, "in.png"),
+        os.path.join(filepath, "coronal.png"),
+        os.path.join(filepath, "3D.png"),
+        data_dict,
+    )
+    assert 1 == 1  # TODO: assert actual creation of PDF
