@@ -1,4 +1,15 @@
+import datetime
+import os
+import sys
+
+from PIL import Image as PILImage
+from PySide2.QtCore import QCoreApplication
+from reportlab.lib import colors, utils
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import cm
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
     Paragraph,
     Spacer,
@@ -10,15 +21,7 @@ from reportlab.platypus import (
     PageTemplate,
     Frame,
 )
-from reportlab.lib.units import cm
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase import pdfmetrics
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib import colors, utils
-from PIL import Image as PILImage
-from PySide2.QtCore import QCoreApplication
-import datetime
-import sys, os
+
 import conf
 
 
@@ -55,11 +58,13 @@ def footer(canvas, doc):
     canvas.drawString(width - 14 * cm, 0.5 * cm, footer_text)
     canvas.restoreState()
 
-def get_image(path, height=1*cm):
+
+def get_image(path, height=1 * cm):
     img = utils.ImageReader(path)
     iw, ih = img.getSize()
     aspect = ih / float(iw)
-    return Image(path, width=height/aspect, height=height)
+    return Image(path, width=height / aspect, height=height)
+
 
 def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     if getattr(sys, "frozen", False):
@@ -69,7 +74,9 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         # we are running in a normal Python environment
         bundle_dir = os.path.dirname(os.path.abspath(__file__))
     # Register Lucida Sans font
-    pdfmetrics.registerFont(TTFont("LucidaSans", os.path.join(bundle_dir, "report/LSANS.ttf")))
+    pdfmetrics.registerFont(
+        TTFont("LucidaSans", os.path.join(bundle_dir, "report/LSANS.ttf"))
+    )
 
     # Document setup
     doc = BaseDocTemplate(
@@ -79,7 +86,9 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         leftMargin=2 * cm,
         rightMargin=2 * cm,
         bottomMargin=1.0 * cm,
-        title=QCoreApplication.translate("Report", "Kali MC - Informe de radioterapia intraoperatoria"),
+        title=QCoreApplication.translate(
+            "Report", "Kali MC - Informe de radioterapia intraoperatoria"
+        ),
         author=conf.DepartmentName,
     )
 
@@ -124,19 +133,23 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
 
     # Add logo
     logo_path = os.path.join(bundle_dir, conf.DepartmentLogo_path)
-    logo_img = get_image(logo_path, height=0.8*cm)
+    logo_img = get_image(logo_path, height=0.8 * cm)
     # Add department
-    department = Paragraph(
-        conf.DepartmentName, styles["LucidaBody"]
-    )
+    department = Paragraph(conf.DepartmentName, styles["LucidaBody"])
     header_table = Table([[logo_img, department]], colWidths=[9.5 * cm, 7.5 * cm])
 
     elements.append(header_table)
     elements.append(Spacer(1, 0.3 * cm))
 
     # Add title
-    title = Paragraph(QCoreApplication.translate("Report","Radioterapia Intraoperatoria"), styles["LucidaTitle"])
-    subtitle = Paragraph(QCoreApplication.translate("Report","Informe de tratamiento"), styles["LucidaSubtitle"])
+    title = Paragraph(
+        QCoreApplication.translate("Report", "Radioterapia Intraoperatoria"),
+        styles["LucidaTitle"],
+    )
+    subtitle = Paragraph(
+        QCoreApplication.translate("Report", "Informe de tratamiento"),
+        styles["LucidaSubtitle"],
+    )
     elements.append(title)
     elements.append(Spacer(1, 0.4 * cm))
     elements.append(subtitle)
@@ -144,15 +157,21 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
 
     # Administrative data table
     admin_data = [
-        [QCoreApplication.translate("Report","NOMBRE:"), data_dict["Name"]],
-        [QCoreApplication.translate("Report","APELLIDOS:"), data_dict["Surname"]],
-        [QCoreApplication.translate("Report","Nº DE HISTORIA:"), data_dict["ID"]],
-        [QCoreApplication.translate("Report","LOCALIZACIÓN:"), data_dict["Site"]],
-        [QCoreApplication.translate("Report","RADIOFÍSICO HOSPITALARIO:"), data_dict["Physicist"]],
-        [QCoreApplication.translate("Report","ONCÓLOGO RADIOTERÁPICO:"), data_dict["Oncologist"]],
-        [QCoreApplication.translate("Report","T.E.R.t:"), data_dict["TERt"]],
-        [QCoreApplication.translate("Report","Fecha:"), data_dict["Date"]],
-        [QCoreApplication.translate("Report","Nº DE RIO:"), data_dict["IORT_number"]],
+        [QCoreApplication.translate("Report", "NOMBRE:"), data_dict["Name"]],
+        [QCoreApplication.translate("Report", "APELLIDOS:"), data_dict["Surname"]],
+        [QCoreApplication.translate("Report", "Nº DE HISTORIA:"), data_dict["ID"]],
+        [QCoreApplication.translate("Report", "LOCALIZACIÓN:"), data_dict["Site"]],
+        [
+            QCoreApplication.translate("Report", "RADIOFÍSICO HOSPITALARIO:"),
+            data_dict["Physicist"],
+        ],
+        [
+            QCoreApplication.translate("Report", "ONCÓLOGO RADIOTERÁPICO:"),
+            data_dict["Oncologist"],
+        ],
+        [QCoreApplication.translate("Report", "T.E.R.t:"), data_dict["TERt"]],
+        [QCoreApplication.translate("Report", "Fecha:"), data_dict["Date"]],
+        [QCoreApplication.translate("Report", "Nº DE RIO:"), data_dict["IORT_number"]],
     ]
     admin_table = Table(admin_data, colWidths=[6 * cm, 11 * cm])
     admin_table.setStyle(
@@ -181,10 +200,19 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     elements.append(prescription_title)
     elements.append(Spacer(1, 0.1 * cm))
     prescription_data = [
-        [QCoreApplication.translate("Report","DIÁMETRO CONO (cm):","UTF-8"), data_dict["Applicator"]],
-        [QCoreApplication.translate("Report","BISEL (º):"), data_dict["Bevel"]],
-        [QCoreApplication.translate("Report","DOSIS PRESCRITA (cGy):"), data_dict["Dose"]],
-        [QCoreApplication.translate("Report","PROF. TRATAMIENTO AL 90%:"), data_dict["R90"]],
+        [
+            QCoreApplication.translate("Report", "DIÁMETRO CONO (cm):", "UTF-8"),
+            data_dict["Applicator"],
+        ],
+        [QCoreApplication.translate("Report", "BISEL (º):"), data_dict["Bevel"]],
+        [
+            QCoreApplication.translate("Report", "DOSIS PRESCRITA (cGy):"),
+            data_dict["Dose"],
+        ],
+        [
+            QCoreApplication.translate("Report", "PROF. TRATAMIENTO AL 90%:"),
+            data_dict["R90"],
+        ],
     ]
     presc_left_table = Table(prescription_data, colWidths=[6 * cm, 2.5 * cm])
     presc_left_table.setStyle(
@@ -202,8 +230,14 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         )
     )
     presc_right_data = [
-        [QCoreApplication.translate("Report","PRESIÓN DE HOY (hPa):"), data_dict["Pressure"]],
-        [QCoreApplication.translate("Report","PRESIÓN DE REFERENCIA (hPa):"), data_dict["RefPressure"]],
+        [
+            QCoreApplication.translate("Report", "PRESIÓN DE HOY (hPa):"),
+            data_dict["Pressure"],
+        ],
+        [
+            QCoreApplication.translate("Report", "PRESIÓN DE REFERENCIA (hPa):"),
+            data_dict["RefPressure"],
+        ],
     ]
     presc_right_table = Table(presc_right_data, colWidths=[5.5 * cm, 3.0 * cm])
     presc_right_table.setStyle(
@@ -229,19 +263,25 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     plan_title = RectText(
         width=17 * cm,
         height=0.8 * cm,
-        text=QCoreApplication.translate("Report","Planificación:"),
+        text=QCoreApplication.translate("Report", "Planificación:"),
         style=styles["LucidaSubtitle"],
     )
     elements.append(plan_title)
     elements.append(Spacer(1, 0.1 * cm))
     plan_data = [
-        [QCoreApplication.translate("Report","ENERGÍA (MeV):"), data_dict["Energy"]],
-        [QCoreApplication.translate("Report","PROFUNDIDAD R90 (cm):"), data_dict["Beam_R90"]],
-        [QCoreApplication.translate("Report","zmax (cm):"), data_dict["Beam_zmax"]],
-        [QCoreApplication.translate("Report","cGy/UM @ zmax:"), data_dict["Output"]],
-        [QCoreApplication.translate("Report","Factor de reescalado de dosis:"), data_dict["Rescale_factor"]],
-        [QCoreApplication.translate("Report","Long. X R90 (cm):"), data_dict["R90X"]],
-        [QCoreApplication.translate("Report","Long. Y R90 (cm):"), data_dict["R90Y"]],
+        [QCoreApplication.translate("Report", "ENERGÍA (MeV):"), data_dict["Energy"]],
+        [
+            QCoreApplication.translate("Report", "PROFUNDIDAD R90 (cm):"),
+            data_dict["Beam_R90"],
+        ],
+        [QCoreApplication.translate("Report", "zmax (cm):"), data_dict["Beam_zmax"]],
+        [QCoreApplication.translate("Report", "cGy/UM @ zmax:"), data_dict["Output"]],
+        [
+            QCoreApplication.translate("Report", "Factor de reescalado de dosis:"),
+            data_dict["Rescale_factor"],
+        ],
+        [QCoreApplication.translate("Report", "Long. X R90 (cm):"), data_dict["R90X"]],
+        [QCoreApplication.translate("Report", "Long. Y R90 (cm):"), data_dict["R90Y"]],
     ]
     plan_table = Table(plan_data, colWidths=[6 * cm, 2.5 * cm])
     plan_table.setStyle(
@@ -260,7 +300,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     )
     # UM section
     UM_data = [
-        [QCoreApplication.translate("Report","UM"), data_dict["UM"]],
+        [QCoreApplication.translate("Report", "UM"), data_dict["UM"]],
     ]
     UM_table = Table(UM_data, colWidths=[6 * cm, 2.5 * cm])
     UM_table.setStyle(
@@ -278,8 +318,8 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         )
     )
     calc2_data = [
-        [QCoreApplication.translate("Report","UM segundo cálculo:"), data_dict["UM2"]],
-        [QCoreApplication.translate("Report","Desviación (%):"), data_dict["UM_dev"]],
+        [QCoreApplication.translate("Report", "UM segundo cálculo:"), data_dict["UM2"]],
+        [QCoreApplication.translate("Report", "Desviación (%):"), data_dict["UM_dev"]],
     ]
 
     calc2_table = Table(calc2_data, colWidths=[6 * cm, 2.5 * cm])
@@ -300,10 +340,10 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     left_table = Table([[plan_table], [UM_table], [calc2_table]], colWidths=[8.5 * cm])
 
     linac_data = [
-        [QCoreApplication.translate("Report","ACELERADOR:"), data_dict["Linac"]],
-        [QCoreApplication.translate("Report","PITCH (º):"), data_dict["Pitch"]],
-        [QCoreApplication.translate("Report","ROLL (º):"), data_dict["Roll"]],
-        [QCoreApplication.translate("Report","VERTICAL (cm):"), data_dict["Vertical"]],
+        [QCoreApplication.translate("Report", "ACELERADOR:"), data_dict["Linac"]],
+        [QCoreApplication.translate("Report", "PITCH (º):"), data_dict["Pitch"]],
+        [QCoreApplication.translate("Report", "ROLL (º):"), data_dict["Roll"]],
+        [QCoreApplication.translate("Report", "VERTICAL (cm):"), data_dict["Vertical"]],
     ]
     linac_table = Table(linac_data, colWidths=[5.5 * cm, 3.0 * cm])
     linac_table.setStyle(
@@ -321,7 +361,9 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
     )
 
     comments = Paragraph(data_dict["Comments"])
-    subtitle = Paragraph(QCoreApplication.translate("Report","Incidencias"), styles["LucidaComments"])
+    subtitle = Paragraph(
+        QCoreApplication.translate("Report", "Incidencias"), styles["LucidaComments"]
+    )
     bordered_table = Table([[subtitle], [comments]], colWidths=[8.5 * cm])
     bordered_table.setStyle(
         TableStyle(
