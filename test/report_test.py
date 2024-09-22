@@ -41,13 +41,13 @@ def create_fake_data_dict():
     return data_dict
 
 
-os.chdir("..")
+filepath = os.path.dirname(__file__)
 data_dict = create_fake_data_dict()
 create_pdf(
-    "test/report_test.pdf",
-    "test/cross.png",
-    "test/in.png",
-    "test/coronal.png",
-    "test/3D.png",
+    os.path.join(filepath, "report_test.pdf"),
+    os.path.join(filepath, "cross.png"),
+    os.path.join(filepath, "in.png"),
+    os.path.join(filepath, "coronal.png"),
+    os.path.join(filepath, "3D.png"),
     data_dict,
 )
