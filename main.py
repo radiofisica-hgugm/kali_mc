@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
+import datetime
 import multiprocessing
+import os
 import sys
-from PySide2.QtWidgets import QApplication, QFileDialog, QMessageBox
-from PySide2 import QtGui, QtCore
+import tempfile
 
 import numpy as np
-from scipy.interpolate import RegularGridInterpolator, interp1d
-import OpenGL.GL as GL
 import pyqtgraph as pg
-import pyqtgraph.opengl as gl
 import pyqtgraph.exporters
-import datetime
-import tempfile
-import os
+import pyqtgraph.opengl as gl
+from PySide2 import QtGui, QtCore
+from PySide2.QtWidgets import QApplication, QFileDialog, QMessageBox
+from scipy.interpolate import RegularGridInterpolator, interp1d
 
 try:
     import pyi_splash
@@ -117,7 +116,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.p2 = self.graphWidget2.addPlot(colspan=1, title="Inline")
         self.p2.addItem(self.img2)
-        self.p3 = self.graphWidget3.addPlot(colspan=1, title=self.tr("Isodosis del 90% en zmax"))
+        self.p3 = self.graphWidget3.addPlot(
+            colspan=1, title=self.tr("Isodosis del 90% en zmax")
+        )
 
         self.extent_cross = [1, 1]
         self.extent_in = [1, 1]
@@ -185,18 +186,18 @@ class Window(QMainWindow, Ui_MainWindow):
             for idx, item in enumerate(rescale_array):
                 if item > 1:
                     labels[idx].setPixmap(QtGui.QPixmap(":/icons/res/alert-icon.png"))
-                    labels[idx].setToolTip(self.tr(
-                        "CUIDADO! se aplicará un factor de reescalado"
-                    )
+                    labels[idx].setToolTip(
+                        self.tr("CUIDADO! se aplicará un factor de reescalado")
                     )
                     rescale_labels[idx].setText(f"{item:.2f}")
                 elif item == 0:
                     labels[idx].setPixmap(
                         QtGui.QPixmap(":/icons/res/red-alert-icon.png")
                     )
-                    labels[idx].setToolTip(self.tr(
-                        "CUIDADO! No se recomienda usar esta combinación de cono/bisel y energía"
-                    )
+                    labels[idx].setToolTip(
+                        self.tr(
+                            "CUIDADO! No se recomienda usar esta combinación de cono/bisel y energía"
+                        )
                     )
                     rescale_labels[idx].setText("")
                 else:
@@ -213,7 +214,9 @@ class Window(QMainWindow, Ui_MainWindow):
                 energy_idx = self.find_checked_radiobutton()
                 self.rescale_factor = rescale_array[energy_idx]
                 if self.rescale_factor > 1:
-                    self.label_comments_warning.setText(self.tr("Factor de reescalado aplicado"))
+                    self.label_comments_warning.setText(
+                        self.tr("Factor de reescalado aplicado")
+                    )
                     self.label_comments_ico.setPixmap(":/icons/res/alert-icon.png")
                 else:
                     self.label_comments_warning.setText("")
@@ -740,7 +743,9 @@ class Window(QMainWindow, Ui_MainWindow):
                 QMessageBox.critical(
                     self,
                     self.tr("Valor de dosis erróneo"),
-                    self.tr("Error en valor de dosis introducida! Recuerda usar . como separador decimal"),
+                    self.tr(
+                        "Error en valor de dosis introducida! Recuerda usar . como separador decimal"
+                    ),
                 )
             else:
                 QMessageBox.critical(
@@ -764,7 +769,9 @@ class Window(QMainWindow, Ui_MainWindow):
                 QMessageBox.critical(
                     self,
                     self.tr("Valor de presión erróneo"),
-                    self.tr("Error en valor de presión introducida! Recuerda usar . como separador decimal"),
+                    self.tr(
+                        "Error en valor de presión introducida! Recuerda usar . como separador decimal"
+                    ),
                 )
             else:
                 QMessageBox.critical(
@@ -803,7 +810,10 @@ class Window(QMainWindow, Ui_MainWindow):
             f"{data_dict['Date']} {data_dict['Name']} {data_dict['Surname']}.pdf",
         )
         name = QFileDialog.getSaveFileName(
-            self, self.tr("Guardar informe pdf"), pdf_path, self.tr("Archivos pdf (*.pdf)")
+            self,
+            self.tr("Guardar informe pdf"),
+            pdf_path,
+            self.tr("Archivos pdf (*.pdf)"),
         )
         if name[0] != "":
             print("Generating report ..........")
@@ -912,15 +922,15 @@ class Window(QMainWindow, Ui_MainWindow):
 if __name__ == "__main__":
     multiprocessing.freeze_support()
     app = QApplication(sys.argv)
-    print(f'Starting Kali MC v.{conf.version}')
+    print(f"Starting Kali MC v.{conf.version}")
 
     # Load translations before showing the window
     translator = QtCore.QTranslator()
-    if hasattr(sys, '_MEIPASS'):  # If running from PyInstaller bundle
-        translations_path = os.path.join(sys._MEIPASS, 'translations')
+    if hasattr(sys, "_MEIPASS"):  # If running from PyInstaller bundle
+        translations_path = os.path.join(sys._MEIPASS, "translations")
     else:  # Running from source
-        translations_path = 'translations'
-    if translator.load(os.path.join(translations_path, f'{conf.locale}.qm')):
+        translations_path = "translations"
+    if translator.load(os.path.join(translations_path, f"{conf.locale}.qm")):
         print(f"Loaded translation file: {conf.locale}.qm")
         app.installTranslator(translator)
     else:
