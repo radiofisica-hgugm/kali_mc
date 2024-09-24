@@ -1,5 +1,5 @@
-API
-===
+Configuration file
+====================
 
 .. autosummary::
    :toctree: generated

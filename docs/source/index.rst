@@ -1,13 +1,17 @@
-Welcome to Lumache's documentation!
+Welcome to Kali MC's documentation!
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+**Kali MC** is a Python application for calculating IORT treatments with a LIAC HWL linac, based on precalculated Monte
+Carlo dose distributions in water.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+
+.. _splash_kali:
+.. figure:: figures/splash-kali.png
+
+    :align: center
+    :width: 80 %
+
+   Gradiente en SBRT vs RT Convencional
 
 .. note::
 
@@ -19,4 +23,5 @@ Contents
 .. toctree::
 
    usage
-   api
+   local_conf
+   license
