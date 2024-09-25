@@ -6,22 +6,27 @@ Carlo dose distributions in water.
 
 
 .. _splash_kali:
-.. figure:: figures/splash-kali.png
-
+.. image:: figures/splash-kali.png
     :align: center
     :width: 80 %
 
-   Gradiente en SBRT vs RT Convencional
+|
 
 .. note::
 
    This project is under active development.
+
+.. warning::
+
+   The software is intended for educational purposes. The end user is responsible of verification of the different
+   dosimetric characteristics of its unit.
 
 Contents
 --------
 
 .. toctree::
 
+   starting
    usage
    local_conf
    license
