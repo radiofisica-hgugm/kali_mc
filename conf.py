@@ -25,7 +25,7 @@ RECORD AND VERIFY DICOM SERVER SETTINGS
 destination_server = "mosaiq.yourinstitution.org"
 """
 IP or Hostname of the Record & Verify server
-e.g. 192.168.1.10 
+e.g. 192.168.1.10
 """
 destination_port = 104
 """
@@ -44,21 +44,21 @@ DICOM PatientSetupLabel, this is mapped in MOSAIQ when importing the plan.
 # Tolerances
 tol_table_ID = ""
 """
-The ID of the Tolerance table to be DICOM exported to the Record & Verify system. 
+The ID of the Tolerance table to be DICOM exported to the Record & Verify system.
 """
 tol_table_label = ""
 """
-The label of the Tolerance table to be DICOM exported to the Record & Verify system. 
+The label of the Tolerance table to be DICOM exported to the Record & Verify system.
 """
 
 # Machine
 machine = "LIAC HWL"
 """
-The name or model of your linac. This will show in the generated report. 
+The name or model of your linac. This will show in the generated report.
 """
 serial_number = "0000"
 """
-The serial number of your linac. This will show in the generated report. 
+The serial number of your linac. This will show in the generated report.
 """
 
 SSD = 645  # mm

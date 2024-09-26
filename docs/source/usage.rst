@@ -1,6 +1,6 @@
 Usage
 ======
-This section describe the general usage of the software.
+This section describes the general usage of the software.
 Follow the next subsections to calculate a treatment, generate a report and send it to a R&V system  with Kali MC.
 
 

@@ -42,4 +42,3 @@ Extract to the desired folder and run the executable file ``kali_mc.exe``.
 .. warning::
 
    Do not run from a network drive, the current release suffers from a bug in the `PySide2 package <https://bugreports.qt.io/browse/PYSIDE-1460>`_.
-
