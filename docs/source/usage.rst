@@ -158,12 +158,42 @@ A report will be generated with the treatment data:
 .. _kali-report:
 .. image:: figures/kali-report.png
     :align: center
-    :width: 300
+    :width: 350
 
 .. note:: The institution logo and department name can be customized in the ``local_conf.py`` file, see the :doc:`local_conf`
     section.
 
 Send plan to R&V systems
 ------------------------
+The prescription and treatment parameters can be sent to a Record and Verify system as a DICOM RTPlan object.
+The following items need to be configured in the ``local_conf.py`` file:
+
+* destination_server
+* destination_AETitle
+* destination_port
+
+If exporting to Elekta Mosaiq, the machine name in Mosaiq must match the exported name. You can modify this using the machine
+parameter:
+
+* machine
+
+Additionally, Mosaiq attempts to match tolerance tables when importing a plan. While this is not strictly necessary,
+it can simplify the import process. You can modify tolerances with the following parameters:
+
+* tol_table_ID
+* tol_table_label
+
+Once the administrative data is filled and the server is configured in the ``local_conf.py`` file, the exportation is
+done by pressing the *Send RTPlan* button:
+
+.. _kali-send-button:
+.. image:: figures/kali-send-button.png
+    :align: center
+    :width: 150
+
+|
+
+.. note:: The applicator names are sent as `C10B0`, `C3B45`... In order to map them in Mosaiq, they have to be defined
+    in the machine characterization.
 
 .. footbibliography::
