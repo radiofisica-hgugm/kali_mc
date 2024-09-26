@@ -11,26 +11,26 @@ environment, you can check it in a terminal:
 
 .. code-block:: console
 
-    (.venv) $ python --version
+    $ python --version
     Python 3.9.19
 
 Clone the repository (or download zip and extract folder) `https://github.com/radiofisica-hgugm/kali_mc.git <https://github.com/radiofisica-hgugm/kali_mc.git>`_
 
 .. code-block:: console
 
-   (.venv) $ git clone https://github.com/radiofisica-hgugm/kali_mc.git
+   $ git clone https://github.com/radiofisica-hgugm/kali_mc.git
 
 Install the needed packages using pip:
 
 .. code-block:: console
 
-   (.venv) $ pip install -r requirements.txt
+   $ pip install -r requirements.txt
 
 Start the application:
 
 .. code-block:: console
 
-   (.venv) $ python main.py
+   $ python main.py
 
 Running the executable
 ----------------------
