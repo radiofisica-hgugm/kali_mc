@@ -39,6 +39,15 @@ Start the application:
 
    $ python main.py
 
+.. note::
+
+    Ubuntu 24 users may face an error related to pyQt5 not being installed in their systems.
+    In that case, please install:
+
+    .. code-block:: console
+
+        sudo apt install pyside2-tools
+
 Running the executable
 ----------------------
 
