@@ -1,7 +1,7 @@
 import datetime
 import os
 
-from report_utils import create_pdf
+from kali_mc.report_utils import create_pdf
 
 
 def create_fake_data_dict():
