@@ -72,7 +72,7 @@ def create_pdf(output_path, cross_img, in_img, coronal_img, tri_img, data_dict):
         bundle_dir = sys._MEIPASS
     else:
         # we are running in a normal Python environment
-        bundle_dir = ""
+        bundle_dir = "./"
     # Register Lucida Sans font
     pdfmetrics.registerFont(
         TTFont("LucidaSans", os.path.join(bundle_dir, "report/LSANS.ttf"))
