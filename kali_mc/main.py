@@ -231,7 +231,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.label_comments_ico.setPixmap("")
                 self.npzfile = os.path.join(
                     self.bundle_dir,
-                    rf"data\sim\C{applicator}\B{bevel}\C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz",
+                    rf"data/sim/C{applicator}/B{bevel}/C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz",
                 )
                 print(f"Loading file: {self.npzfile}")
                 results = np.load(self.npzfile, allow_pickle=True)
