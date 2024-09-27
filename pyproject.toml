@@ -1,5 +1,5 @@
 [project]
-name = "Kali MC"
+name = "Kali_MC"
 requires-python = ">=3.9"
 description = "Software for calculating IORT treatments with a LIAC HWL linac"
 authors = [
