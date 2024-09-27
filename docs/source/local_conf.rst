@@ -13,5 +13,5 @@ the executable file. The configuration will be loaded on startup:
         local_conf imported
         Starting Kali MC v.1.1.0
 
-.. automodule:: conf
+.. automodule:: kali_mc.conf
     :members:
