@@ -5,7 +5,7 @@
 
 Software for calculating IORT treatments with a LIAC HWL linac, based on precalculated Monte Carlo dose distributions in water.
 
-![3D applicator setup](ui/res/splash-kali.png?raw=true "3D applicator setup")
+![3D applicator setup](kali_mc/ui/res/splash-kali.png?raw=true "3D applicator setup")
 
 ## Main Features:
 - Visualize absorbed dose distributions of all combinations of applicators and energies
