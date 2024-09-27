@@ -19,12 +19,19 @@ Clone the repository (or download zip and extract folder) `https://github.com/ra
 .. code-block:: console
 
    $ git clone https://github.com/radiofisica-hgugm/kali_mc.git
+   $ cd kali_mc
 
 Install the needed packages using pip:
 
 .. code-block:: console
 
    $ pip install -r requirements.txt
+
+Access the application source folder:
+
+.. code-block:: console
+
+   $ cd kali_mc
 
 Start the application:
 
