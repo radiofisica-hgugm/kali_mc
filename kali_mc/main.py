@@ -790,7 +790,7 @@ class Window(QMainWindow, Ui_MainWindow):
             return
         # Load output from file and calculate
         OFs = np.load(
-            os.path.join(self.bundle_dir, rf"data\OF_C{applicator}.npz"),
+            os.path.join(self.bundle_dir, rf"data/OF_C{applicator}.npz"),
             allow_pickle=True,
         )["arr_0"]
         self.cGy_UM = OFs[b_idx, energy_idx]
