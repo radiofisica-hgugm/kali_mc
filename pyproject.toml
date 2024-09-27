@@ -46,6 +46,10 @@ dependencies = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.version]
+# https://hatch.pypa.io/latest/version/
+path = "conf.py"  # hatch will automatically set the version to the value in this file.
+
 [project.urls]
 Documentation = "https://kali-mc.readthedocs.io/"
 Repository = "https://github.com/radiofisica-hgugm/kali_mc"

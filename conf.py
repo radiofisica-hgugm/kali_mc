@@ -92,3 +92,4 @@ except ImportError:
     pass
 
 version = "1.1.0"
+__version__ = version
