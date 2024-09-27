@@ -150,7 +150,7 @@ Press the *Generate report* button:
 
 Use the save file dialog to choose the destination path of the pdf file.
 
-.. note:: The default path for saving reports can be customize in the ``local_conf.py`` file, see the :doc:`local_conf`
+.. note:: The default path for saving reports can be customized in the ``local_conf.py`` file, see the :doc:`local_conf`
     section.
 
 A report will be generated with the treatment data:
