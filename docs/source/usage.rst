@@ -11,8 +11,6 @@ Follow the next subsections to calculate a treatment, generate a report and send
 
 |
 
-The software shows absorbed dose distributions in water, pre-calculated with penEasy 2020 :footcite:p:`sempauPENELOPEbasedSystemAutomated2011`,
-based in PENELOPE 2018 :footcite:p:`nuclearenergyagencyPENELOPE2018Code2019`.
 
 Applicator
 -------------
@@ -195,5 +193,3 @@ done by pressing the *Send RTPlan* button:
 
 .. note:: The applicator names are sent as `C10B0`, `C3B45`... In order to map them in Mosaiq, they have to be defined
     in the machine characterization.
-
-.. footbibliography::

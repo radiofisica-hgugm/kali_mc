@@ -32,4 +32,5 @@ Contents
    starting
    usage
    local_conf
+   data_sources
    license
