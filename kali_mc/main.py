@@ -9,8 +9,8 @@ import numpy as np
 import pyqtgraph as pg
 import pyqtgraph.exporters
 import pyqtgraph.opengl as gl
-from PySide2 import QtGui, QtCore
-from PySide2.QtWidgets import QApplication, QFileDialog, QMessageBox
+from PySide6 import QtGui, QtCore
+from PySide6.QtWidgets import QApplication, QFileDialog, QMessageBox
 from scipy.interpolate import RegularGridInterpolator, interp1d
 
 try:
@@ -209,7 +209,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     )
                     rescale_labels[idx].setText("")
                 else:
-                    labels[idx].setPixmap("")
+                    labels[idx].setPixmap(QtGui.QPixmap(""))
                     labels[idx].setToolTip("")
                     rescale_labels[idx].setText("")
 
@@ -225,10 +225,12 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.label_comments_warning.setText(
                         self.tr("Factor de reescalado aplicado")
                     )
-                    self.label_comments_ico.setPixmap(":/icons/res/alert-icon.png")
+                    self.label_comments_ico.setPixmap(
+                        QtGui.QPixmap(":/icons/res/alert-icon.png")
+                    )
                 else:
                     self.label_comments_warning.setText("")
-                    self.label_comments_ico.setPixmap("")
+                    self.label_comments_ico.setPixmap(QtGui.QPixmap(""))
                 self.npzfile = os.path.join(
                     self.bundle_dir,
                     rf"data/sim/C{applicator}/B{bevel}/C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz",
@@ -954,4 +956,4 @@ if __name__ == "__main__":
 
     except NameError:
         pass
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
