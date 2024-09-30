@@ -6,8 +6,8 @@ Starting Kali MC
 Running from source
 --------------------
 
-To use Kali MC, first ensure you have a Python 3 distribution installed in your system and/or activate a virtual
-environment, you can check it in a terminal:
+To use Kali MC, first ensure you have a Python 3 distribution (Python version 3.9 or 3.10) installed in your system
+and/or activate a virtual environment, you can check it in a terminal:
 
 .. code-block:: console
 
