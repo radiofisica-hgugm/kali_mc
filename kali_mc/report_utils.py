@@ -3,7 +3,7 @@ import os
 import sys
 
 from PIL import Image as PILImage
-from PySide2.QtCore import QCoreApplication
+from PySide6.QtCore import QCoreApplication
 from reportlab.lib import colors, utils
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
