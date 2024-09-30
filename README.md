@@ -19,3 +19,6 @@ Software for calculating IORT treatments with a LIAC HWL linac, based on precalc
 - The software is intended for educational purposes
 - The Monte Carlo model was fitted to the data accquired at Gregorio Marañón hospital, Madrid.
   Different linacs may show dosimetric differences.
+
+## Documentation:
+[https://kali-mc.readthedocs.io/](https://kali-mc.readthedocs.io/)

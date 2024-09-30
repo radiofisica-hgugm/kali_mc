@@ -7,6 +7,7 @@ Welcome to Kali MC's documentation!
 **Kali MC** is a Python application for calculating IORT treatments with a LIAC HWL linac, based on pre-calculated Monte
 Carlo dose distributions in water.
 
+Github repo: `https://github.com/radiofisica-hgugm/kali_mc <https://github.com/radiofisica-hgugm/kali_mc>`_
 
 .. _splash_kali:
 .. image:: figures/splash-kali.png
