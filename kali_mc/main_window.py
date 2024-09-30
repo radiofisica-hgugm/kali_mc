@@ -3,18 +3,68 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 6.7.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide6.QtCore import (
+    QCoreApplication,
+    QDate,
+    QDateTime,
+    QLocale,
+    QMetaObject,
+    QObject,
+    QPoint,
+    QRect,
+    QSize,
+    QTime,
+    QUrl,
+    Qt,
+)
+from PySide6.QtGui import (
+    QBrush,
+    QColor,
+    QConicalGradient,
+    QCursor,
+    QFont,
+    QFontDatabase,
+    QGradient,
+    QIcon,
+    QImage,
+    QKeySequence,
+    QLinearGradient,
+    QPainter,
+    QPalette,
+    QPixmap,
+    QRadialGradient,
+    QTransform,
+)
+from PySide6.QtWidgets import (
+    QApplication,
+    QComboBox,
+    QFormLayout,
+    QFrame,
+    QGridLayout,
+    QGroupBox,
+    QHBoxLayout,
+    QLabel,
+    QLayout,
+    QLineEdit,
+    QMainWindow,
+    QMenuBar,
+    QPlainTextEdit,
+    QPushButton,
+    QRadioButton,
+    QSizePolicy,
+    QSpacerItem,
+    QStatusBar,
+    QVBoxLayout,
+    QWidget,
+)
 
 from pyqtgraph import GraphicsLayoutWidget
 from pyqtgraph.opengl import GLViewWidget
-
 import main_rc
 
 
@@ -24,7 +74,9 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1468, 886)
         icon = QIcon()
-        icon.addFile(":/icons/res/kali_ico.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(
+            ":/icons/res/kali_ico.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off
+        )
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -32,7 +84,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.horizontalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.horizontalLayout.setSizeConstraint(
+            QLayout.SizeConstraint.SetDefaultConstraint
+        )
         self.horizontalLayout.setContentsMargins(-1, 4, -1, -1)
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(6)
@@ -41,7 +95,7 @@ class Ui_MainWindow(object):
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName("label")
         font = QFont()
-        font.setFamily("Lucida Sans")
+        font.setFamilies(["Lucida Sans"])
         font.setPointSize(15)
         self.label.setFont(font)
 
@@ -51,10 +105,9 @@ class Ui_MainWindow(object):
         self.groupBox.setObjectName("groupBox")
         self.groupBox.setMinimumSize(QSize(230, 80))
         font1 = QFont()
-        font1.setFamily("Lucida Sans")
+        font1.setFamilies(["Lucida Sans"])
         font1.setPointSize(12)
         font1.setBold(False)
-        font1.setWeight(50)
         font1.setKerning(False)
         self.groupBox.setFont(font1)
         self.formLayout_4 = QFormLayout(self.groupBox)
@@ -91,7 +144,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.label_9 = QLabel(self.groupBox)
         self.label_9.setObjectName("label_9")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(
+            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred
+        )
         sizePolicy.setHorizontalStretch(16)
         sizePolicy.setVerticalStretch(16)
         sizePolicy.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
@@ -104,16 +159,17 @@ class Ui_MainWindow(object):
 
         self.label_3 = QLabel(self.groupBox)
         self.label_3.setObjectName("label_3")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        sizePolicy1 = QSizePolicy(
+            QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred
+        )
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
         self.label_3.setSizePolicy(sizePolicy1)
         font2 = QFont()
-        font2.setFamily("Lucida Sans")
+        font2.setFamilies(["Lucida Sans"])
         font2.setPointSize(10)
         font2.setBold(False)
-        font2.setWeight(50)
         font2.setKerning(False)
         self.label_3.setFont(font2)
 
@@ -148,7 +204,7 @@ class Ui_MainWindow(object):
         self.groupBox_2 = QGroupBox(self.centralwidget)
         self.groupBox_2.setObjectName("groupBox_2")
         font3 = QFont()
-        font3.setFamily("Lucida Sans")
+        font3.setFamilies(["Lucida Sans"])
         font3.setPointSize(12)
         self.groupBox_2.setFont(font3)
         self.formLayoutWidget_2 = QWidget(self.groupBox_2)
@@ -165,7 +221,7 @@ class Ui_MainWindow(object):
 
         self.DoseEdit = QLineEdit(self.formLayoutWidget_2)
         self.DoseEdit.setObjectName("DoseEdit")
-        self.DoseEdit.setAlignment(Qt.AlignCenter)
+        self.DoseEdit.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_5.setWidget(0, QFormLayout.FieldRole, self.DoseEdit)
 
@@ -177,7 +233,7 @@ class Ui_MainWindow(object):
 
         self.depth_edit = QLineEdit(self.formLayoutWidget_2)
         self.depth_edit.setObjectName("depth_edit")
-        self.depth_edit.setAlignment(Qt.AlignCenter)
+        self.depth_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_5.setWidget(1, QFormLayout.FieldRole, self.depth_edit)
 
@@ -195,10 +251,10 @@ class Ui_MainWindow(object):
         self.label_12MeV = QLabel(self.gridLayoutWidget)
         self.label_12MeV.setObjectName("label_12MeV")
         font4 = QFont()
-        font4.setFamily("Lucida Sans")
+        font4.setFamilies(["Lucida Sans"])
         font4.setPointSize(11)
         self.label_12MeV.setFont(font4)
-        self.label_12MeV.setAlignment(Qt.AlignCenter)
+        self.label_12MeV.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_12MeV, 4, 1, 1, 1)
 
@@ -217,19 +273,18 @@ class Ui_MainWindow(object):
         self.label_11 = QLabel(self.gridLayoutWidget)
         self.label_11.setObjectName("label_11")
         font5 = QFont()
-        font5.setFamily("Lucida Sans")
+        font5.setFamilies(["Lucida Sans"])
         font5.setPointSize(11)
         font5.setBold(True)
-        font5.setWeight(75)
         self.label_11.setFont(font5)
-        self.label_11.setAlignment(Qt.AlignCenter)
+        self.label_11.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_11, 0, 1, 1, 1)
 
         self.label_8MeV = QLabel(self.gridLayoutWidget)
         self.label_8MeV.setObjectName("label_8MeV")
         self.label_8MeV.setFont(font4)
-        self.label_8MeV.setAlignment(Qt.AlignCenter)
+        self.label_8MeV.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_8MeV, 2, 1, 1, 1)
 
@@ -278,14 +333,14 @@ class Ui_MainWindow(object):
         self.label_6MeV = QLabel(self.gridLayoutWidget)
         self.label_6MeV.setObjectName("label_6MeV")
         self.label_6MeV.setFont(font4)
-        self.label_6MeV.setAlignment(Qt.AlignCenter)
+        self.label_6MeV.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_6MeV, 1, 1, 1, 1)
 
         self.label_10MeV = QLabel(self.gridLayoutWidget)
         self.label_10MeV.setObjectName("label_10MeV")
         self.label_10MeV.setFont(font4)
-        self.label_10MeV.setAlignment(Qt.AlignCenter)
+        self.label_10MeV.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_10MeV, 3, 1, 1, 1)
 
@@ -310,45 +365,43 @@ class Ui_MainWindow(object):
         self.label_rescale_f_8 = QLabel(self.gridLayoutWidget)
         self.label_rescale_f_8.setObjectName("label_rescale_f_8")
         font6 = QFont()
-        font6.setFamily("Lucida Sans")
+        font6.setFamilies(["Lucida Sans"])
         font6.setPointSize(8)
         font6.setBold(False)
-        font6.setWeight(50)
         self.label_rescale_f_8.setFont(font6)
-        self.label_rescale_f_8.setAlignment(Qt.AlignCenter)
+        self.label_rescale_f_8.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_rescale_f_8, 2, 3, 1, 1)
 
         self.label_35 = QLabel(self.gridLayoutWidget)
         self.label_35.setObjectName("label_35")
         font7 = QFont()
-        font7.setFamily("Lucida Sans")
+        font7.setFamilies(["Lucida Sans"])
         font7.setPointSize(9)
         font7.setBold(True)
-        font7.setWeight(75)
         self.label_35.setFont(font7)
-        self.label_35.setAlignment(Qt.AlignCenter)
+        self.label_35.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_35, 0, 3, 1, 1)
 
         self.label_rescale_f_6 = QLabel(self.gridLayoutWidget)
         self.label_rescale_f_6.setObjectName("label_rescale_f_6")
         self.label_rescale_f_6.setFont(font6)
-        self.label_rescale_f_6.setAlignment(Qt.AlignCenter)
+        self.label_rescale_f_6.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_rescale_f_6, 1, 3, 1, 1)
 
         self.label_rescale_f_10 = QLabel(self.gridLayoutWidget)
         self.label_rescale_f_10.setObjectName("label_rescale_f_10")
         self.label_rescale_f_10.setFont(font6)
-        self.label_rescale_f_10.setAlignment(Qt.AlignCenter)
+        self.label_rescale_f_10.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_rescale_f_10, 3, 3, 1, 1)
 
         self.label_rescale_f_12 = QLabel(self.gridLayoutWidget)
         self.label_rescale_f_12.setObjectName("label_rescale_f_12")
         self.label_rescale_f_12.setFont(font6)
-        self.label_rescale_f_12.setAlignment(Qt.AlignCenter)
+        self.label_rescale_f_12.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.gridLayout.addWidget(self.label_rescale_f_12, 4, 3, 1, 1)
 
@@ -359,10 +412,9 @@ class Ui_MainWindow(object):
         self.groupBox_4 = QGroupBox(self.centralwidget)
         self.groupBox_4.setObjectName("groupBox_4")
         font8 = QFont()
-        font8.setFamily("Lucida Sans")
+        font8.setFamilies(["Lucida Sans"])
         font8.setPointSize(13)
         font8.setBold(True)
-        font8.setWeight(75)
         self.groupBox_4.setFont(font8)
         self.formLayoutWidget_5 = QWidget(self.groupBox_4)
         self.formLayoutWidget_5.setObjectName("formLayoutWidget_5")
@@ -374,10 +426,9 @@ class Ui_MainWindow(object):
         self.label_14 = QLabel(self.formLayoutWidget_5)
         self.label_14.setObjectName("label_14")
         font9 = QFont()
-        font9.setFamily("Lucida Sans")
+        font9.setFamilies(["Lucida Sans"])
         font9.setPointSize(10)
         font9.setBold(False)
-        font9.setWeight(50)
         self.label_14.setFont(font9)
 
         self.formLayout_8.setWidget(0, QFormLayout.LabelRole, self.label_14)
@@ -401,7 +452,7 @@ class Ui_MainWindow(object):
 
         self.UM_label = QLabel(self.formLayoutWidget_5)
         self.UM_label.setObjectName("UM_label")
-        self.UM_label.setAlignment(Qt.AlignCenter)
+        self.UM_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_8.setWidget(4, QFormLayout.FieldRole, self.UM_label)
 
@@ -414,33 +465,33 @@ class Ui_MainWindow(object):
         self.label_pref = QLabel(self.formLayoutWidget_5)
         self.label_pref.setObjectName("label_pref")
         self.label_pref.setFont(font9)
-        self.label_pref.setAlignment(Qt.AlignCenter)
+        self.label_pref.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_8.setWidget(0, QFormLayout.FieldRole, self.label_pref)
 
         self.output_label = QLabel(self.formLayoutWidget_5)
         self.output_label.setObjectName("output_label")
         self.output_label.setFont(font9)
-        self.output_label.setAlignment(Qt.AlignCenter)
+        self.output_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_8.setWidget(3, QFormLayout.FieldRole, self.output_label)
 
         self.ptoday_edit = QLineEdit(self.formLayoutWidget_5)
         self.ptoday_edit.setObjectName("ptoday_edit")
         self.ptoday_edit.setFont(font9)
-        self.ptoday_edit.setAlignment(Qt.AlignCenter)
+        self.ptoday_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_8.setWidget(1, QFormLayout.FieldRole, self.ptoday_edit)
 
         self.SecondEdit = QLineEdit(self.formLayoutWidget_5)
         self.SecondEdit.setObjectName("SecondEdit")
         self.SecondEdit.setFont(font9)
-        self.SecondEdit.setAlignment(Qt.AlignCenter)
+        self.SecondEdit.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_8.setWidget(5, QFormLayout.FieldRole, self.SecondEdit)
 
         self.horizontalSpacer = QSpacerItem(
-            40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum
+            40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
         )
 
         self.formLayout_8.setItem(2, QFormLayout.LabelRole, self.horizontalSpacer)
@@ -449,7 +500,10 @@ class Ui_MainWindow(object):
         self.calcular.setObjectName("calcular")
         icon1 = QIcon()
         icon1.addFile(
-            ":/icons/res/calc-icon-blue.svg", QSize(), QIcon.Normal, QIcon.Off
+            ":/icons/res/calc-icon-blue.svg",
+            QSize(),
+            QIcon.Mode.Normal,
+            QIcon.State.Off,
         )
         self.calcular.setIcon(icon1)
 
@@ -464,7 +518,7 @@ class Ui_MainWindow(object):
         self.desv_label = QLabel(self.formLayoutWidget_5)
         self.desv_label.setObjectName("desv_label")
         self.desv_label.setFont(font9)
-        self.desv_label.setAlignment(Qt.AlignCenter)
+        self.desv_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_8.setWidget(6, QFormLayout.FieldRole, self.desv_label)
 
@@ -480,7 +534,9 @@ class Ui_MainWindow(object):
         self.formLayout_7 = QFormLayout(self.formLayoutWidget_4)
         self.formLayout_7.setObjectName("formLayout_7")
         self.formLayout_7.setFormAlignment(
-            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter
+            Qt.AlignmentFlag.AlignLeading
+            | Qt.AlignmentFlag.AlignLeft
+            | Qt.AlignmentFlag.AlignVCenter
         )
         self.formLayout_7.setHorizontalSpacing(6)
         self.formLayout_7.setContentsMargins(0, 0, 0, 0)
@@ -493,14 +549,14 @@ class Ui_MainWindow(object):
         self.label_linac_energy = QLabel(self.formLayoutWidget_4)
         self.label_linac_energy.setObjectName("label_linac_energy")
         self.label_linac_energy.setFont(font3)
-        self.label_linac_energy.setAlignment(Qt.AlignCenter)
+        self.label_linac_energy.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_7.setWidget(0, QFormLayout.FieldRole, self.label_linac_energy)
 
         self.label_linac_applicator = QLabel(self.formLayoutWidget_4)
         self.label_linac_applicator.setObjectName("label_linac_applicator")
         self.label_linac_applicator.setFont(font3)
-        self.label_linac_applicator.setAlignment(Qt.AlignCenter)
+        self.label_linac_applicator.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_7.setWidget(
             1, QFormLayout.FieldRole, self.label_linac_applicator
@@ -515,7 +571,7 @@ class Ui_MainWindow(object):
         self.label_linac_dose = QLabel(self.formLayoutWidget_4)
         self.label_linac_dose.setObjectName("label_linac_dose")
         self.label_linac_dose.setFont(font3)
-        self.label_linac_dose.setAlignment(Qt.AlignCenter)
+        self.label_linac_dose.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.formLayout_7.setWidget(2, QFormLayout.FieldRole, self.label_linac_dose)
 
@@ -558,7 +614,7 @@ class Ui_MainWindow(object):
         self.label_13 = QLabel(self.centralwidget)
         self.label_13.setObjectName("label_13")
         font10 = QFont()
-        font10.setFamily("Lucida Sans")
+        font10.setFamilies(["Lucida Sans"])
         self.label_13.setFont(font10)
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_13)
@@ -617,7 +673,7 @@ class Ui_MainWindow(object):
         self.groupBox_6 = QGroupBox(self.centralwidget)
         self.groupBox_6.setObjectName("groupBox_6")
         font11 = QFont()
-        font11.setFamily("Lucida Sans")
+        font11.setFamilies(["Lucida Sans"])
         font11.setPointSize(13)
         self.groupBox_6.setFont(font11)
         self.groupBox_6.setAutoFillBackground(False)
@@ -634,7 +690,7 @@ class Ui_MainWindow(object):
         self.label_18 = QLabel(self.verticalLayoutWidget_4)
         self.label_18.setObjectName("label_18")
         font12 = QFont()
-        font12.setFamily("Lucida Sans")
+        font12.setFamilies(["Lucida Sans"])
         font12.setPointSize(10)
         self.label_18.setFont(font12)
 
@@ -722,8 +778,8 @@ class Ui_MainWindow(object):
 
         self.line_2 = QFrame(self.verticalLayoutWidget_4)
         self.line_2.setObjectName("line_2")
-        self.line_2.setFrameShape(QFrame.VLine)
-        self.line_2.setFrameShadow(QFrame.Sunken)
+        self.line_2.setFrameShape(QFrame.Shape.VLine)
+        self.line_2.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_3.addWidget(self.line_2)
 
@@ -766,13 +822,13 @@ class Ui_MainWindow(object):
         self.formLayout_10.setWidget(2, QFormLayout.FieldRole, self.VerticalEdit)
 
         self.verticalSpacer_2 = QSpacerItem(
-            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
+            20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
         )
 
         self.formLayout_10.setItem(3, QFormLayout.LabelRole, self.verticalSpacer_2)
 
         self.verticalSpacer = QSpacerItem(
-            20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding
+            20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
         )
 
         self.formLayout_10.setItem(5, QFormLayout.LabelRole, self.verticalSpacer)
@@ -798,8 +854,8 @@ class Ui_MainWindow(object):
 
         self.line = QFrame(self.verticalLayoutWidget_4)
         self.line.setObjectName("line")
-        self.line.setFrameShape(QFrame.HLine)
-        self.line.setFrameShadow(QFrame.Sunken)
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout_5.addWidget(self.line)
 
@@ -847,7 +903,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setContentsMargins(5, -1, -1, -1)
         self.pushreport = QPushButton(self.verticalLayoutWidget_4)
         self.pushreport.setObjectName("pushreport")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.pushreport.sizePolicy().hasHeightForWidth())
@@ -857,8 +913,8 @@ class Ui_MainWindow(object):
         icon2.addFile(
             ":/icons/res/generate-report-icon-blue.svg",
             QSize(),
-            QIcon.Normal,
-            QIcon.Off,
+            QIcon.Mode.Normal,
+            QIcon.State.Off,
         )
         self.pushreport.setIcon(icon2)
 
@@ -869,7 +925,10 @@ class Ui_MainWindow(object):
         self.pushsend.setFont(font4)
         icon3 = QIcon()
         icon3.addFile(
-            ":/icons/res/curved-arrow-icon.svg", QSize(), QIcon.Normal, QIcon.Off
+            ":/icons/res/curved-arrow-icon.svg",
+            QSize(),
+            QIcon.Mode.Normal,
+            QIcon.State.Off,
         )
         self.pushsend.setIcon(icon3)
 
@@ -892,7 +951,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName("menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1468, 21))
+        self.menubar.setGeometry(QRect(0, 0, 1468, 22))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
