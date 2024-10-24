@@ -1,4 +1,5 @@
 import pytest
+from PySide6.QtWidgets import QApplication
 from PySide6.QtWidgets import QMessageBox
 from kali_mc.main import Window  # Import your class from your module
 
