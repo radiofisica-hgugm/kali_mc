@@ -52,8 +52,4 @@ def test_report():
         os.path.join(filepath, "3D.png"),
         data_dict,
     )
-    # open file
-    # f = open(os.path.join(filepath, "report_test.pdf"), "r", encoding='utf-8')
-    # a = f.read()
-    # UM_string = "UM 2500"
     assert os.path.isfile(os.path.join(filepath, "report_test.pdf"))
