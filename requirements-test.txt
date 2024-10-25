@@ -1,4 +1,0 @@
-pytest==8.3.3
-coverage
-pytest-qt
-pytest-mock
