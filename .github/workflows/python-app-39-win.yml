@@ -18,6 +18,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Set OpenGL to software
+      run: echo "QT_OPENGL=software" >> $GITHUB_ENV
     - name: Set up Python 3.9
       uses: actions/setup-python@v3
       with:
