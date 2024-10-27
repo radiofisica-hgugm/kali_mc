@@ -178,3 +178,38 @@ def test_refresh_rescaling_no_warning(qtbot, mocker):
 
     # Check that plot_distribs was called
     plot_distribs_mock.assert_called_once()
+
+
+def test_refresh_no_selection(qtbot, mocker):
+    """Test refresh method with insufficient input data (no dose loaded)."""
+    # Create the window instance
+    window = Window()
+    qtbot.addWidget(window)
+
+    # Set up mock data for GUI elements and return values
+    mocker.patch.object(
+        window.combo_applicator, "currentIndex", return_value=0
+    )  # No selection
+    mocker.patch.object(window.combo_applicator, "currentText", return_value="")
+    mocker.patch.object(window.combo_bevel, "currentIndex", return_value=0)
+    mocker.patch.object(window.combo_bevel, "currentText", return_value="")
+    mocker.patch.object(window.ptoday_edit, "text", return_value="")
+    mocker.patch.object(
+        window.radio1, "isChecked", return_value=False
+    )  # Energy = 6 MeV
+    mocker.patch.object(
+        window.radio2, "isChecked", return_value=False
+    )  # Energy = 8 MeV
+    mocker.patch.object(
+        window.radio3, "isChecked", return_value=False
+    )  # Energy = 10 MeV
+    mocker.patch.object(
+        window.radio4, "isChecked", return_value=False
+    )  # Energy = 12 MeV
+
+    # Call the method
+    window.refresh()
+
+    # Assert that no dose matrix is loaded
+    assert window.npzfile == ""
+    assert window.dose_distrib is None
