@@ -18,16 +18,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Download Mesa3D
-      run: curl -L -o mesa.7z https://github.com/pal1000/mesa-dist-win/releases/download/22.1.7/mesa3d-22.1.7-release-msvc.7z
-
-    - name: Extract Mesa3D
-      run: 7z x mesa.7z -omesa
-
-    - name: Add Mesa3D to PATH
-      run: echo "mesa\\x64" >> $GITHUB_PATH
-        mklink opengl32.dll "x64\opengl32.dll"
-        mklink libglapi.dll "x64\libglapi.dll"
     - name: Set up Python 3.9
       uses: actions/setup-python@v3
       with:
