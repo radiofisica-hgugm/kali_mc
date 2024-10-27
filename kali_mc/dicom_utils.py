@@ -24,7 +24,7 @@ from conf import destination_server, destination_port, destination_AETitle
 
 
 def generate_uid(prefix="1.2.392.200036.9116.2.6.1.48."):
-    uid = prefix + str(random.randint(1e10, 1e12))
+    uid = prefix + str(random.randint(int(1e10), int(1e12)))
     return uid
 
 
