@@ -2,6 +2,7 @@ import pytest
 from PySide6.QtWidgets import QApplication
 from PySide6.QtWidgets import QMessageBox
 from kali_mc.main import Window  # Import your class from your module
+import numpy as np
 
 
 def test_calculate_UM(qtbot, mocker):
@@ -36,6 +37,86 @@ def test_calculate_UM(qtbot, mocker):
     assert window.label_linac_applicator.text() == "50 mm"
     assert window.label_linac_dose.text() == "920 UM"
     assert window.label_linac_energy.text() == "12 MeV"
+
+
+def test_calculate_UM_rescale(qtbot, mocker):
+    """Test the calculate_UM method with mocked input values and rescaling factors"""
+
+    mocker.patch("kali_mc.main.rescale_factors", True)
+    # Create the window instance
+    window = Window()
+    qtbot.addWidget(window)
+
+    # Mock the QComboBox and QLineEdit values
+
+    mocker.patch.object(window.DoseEdit, "text", return_value="1250")  # Dose = 1250 cGy
+    mocker.patch.object(
+        window.combo_applicator, "currentText", return_value="12"
+    )  # Applicator -> 12 cm
+    mocker.patch.object(window.combo_applicator, "currentIndex", return_value=1)
+    mocker.patch.object(
+        window.combo_bevel, "currentIndex", return_value=1
+    )  # Bevel -> 0º
+    mocker.patch.object(
+        window.combo_bevel, "currentText", return_value="0"
+    )  # Applicator -> 12 cm
+    mocker.patch.object(window.radio2, "isChecked", return_value=True)  # Energy = 8 MeV
+    mocker.patch.object(
+        window.ptoday_edit, "text", return_value="950"
+    )  # Current air pressure = 950 hPa
+
+    # Call the method
+    window.refresh()
+    window.calculate_UM()
+
+    # Assert that the result is as expected
+    assert window.UM_label.text() == "1679"
+    assert window.output_label.text() == "0.883"
+    assert window.label_linac_applicator.text() == "120 mm"
+    assert window.label_linac_dose.text() == "1679 UM"
+    assert window.label_linac_energy.text() == "8 MeV"
+    assert window.rescale_factor == 1.05
+
+
+def test_calculate_UM_rescale_disabled(qtbot, mocker):
+    """Test the calculate_UM method with mocked input values and a disabled applicator/bevel/energy combination"""
+
+    mocker.patch("kali_mc.main.rescale_factors", True)
+    # Create the window instance
+    window = Window()
+    qtbot.addWidget(window)
+
+    # Mock the QComboBox and QLineEdit values
+
+    mocker.patch.object(window.DoseEdit, "text", return_value="1250")  # Dose = 1250 cGy
+    mocker.patch.object(
+        window.combo_applicator, "currentText", return_value="12"
+    )  # Applicator -> 12 cm
+    mocker.patch.object(window.combo_applicator, "currentIndex", return_value=1)
+    mocker.patch.object(
+        window.combo_bevel, "currentIndex", return_value=1
+    )  # Bevel -> 0º
+    mocker.patch.object(
+        window.combo_bevel, "currentText", return_value="0"
+    )  # Applicator -> 12 cm
+    mocker.patch.object(
+        window.radio3, "isChecked", return_value=True
+    )  # Energy = 10 MeV
+    mocker.patch.object(
+        window.ptoday_edit, "text", return_value="950"
+    )  # Current air pressure = 950 hPa
+
+    # Call the method
+    window.refresh()
+    window.calculate_UM()
+
+    # Assert that the result is as expected
+    assert window.UM_label.text() == "0"
+    assert window.output_label.text() == "0.888"
+    assert window.label_linac_applicator.text() == "120 mm"
+    assert window.label_linac_dose.text() == "0 UM"
+    assert window.label_linac_energy.text() == "10 MeV"
+    assert window.rescale_factor == 0
 
 
 def test_calculate_um_invalid_dose_value(qtbot, mocker):
@@ -173,3 +254,14 @@ def test_calc_um_diff_empty_values(qtbot, mocker):
 
     # Assert that desv_label was not updated (empty text or default state)
     assert window.desv_label.text() == ""
+
+
+def test_rescale_factors_disabled(qtbot, mocker):
+    """Test to verify that when rescaled factors are disabled self.rescale_mat == ones([36,4])"""
+
+    mocker.patch("kali_mc.main.rescale_factors", False)
+    # Create the window instance
+    window = Window()
+    qtbot.addWidget(window)
+
+    assert window.rescale_mat.any() == 1.0
