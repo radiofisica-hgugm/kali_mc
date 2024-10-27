@@ -7,12 +7,6 @@ def test_plot_distribs(qtbot, mocker):
     window = Window()
     qtbot.addWidget(window)
 
-    # Mock the plot and addItem calls
-    mock_plot = MagicMock()
-    mocker.patch.object(window.graphWidget1, "addPlot", return_value=mock_plot)
-    mocker.patch.object(window.graphWidget2, "addPlot", return_value=mock_plot)
-    mocker.patch.object(window.graphWidget3, "addPlot", return_value=mock_plot)
-
     mocker.patch.object(window.DoseEdit, "text", return_value="1250")  # Dose = 1250 cGy
     mocker.patch.object(window.combo_applicator, "currentIndex", return_value=7)
     mocker.patch.object(window.combo_applicator, "currentText", return_value="6")
