@@ -98,6 +98,12 @@ def test_generate_report(qtbot, mocker):
 
     filepath = os.path.dirname(__file__)
     mock_create_pdf = mocker.patch("kali_mc.main.create_pdf")
+
+    # Mock grabFramebuffer() to avoid OpenGL rendering issues
+    mock_grab_framebuffer = mocker.patch.object(
+        window.openGLWidget, "grabFramebuffer", return_value=MagicMock()
+    )
+
     window.generate_report()
 
     # Check QFileDialog called as expected
