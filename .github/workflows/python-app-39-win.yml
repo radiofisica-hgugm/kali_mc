@@ -18,8 +18,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set OpenGL to software
-      run: echo "QT_OPENGL=software" >> $GITHUB_ENV
+    - name: Download Mesa3D
+      run: |
+        curl -L -o mesa.zip https://github.com/pal1000/mesa-dist-win/releases/download/22.1.7/mesa3d-22.1.7-release-msvc.zip
+        unzip mesa.zip -d mesa
+
+    - name: Add Mesa3D to PATH
+      run: |
+        echo "mesa\\x64" >> $GITHUB_PATH
     - name: Set up Python 3.9
       uses: actions/setup-python@v3
       with:
