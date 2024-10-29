@@ -37,7 +37,7 @@ jobs:
           zip -r kali_mc.zip kali_mc/  # Adjust the output folder name based on your spec
 
       - name: Upload artifact for release
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: kali_mc_build
           path: dist/kali_mc.zip
@@ -47,7 +47,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Download build artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: kali_mc_build
 
