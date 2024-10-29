@@ -2,7 +2,9 @@ echo on
 pyinstaller --name kali_mc --hiddenimport=pydicom.encoders.gdcm --hiddenimport=pydicom.encoders.pylibjpeg ^
 --hidden-import=PySide6 ^
 --hidden-import=kali_mc ^
---noconfirm --icon kali_mc\ui\res\kali_ico.png main.py --paths ./kali_mc --splash kali_mc\ui\res\splash-kali.png ^
+--noconfirm ^
+--icon kali_mc\ui\res\kali_ico.png main.py  ^
+--paths ./kali_mc --splash kali_mc\ui\res\splash-kali.png ^
 --exclude-module local_conf ^
 --distpath dist ^
 --workpath build ^
@@ -49,4 +51,7 @@ pyinstaller --name kali_mc --hiddenimport=pydicom.encoders.gdcm --hiddenimport=p
 --exclude-module "pytest" ^
 --exclude-module "sphinx" ^
 --exclude-module "sphinx-rtd-theme" ^
---exclude-module "sphinxcontrib-bibtex"
+--exclude-module "sphinxcontrib-bibtex" ^
+--exclude-module "pytest-qt" ^
+--exclude-module "coverage" ^
+--exclude-module "pytest-mock"

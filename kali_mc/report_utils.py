@@ -22,7 +22,7 @@ from reportlab.platypus import (
     Frame,
 )
 
-from conf import __version__, DepartmentName, DepartmentLogo_path
+from kali_mc.conf import __version__, DepartmentName, DepartmentLogo_path
 
 
 def get_image_size(path, desired_width):

@@ -10,7 +10,7 @@ a = Analysis(
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=['local_conf', 'importlib-metadata', 'pre-commit', 'pytest', 'sphinx', 'sphinx-rtd-theme', 'sphinxcontrib-bibtex'],
+    excludes=['local_conf', 'importlib-metadata', 'pre-commit', 'pytest', 'sphinx', 'sphinx-rtd-theme', 'sphinxcontrib-bibtex', 'pytest-qt', 'coverage', 'pytest-mock'],
     noarchive=False,
     optimize=0,
 )
