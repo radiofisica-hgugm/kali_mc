@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
@@ -29,7 +29,7 @@ jobs:
         run: pip install pyinstaller
 
       - name: Build with PyInstaller
-        run: pyinstaller kali_mc.spec
+        run: pyinstaller kali_mc_win.spec
 
       - name: Create ZIP file for release
         run: |
@@ -37,7 +37,7 @@ jobs:
           powershell Compress-Archive -Path kali_mc -DestinationPath kali_mc_windows.zip
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: kali_mc_windows
           path: dist/kali_mc_windows.zip
@@ -47,10 +47,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
@@ -63,7 +63,7 @@ jobs:
         run: pip install pyinstaller
 
       - name: Build with PyInstaller
-        run: pyinstaller kali_mc.spec
+        run: pyinstaller kali_mc_macos.spec
 
       - name: Create ZIP file for release
         run: |
@@ -71,44 +71,44 @@ jobs:
           zip -r kali_mc_macos.zip kali_mc/
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: kali_mc_macos
           path: dist/kali_mc_macos.zip
 
-  build-ubuntu:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Install PyInstaller
-        run: pip install pyinstaller
-
-      - name: Build with PyInstaller
-        run: pyinstaller kali_mc.spec
-
-      - name: Create ZIP file for release
-        run: |
-          cd dist
-          zip -r kali_mc_ubuntu.zip kali_mc/
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: kali_mc_ubuntu
-          path: dist/kali_mc_ubuntu.zip
+#  build-ubuntu:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Python
+#        uses: actions/setup-python@v5
+#        with:
+#          python-version: '3.12'
+#
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install -r requirements.txt
+#
+#      - name: Install PyInstaller
+#        run: pip install pyinstaller
+#
+#      - name: Build with PyInstaller
+#        run: pyinstaller kali_mc.spec
+#
+#      - name: Create ZIP file for release
+#        run: |
+#          cd dist
+#          zip -r kali_mc_ubuntu.zip kali_mc/
+#
+#      - name: Upload artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: kali_mc_ubuntu
+#          path: dist/kali_mc_ubuntu.zip
 
   release:
     needs: [build-windows, build-macos, build-ubuntu]
@@ -116,19 +116,19 @@ jobs:
 
     steps:
       - name: Download Windows artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: kali_mc_windows
 
       - name: Download macOS artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: kali_mc_macos
 
-      - name: Download Ubuntu artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: kali_mc_ubuntu
+#      - name: Download Ubuntu artifact
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: kali_mc_ubuntu
 
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
@@ -136,7 +136,7 @@ jobs:
           artifacts: |
             kali_mc_windows.zip
             kali_mc_macos.zip
-            kali_mc_ubuntu.zip
+#            kali_mc_ubuntu.zip
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
           name: "Release ${{ github.ref_name }}"
