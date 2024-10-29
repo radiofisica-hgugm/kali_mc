@@ -3,8 +3,8 @@ Configuration file
 
 Some parameters can be tweaked for customization of reports and configuration of Record & Verify systems.
 
-In order to customize Kali MC, the user has to create a text file named ``local_conf.py`` and place it in the same
-folder as the program main file ``main.py`` if running from source, or inside the ``_internal`` folder if running from
+In order to customize Kali MC, the user has to create a text file named ``local_conf.py`` and place it in the folder
+``kali_mc/kali_mc`` where ``conf.py`` resides, if running from source, or inside the ``_internal`` folder if running from
 the executable file. The configuration will be loaded on startup:
 
 .. code-block:: console

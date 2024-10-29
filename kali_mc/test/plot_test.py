@@ -1,4 +1,4 @@
-from kali_mc.main import Window
+from main import Window
 from unittest.mock import MagicMock
 import numpy as np
 

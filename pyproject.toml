@@ -23,6 +23,7 @@ classifiers=[
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Medical Science Apps.",
     "Topic :: Scientific/Engineering :: Physics",
 ]
@@ -34,7 +35,7 @@ dependencies = [
     "pillow==10.3.0",
     "PyOpenGL==3.1.7",
     "pyqtgraph==0.13.7",
-    "PySide2==5.15.2.1",
+    "PySide6==5.15.2.1",
     "reportlab==4.2.0",
     "scipy==1.13.1",
     "shiboken2==5.15.2.1",

@@ -27,12 +27,6 @@ Install the needed packages using pip:
 
    $ pip install -r requirements.txt
 
-Access the application source folder:
-
-.. code-block:: console
-
-   $ cd kali_mc
-
 Start the application:
 
 .. code-block:: console

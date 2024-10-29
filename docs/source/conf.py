@@ -7,8 +7,8 @@ project = "Kali MC"
 copyright = "2024, Servicio de Dosimetría y Radioprotección , Hospital General Universitario Gregorio Marañón"
 author = "Rafael Ayala"
 
-release = "1.1"
-version = "1.1.0"
+release = "1.2"
+version = "1.2.0"
 
 # -- General configuration
 
@@ -21,7 +21,7 @@ extensions = [
     "sphinxcontrib.bibtex",
 ]
 
-sys.path.insert(0, os.path.abspath("../"))
+sys.path.insert(0, os.path.abspath(os.path.join("..", "..")))
 add_module_names = False
 
 intersphinx_mapping = {

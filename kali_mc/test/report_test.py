@@ -3,7 +3,7 @@ import os
 import tempfile
 from unittest.mock import MagicMock, patch
 from kali_mc.report_utils import create_pdf
-from kali_mc.main import Window
+from main import Window
 
 
 def create_fake_data_dict():
@@ -97,7 +97,7 @@ def test_generate_report(qtbot, mocker):
     mocker.patch("pyqtgraph.exporters.ImageExporter", return_value=mock_exporter)
 
     filepath = os.path.dirname(__file__)
-    mock_create_pdf = mocker.patch("kali_mc.main.create_pdf")
+    mock_create_pdf = mocker.patch("main.create_pdf")
 
     # Mock grabFramebuffer() to avoid OpenGL rendering issues
     mock_grab_framebuffer = mocker.patch.object(

@@ -17,8 +17,8 @@ try:
     import pyi_splash
 except ModuleNotFoundError:
     pass
-from main_window import Ui_MainWindow, QMainWindow
-from conf import (
+from kali_mc.main_window import Ui_MainWindow, QMainWindow
+from kali_mc.conf import (
     rescale_factors,
     PREF,
     pdf_path,
@@ -27,8 +27,8 @@ from conf import (
     __version__,
     locale,
 )
-from report_utils import create_pdf
-from dicom_utils import send_rtplan
+from kali_mc.report_utils import create_pdf
+from kali_mc.dicom_utils import send_rtplan
 
 
 def find_text_position(data, level):
@@ -56,7 +56,9 @@ class Window(QMainWindow, Ui_MainWindow):
             self.bundle_dir = sys._MEIPASS
         else:
             # we are running in a normal Python environment
-            self.bundle_dir = os.path.dirname(os.path.abspath(__file__))
+            self.bundle_dir = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)), "kali_mc"
+            )
 
         self.initial_title = self.windowTitle()
         self.energies = [6, 8, 10, 12]
@@ -940,7 +942,7 @@ if __name__ == "__main__":
         translations_path = os.path.join(sys._MEIPASS, "translations")
     else:  # Running from source
         translations_path = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "translations"
+            os.path.dirname(os.path.abspath(__file__)), "kali_mc/translations"
         )
     if translator.load(os.path.join(translations_path, f"{locale}.qm")):
         print(f"Loaded translation file: {locale}.qm")

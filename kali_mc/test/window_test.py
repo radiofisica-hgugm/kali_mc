@@ -2,14 +2,7 @@ import sys
 import pytest
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QTranslator
-from kali_mc.main import Window  # Import your class from your module
-
-#
-# @pytest.fixture
-# def app(qtbot):
-#     """Fixture to create the QApplication."""
-#     _app = QApplication(sys.argv)
-#     yield _app
+from main import Window  # Import your class from your module
 
 
 def test_window_initialization(qtbot):

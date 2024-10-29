@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import MagicMock, patch
 from PySide6 import QtGui
 import numpy as np
-from kali_mc.main import Window
+from main import Window
 
 
 def test_refresh_valid_indices_and_rescale_warning(qtbot, mocker):

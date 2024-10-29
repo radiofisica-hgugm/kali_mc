@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 from pydicom.dataset import Dataset
 from pydicom.uid import ImplicitVRLittleEndian
 from pynetdicom import AE
-from kali_mc.main import Window
+from main import Window
 from kali_mc.dicom_utils import fill_rtplan
 import tempfile
 
@@ -83,7 +83,7 @@ def test_send_dicom_with_real_rtplan_creation(qtbot, mocker):
     )
 
     # Mock the AE class in dicom_utils.py
-    mock_ae = mocker.patch("dicom_utils.AE")
+    mock_ae = mocker.patch("kali_mc.dicom_utils.AE")
 
     # Configure the mocked AE instance behavior
     mock_ae_instance = mock_ae.return_value

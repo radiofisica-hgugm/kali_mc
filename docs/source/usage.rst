@@ -26,7 +26,7 @@ Choose between the available applicator diameters (3, 4, 5, 6, 7, 8, 9, 10 and 1
 
 Prescription
 -------------
-Enter the prescribed dose in cGy and the desire depth in cm (depth of the 90% isodose).
+Enter the prescribed dose in cGy and the desired depth in cm (depth of the 90% isodose).
 
 .. _kali-prescription:
 .. image:: figures/kali-prescription.png
