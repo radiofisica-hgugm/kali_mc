@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="850" height="425" alt="Kali MC" src="kali_mc/ui/res/splash-kali.png">
+  <img alt="Kali MC" src="kali_mc/ui/res/splash-kali.png">
 </p>
 
 **Software for calculating IORT treatments with a LIAC HWL linac, based on precalculated Monte Carlo dose distributions in water.**
