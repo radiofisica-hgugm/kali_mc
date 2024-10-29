@@ -1,11 +1,13 @@
-# Kali MC
+<p align="center">
+  <img width="597" height="490" alt="Kali MC" src="kali_mc/ui/res/splash-kali.png">
+</p>
+
+**Software for calculating IORT treatments with a LIAC HWL linac, based on precalculated Monte Carlo dose distributions in water.**
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fradiofisica-hgugm%2Fkali_mc%2Fmain%2Fpyproject.toml)
 [![Documentation Status](https://readthedocs.org/projects/kali-mc/badge/?version=latest)](https://kali-mc.readthedocs.io/en/latest/?badge=latest)
 
-Software for calculating IORT treatments with a LIAC HWL linac, based on precalculated Monte Carlo dose distributions in water.
-
-![3D applicator setup](kali_mc/ui/res/splash-kali.png?raw=true "3D applicator setup")
 
 ## Main Features:
 - Visualize absorbed dose distributions of all combinations of applicators and energies
