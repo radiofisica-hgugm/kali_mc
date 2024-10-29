@@ -150,6 +150,9 @@ class Window(QMainWindow, Ui_MainWindow):
         # Otherwise, image shows rotated 90ยบ
         pg.setConfigOptions(imageAxisOrder="row-major")
 
+        # Set window title with current version
+        self.setWindowTitle(f"Kali MC v.{__version__}")
+
     def find_checked_radiobutton(self):
         """find the checked radiobutton, returns energy index"""
         radiobuttons = [self.radio1, self.radio2, self.radio3, self.radio4]
