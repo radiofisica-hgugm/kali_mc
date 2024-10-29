@@ -1,0 +1,57 @@
+echo on
+pyinstaller --name kali_mc --hiddenimport=pydicom.encoders.gdcm --hiddenimport=pydicom.encoders.pylibjpeg ^
+--hidden-import=PySide6 ^
+--hidden-import=kali_mc ^
+--noconfirm ^
+--icon kali_mc\ui\res\kali_ico.png main.py  ^
+--paths ./kali_mc --splash kali_mc\ui\res\splash-kali.png ^
+--exclude-module local_conf ^
+--distpath dist ^
+--workpath build ^
+--add-data "kali_mc/data/*.*;data/" --add-data "kali_mc/data/sim/*.*;data/sim/" --add-data "kali_mc/report/*.*;report/" ^
+--add-data "kali_mc/data/sim/C3/B0/*.*;data/sim/C3/B0" ^
+--add-data "kali_mc/data/sim/C4/B0/*.*;data/sim/C4/B0" ^
+--add-data "kali_mc/data/sim/C5/B0/*.*;data/sim/C5/B0" ^
+--add-data "kali_mc/data/sim/C6/B0/*.*;data/sim/C6/B0" ^
+--add-data "kali_mc/data/sim/C7/B0/*.*;data/sim/C7/B0" ^
+--add-data "kali_mc/data/sim/C8/B0/*.*;data/sim/C8/B0" ^
+--add-data "kali_mc/data/sim/C9/B0/*.*;data/sim/C9/B0" ^
+--add-data "kali_mc/data/sim/C10/B0/*.*;data/sim/C10/B0" ^
+--add-data "kali_mc/data/sim/C12/B0/*.*;data/sim/C12/B0" ^
+--add-data "kali_mc/data/sim/C3/B15/*.*;data/sim/C3/B15" ^
+--add-data "kali_mc/data/sim/C4/B15/*.*;data/sim/C4/B15" ^
+--add-data "kali_mc/data/sim/C5/B15/*.*;data/sim/C5/B15" ^
+--add-data "kali_mc/data/sim/C6/B15/*.*;data/sim/C6/B15" ^
+--add-data "kali_mc/data/sim/C7/B15/*.*;data/sim/C7/B15" ^
+--add-data "kali_mc/data/sim/C8/B15/*.*;data/sim/C8/B15" ^
+--add-data "kali_mc/data/sim/C9/B15/*.*;data/sim/C9/B15" ^
+--add-data "kali_mc/data/sim/C10/B15/*.*;data/sim/C10/B15" ^
+--add-data "kali_mc/data/sim/C12/B15/*.*;data/sim/C12/B15" ^
+--add-data "kali_mc/data/sim/C3/B30/*.*;data/sim/C3/B30" ^
+--add-data "kali_mc/data/sim/C4/B30/*.*;data/sim/C4/B30" ^
+--add-data "kali_mc/data/sim/C5/B30/*.*;data/sim/C5/B30" ^
+--add-data "kali_mc/data/sim/C6/B30/*.*;data/sim/C6/B30" ^
+--add-data "kali_mc/data/sim/C7/B30/*.*;data/sim/C7/B30" ^
+--add-data "kali_mc/data/sim/C8/B30/*.*;data/sim/C8/B30" ^
+--add-data "kali_mc/data/sim/C9/B30/*.*;data/sim/C9/B30" ^
+--add-data "kali_mc/data/sim/C10/B30/*.*;data/sim/C10/B30" ^
+--add-data "kali_mc/data/sim/C12/B30/*.*;data/sim/C12/B30" ^
+--add-data "kali_mc/data/sim/C3/B45/*.*;data/sim/C3/B45" ^
+--add-data "kali_mc/data/sim/C4/B45/*.*;data/sim/C4/B45" ^
+--add-data "kali_mc/data/sim/C5/B45/*.*;data/sim/C5/B45" ^
+--add-data "kali_mc/data/sim/C6/B45/*.*;data/sim/C6/B45" ^
+--add-data "kali_mc/data/sim/C7/B45/*.*;data/sim/C7/B45" ^
+--add-data "kali_mc/data/sim/C8/B45/*.*;data/sim/C8/B45" ^
+--add-data "kali_mc/data/sim/C9/B45/*.*;data/sim/C9/B45" ^
+--add-data "kali_mc/data/sim/C10/B45/*.*;data/sim/C10/B45" ^
+--add-data "kali_mc/data/sim/C12/B45/*.*;data/sim/C12/B45" ^
+--add-data "kali_mc/translations/*.*;translations" ^
+--exclude-module "importlib-metadata" ^
+--exclude-module "pre-commit" ^
+--exclude-module "pytest" ^
+--exclude-module "sphinx" ^
+--exclude-module "sphinx-rtd-theme" ^
+--exclude-module "sphinxcontrib-bibtex" ^
+--exclude-module "pytest-qt" ^
+--exclude-module "coverage" ^
+--exclude-module "pytest-mock"

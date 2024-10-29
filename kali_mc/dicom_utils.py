@@ -11,7 +11,7 @@ import random
 import datetime
 import tempfile
 import os
-from conf import (
+from kali_mc.conf import (
     __version__,
     tol_table_ID,
     tol_table_label,
@@ -20,7 +20,7 @@ from conf import (
     machine,
     SSD,
 )
-from conf import destination_server, destination_port, destination_AETitle
+from kali_mc.conf import destination_server, destination_port, destination_AETitle
 
 
 def generate_uid(prefix="1.2.392.200036.9116.2.6.1.48."):

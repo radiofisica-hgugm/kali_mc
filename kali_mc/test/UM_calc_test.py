@@ -1,7 +1,7 @@
 import pytest
 from PySide6.QtWidgets import QApplication
 from PySide6.QtWidgets import QMessageBox
-from kali_mc.main import Window  # Import your class from your module
+from main import Window  # Import your class from your module
 import numpy as np
 
 
@@ -42,7 +42,7 @@ def test_calculate_UM(qtbot, mocker):
 def test_calculate_UM_rescale(qtbot, mocker):
     """Test the calculate_UM method with mocked input values and rescaling factors"""
 
-    mocker.patch("kali_mc.main.rescale_factors", True)
+    mocker.patch("main.rescale_factors", True)
     # Create the window instance
     window = Window()
     qtbot.addWidget(window)
@@ -81,7 +81,7 @@ def test_calculate_UM_rescale(qtbot, mocker):
 def test_calculate_UM_rescale_disabled(qtbot, mocker):
     """Test the calculate_UM method with mocked input values and a disabled applicator/bevel/energy combination"""
 
-    mocker.patch("kali_mc.main.rescale_factors", True)
+    mocker.patch("main.rescale_factors", True)
     # Create the window instance
     window = Window()
     qtbot.addWidget(window)
@@ -259,7 +259,7 @@ def test_calc_um_diff_empty_values(qtbot, mocker):
 def test_rescale_factors_disabled(qtbot, mocker):
     """Test to verify that when rescaled factors are disabled self.rescale_mat == ones([36,4])"""
 
-    mocker.patch("kali_mc.main.rescale_factors", False)
+    mocker.patch("main.rescale_factors", False)
     # Create the window instance
     window = Window()
     qtbot.addWidget(window)
