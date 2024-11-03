@@ -1,5 +1,5 @@
 pyinstaller==6.8.0
-importlib-metadata==4.6.0
+importlib-metadata
 pre-commit==3.8.0
 pytest==8.3.3
 coverage
