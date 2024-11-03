@@ -8,7 +8,7 @@ copyright = "2024, Servicio de Dosimetría y Radioprotección , Hospital General
 author = "Rafael Ayala"
 
 release = "1.2"
-version = "1.2.0"
+version = "1.2.1"
 
 # -- General configuration
 
@@ -35,6 +35,12 @@ templates_path = ["_templates"]
 # -- Options for HTML output
 
 html_theme = "sphinx_rtd_theme"
+
+html_logo = "kali_mc.svg"
+html_theme_options = {
+    "logo_only": False,
+    "display_version": True,
+}
 
 # -- Options for EPUB output
 epub_show_urls = "footnote"
