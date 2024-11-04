@@ -81,7 +81,7 @@ enable_external_data = False
 Whether to use external data for MU calculations and R90 values. A valid path is needed in `external_data_path`
 """
 
-external_data_path = ""
+external_data_path = r""
 """
 A valid path to external data files in numpy format, please check the docs for details. Only takes effect if
 `enable_external_data == True`.

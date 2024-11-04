@@ -26,6 +26,8 @@ from kali_mc.conf import (
     serial_number,
     __version__,
     locale,
+    enable_external_data,
+    external_data_path,
 )
 from kali_mc.report_utils import create_pdf
 from kali_mc.dicom_utils import send_rtplan
@@ -46,15 +48,6 @@ def find_text_position(data, level):
     return None
 
 
-def show_fatal_error(message):
-    # Create and show a QMessageBox with the fatal error
-    msg_box = QMessageBox()
-    msg_box.setIcon(QMessageBox.Critical)
-    msg_box.setText(message)
-    msg_box.setWindowTitle("Fatal Error")
-    msg_box.exec()
-
-
 class Window(QMainWindow, Ui_MainWindow):
 
     def __init__(self, parent=None):
@@ -69,6 +62,13 @@ class Window(QMainWindow, Ui_MainWindow):
             self.bundle_dir = os.path.join(
                 os.path.dirname(os.path.abspath(__file__)), "kali_mc"
             )
+
+        if enable_external_data:
+            self.data_dir = external_data_path
+            print(rf"Running Kali MC with external data in {external_data_path}")
+            print(rf"Warning: No integrity checks are run on external data!")
+        else:
+            self.data_dir = os.path.join(self.bundle_dir, "data")
 
         self.initial_title = self.windowTitle()
         self.energies = [6, 8, 10, 12]
@@ -92,7 +92,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         if rescale_factors:
             self.rescale_mat = np.load(
-                os.path.join(self.bundle_dir, rf"data/rescale_factors.npy")
+                os.path.join(self.data_dir, "rescale_factors.npy")
             )
         else:
             self.rescale_mat = np.ones([36, 4])
@@ -161,21 +161,26 @@ class Window(QMainWindow, Ui_MainWindow):
         pg.setConfigOptions(imageAxisOrder="row-major")
 
         # Check for data integrity
-        print("Checking data integrity...")
-        if (
-            hash_folder(os.path.join(self.bundle_dir, "data"))
-            != "622b11c7256af8f303653d65f931f6cebec75b4d1c62a57753bb1e71afdcfd00"
-        ):
-            show_fatal_error(
-                "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
-            )
-            sys.exit()  # Exits the application if the hash doesn't match
+        if not enable_external_data:
+            print("Checking data integrity...")
+            if (
+                hash_folder(os.path.join(self.bundle_dir, "data"))
+                != "622b11c7256af8f303653d65f931f6cebec75b4d1c62a57753bb1e71afdcfd00"
+            ):
+                self.show_fatal_error(
+                    "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
+                )
+                sys.exit()  # Exits the application if the hash doesn't match
 
-        else:
-            print("Data integrity OK")
+            else:
+                print("Data integrity OK")
 
         # Set window title with current version
         self.setWindowTitle(f"Kali MC v.{__version__}")
+
+    def show_fatal_error(self, message):
+        # Display a critical error message box with the given message
+        QMessageBox.critical(self, "Fatal Error", message)
 
     def find_checked_radiobutton(self):
         """find the checked radiobutton, returns energy index"""
@@ -195,9 +200,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
         if (a_idx >= 0) and (b_idx >= 0):
 
-            R90_array = np.load(
-                os.path.join(self.bundle_dir, rf"data/R90_C{applicator}.npz")
-            )["R90"][
+            R90_array = np.load(os.path.join(self.data_dir, rf"R90_C{applicator}.npz"))[
+                "R90"
+            ][
                 :, b_idx
             ]  # load R90 data
             self.label_6MeV.setText(f"{R90_array[0]:.1f}")
@@ -261,8 +266,8 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.label_comments_warning.setText("")
                     self.label_comments_ico.setPixmap(QtGui.QPixmap(""))
                 self.npzfile = os.path.join(
-                    self.bundle_dir,
-                    rf"data/sim/C{applicator}/B{bevel}/C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz",
+                    self.data_dir,
+                    rf"sim/C{applicator}/B{bevel}/C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz",
                 )
                 print(f"Loading file: {self.npzfile}")
                 results = np.load(self.npzfile, allow_pickle=True)
@@ -821,7 +826,7 @@ class Window(QMainWindow, Ui_MainWindow):
             return
         # Load output from file and calculate
         OFs = np.load(
-            os.path.join(self.bundle_dir, rf"data/OF_C{applicator}.npz"),
+            os.path.join(self.data_dir, rf"OF_C{applicator}.npz"),
             allow_pickle=True,
         )["arr_0"]
         self.cGy_UM = OFs[b_idx, energy_idx]
