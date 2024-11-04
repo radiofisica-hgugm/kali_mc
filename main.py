@@ -29,6 +29,7 @@ from kali_mc.conf import (
 )
 from kali_mc.report_utils import create_pdf
 from kali_mc.dicom_utils import send_rtplan
+from kali_mc.main_utils import hash_folder
 
 
 def find_text_position(data, level):
@@ -43,6 +44,15 @@ def find_text_position(data, level):
         y_center = np.max(y)
         return x_center, y_center
     return None
+
+
+def show_fatal_error(message):
+    # Create and show a QMessageBox with the fatal error
+    msg_box = QMessageBox()
+    msg_box.setIcon(QMessageBox.Critical)
+    msg_box.setText(message)
+    msg_box.setWindowTitle("Fatal Error")
+    msg_box.exec()
 
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -147,8 +157,22 @@ class Window(QMainWindow, Ui_MainWindow):
         self.openGLWidget.opts["bgcolor"] = (0.3, 0.3, 0.3, 1)
 
         # Interpret image data as row-major instead of col-major
-        # Otherwise, image shows rotated 90ยบ
+        # Otherwise, image shows rotated 90
         pg.setConfigOptions(imageAxisOrder="row-major")
+
+        # Check for data integrity
+        print("Checking data integrity...")
+        if (
+            hash_folder(os.path.join(self.bundle_dir, "data"))
+            != "622b11c7256af8f303653d65f931f6cebec75b4d1c62a57753bb1e71afdcfd00"
+        ):
+            show_fatal_error(
+                "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
+            )
+            sys.exit()  # Exits the application if the hash doesn't match
+
+        else:
+            print("Data integrity OK")
 
         # Set window title with current version
         self.setWindowTitle(f"Kali MC v.{__version__}")
