@@ -7,8 +7,8 @@ project = "Kali MC"
 copyright = "2024, Servicio de Dosimetría y Radioprotección , Hospital General Universitario Gregorio Marañón"
 author = "Rafael Ayala"
 
-release = "1.2"
-version = "1.2.1"
+release = "1.3"
+version = "1.3.0"
 
 # -- General configuration
 
