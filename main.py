@@ -165,7 +165,7 @@ class Window(QMainWindow, Ui_MainWindow):
             print("Checking data integrity...")
             if (
                 hash_folder(os.path.join(self.bundle_dir, "data"))
-                != "622b11c7256af8f303653d65f931f6cebec75b4d1c62a57753bb1e71afdcfd00"
+                != "79b519a56c878f519f7ccd1a07e9a7f4cf91566d9d833dc3fef943b27f4cb95a"
             ):
                 self.show_fatal_error(
                     "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
@@ -828,7 +828,7 @@ class Window(QMainWindow, Ui_MainWindow):
         OFs = np.load(
             os.path.join(self.data_dir, rf"OF_C{applicator}.npz"),
             allow_pickle=True,
-        )["arr_0"]
+        )["OFs"]
         self.cGy_UM = OFs[b_idx, energy_idx]
         self.output_label.setText(f"{self.cGy_UM:.3f}")
         prescription_isodose = 90
