@@ -7,6 +7,9 @@ The dose distributions that can be visualized in Kali MC by default were pre-cal
 2020 :footcite:p:`sempauPENELOPEbasedSystemAutomated2011`, based on PENELOPE
 2018 :footcite:p:`nuclearenergyagencyPENELOPE2018Code2019`.
 
+Monte Carlo calculated Phase Space Files in IAEA format providing the aforementioned absorbed dose distributions are
+available online :footcite:p:`ayala_2024_14143380`.
+
 R\ :sub:`90` \ values
 ----------------------
 
