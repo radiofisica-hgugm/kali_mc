@@ -18,11 +18,16 @@
 - Rescaling factors can be added for desired applicator/energy combinations
 - Report generation in pdf
 - Send data as RTPlan to Record and Verify software (only tested with MOSAIQ)
+- Support for user customized data: output factors, R<sub>90</sub> values and rescaling factors.
 
 ## Limitations:
 - The software is intended for educational purposes
-- The Monte Carlo model was fitted to the data accquired at Gregorio Marañón hospital, Madrid.
+- The Monte Carlo model was fitted to the data acquired at Gregorio Marañón hospital, Madrid.
   Different linacs may show dosimetric differences.
 
 ## Documentation:
 [https://kali-mc.readthedocs.io/](https://kali-mc.readthedocs.io/)
+
+## Additional data:
+Monte Carlo Phase Space Files (PSFs) that give rise to the displayed absorbed dose distributions are available here:
+ [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14029134.svg)](https://doi.org/10.5281/zenodo.14029134)
