@@ -202,7 +202,9 @@ def send_rtplan(data_dict):
 
     with tempfile.TemporaryFile() as fp:
         rtplan = fill_rtplan(fp, data_dict)
-        print("Associating with remote DICOM server ..............")
+        print(
+            rf"Associating with remote DICOM server {destination_server} at port {destination_port}"
+        )
         ae = AE(ae_title="MY_STORAGE_SCU")
         # We can also do the same thing with the requested contexts
         ae.requested_contexts = VerificationPresentationContexts
@@ -222,7 +224,7 @@ def send_rtplan(data_dict):
         )
 
         if assoc.is_established:
-            print("Sending DICOM file to remote server ......................")
+            print("Sending DICOM file to remote server")
             status = assoc.send_c_store(rtplan)
             if status.Status != 0:
                 print("Tranfer error!")
@@ -230,3 +232,5 @@ def send_rtplan(data_dict):
                 print("DICOM RTPlan was successfully sent")
 
             assoc.release()
+        else:
+            print("Association failed!")

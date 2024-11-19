@@ -9,8 +9,18 @@ import numpy as np
 import pyqtgraph as pg
 import pyqtgraph.exporters
 import pyqtgraph.opengl as gl
+
 from PySide6 import QtGui, QtCore
-from PySide6.QtWidgets import QApplication, QFileDialog, QMessageBox
+from PySide6.QtCore import QThread, Signal, QObject
+from PySide6.QtWidgets import (
+    QApplication,
+    QFileDialog,
+    QMessageBox,
+    QTextEdit,
+    QVBoxLayout,
+    QDialog,
+    QPushButton,
+)
 from scipy.interpolate import RegularGridInterpolator, interp1d
 
 try:
@@ -46,6 +56,35 @@ def find_text_position(data, level):
         y_center = np.max(y)
         return x_center, y_center
     return None
+
+
+class StreamHandler(QObject):
+    new_text = Signal(str)  # Signal emitted when new text is available
+
+
+class OutputCapturingThread(QThread):
+    def __init__(self, target, args=None, kwargs=None):
+        super().__init__()
+        self.target = target
+        self.args = args if args else ()
+        self.kwargs = kwargs if kwargs else {}
+        self.stream_handler = StreamHandler()
+        self.original_stdout = sys.stdout
+
+    def run(self):
+        # Redirect stdout to capture the output
+        sys.stdout = self
+        try:
+            self.target(*self.args, **self.kwargs)
+        finally:
+            sys.stdout = self.original_stdout
+
+    def write(self, text):
+        if text.strip():  # Filter out empty lines
+            self.stream_handler.new_text.emit(text)
+
+    def flush(self):
+        pass  # Required to match file-like interface
 
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -951,7 +990,37 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def send_dicom(self):
         data_dict = self.create_data_dict()
-        send_rtplan(data_dict)
+        # Prepare to capture output
+        # Create and show the real-time output dialog
+        dialog = QDialog(self)
+        dialog.setWindowTitle("DICOM Transmission Info")
+        layout = QVBoxLayout(dialog)
+
+        text_edit = QTextEdit()
+        text_edit.setReadOnly(True)
+        layout.addWidget(text_edit)
+
+        close_button = QPushButton("Close")
+        close_button.setEnabled(False)
+        layout.addWidget(close_button)
+
+        # Define the worker thread to run send_rtplan
+        thread = OutputCapturingThread(target=send_rtplan, args=(data_dict,))
+        thread.stream_handler.new_text.connect(text_edit.append)
+
+        # Enable the close button when the thread finishes
+        thread.finished.connect(lambda: close_button.setEnabled(True))
+
+        # Connect the close button to close the dialog
+        close_button.clicked.connect(dialog.accept)
+
+        # Start the thread and show the dialog
+        thread.start()
+        dialog.exec()
+
+    def show_info_message(self, title, message):
+        # Create and show an informational QMessageBox
+        QMessageBox.information(self, title, message)
 
     def calc_UM_diff(self):
         if self.UM_label.text() != "" and self.SecondEdit.text() != "":
