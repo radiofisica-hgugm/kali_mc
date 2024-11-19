@@ -13,9 +13,9 @@
 
 ## Main Features:
 - Visualize absorbed dose distributions of all combinations of applicators and energies
-- Calculate monitor units (MU) with measured output factors at zmax
-- Pressure correction available
-- Rescaling factors can be added for desired combinations
+- Calculate monitor units (MU) with measured output factors at z<sub>max</sub>
+- Atmospheric pressure correction available
+- Rescaling factors can be added for desired applicator/energy combinations
 - Report generation in pdf
 - Send data as RTPlan to Record and Verify software (only tested with MOSAIQ)
 

@@ -4,16 +4,16 @@ Since version ``v.1.3.0``, the software supports custom data sources. To use thi
 to the desired location and modify its contents there.
 
 .. danger::
-    Do not modify the data folder directly. At startup, Kali MC checks the integrity of the original
-    data. If these files are modified, the application will not start.
+    Do not modify the data folder directly. Kali MC checks the integrity of the original data at startup.
+    If these files are modified, the application will not start.
 
-To enable custom data sources the parameter *enable_external_data* has to be enabled in the ``local_conf.py`` file,
-together with the path to the customized data in *external_data_path*.
+To enable custom data sources the parameter *enable_external_data* must to be enabled in the ``local_conf.py`` file,
+along with the path to the customized data in *external_data_path*.
 
 Modifying the original data
 -----------------------------
-The files in the ``data`` folder are numpy .npz files. In order to modify them, a python installation with the numpy
-package needs to be available.
+The files in the ``data`` folder are NumPy .npz files. In order to modify them, a Python installation with the NumPy
+package must be available.
 
 Output factors
 ##################
@@ -38,9 +38,9 @@ The following code modifies the output factor of the 8 cm applicator (C\ :sub:`8
        [1.27 , 1.27 , 1.245, 1.236]])
 
 
-The different energies ``[6, 8, 10, 12]`` correspond to columns in the output factors (OFs) and the bevels
+The different energies ``[6, 8, 10, 12]`` correspond to columns in the output factors array (OFs) and the bevels
 ``[0, 15, 30, 45]`` correspond to rows.
-For example, if we would like to modify the output factor of C\ :sub:`8`\B\ :sub:`45` \ and 10 MeV:
+For example, if we want to modify the output factor of C\ :sub:`8`\B\ :sub:`45` \ at 10 MeV:
 
 .. code-block:: python
 
@@ -61,8 +61,8 @@ Finally, save the data to the npz file.
 
    np.savez(npzfile, OFs=OFs)
 
-R90 values
-#################
+R\ :sub:`90` \ values
+#######################
 The procedure is almost the same as in the previous section:
 
 .. code-block:: python
@@ -88,7 +88,7 @@ Modify desired item:
 
    R90s[0,2] = 0.95
 
-Verify that the R90s array is modified accordingly:
+Verify that the R\ :sub:`90` s array is modified accordingly:
 
 .. code-block:: python
 
@@ -106,14 +106,14 @@ Save the data to the npz file.
 
 Rescaling factors
 ##################
-Rescaling factors are saved in ``data/rescale_factors.npy``
+Rescaling factors are saved in ``data/rescaling_factors.npy``
 
 .. code-block:: python
 
-   npyfile = r'path-to-your-custom-data/rescale_factors.npy'
+   npyfile = r'path-to-your-custom-data/rescaling_factors.npy'
    r_factors = np.load(npyfile, allow_pickle=True)
 
-All the rescaling factors are stored in the same numpy array, the different energies [6, 8, 10, 12] correspond to
+All the rescaling factors are stored in the same NumPy array, the different energies [6, 8, 10, 12] correspond to
 columns, while the order of rows is as follows:
 
 .. code-block:: python

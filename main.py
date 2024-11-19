@@ -92,7 +92,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         if rescale_factors:
             self.rescale_mat = np.load(
-                os.path.join(self.data_dir, "rescale_factors.npy")
+                os.path.join(self.data_dir, "rescaling_factors.npy")
             )
         else:
             self.rescale_mat = np.ones([36, 4])
@@ -165,7 +165,7 @@ class Window(QMainWindow, Ui_MainWindow):
             print("Checking data integrity...")
             if (
                 hash_folder(os.path.join(self.bundle_dir, "data"))
-                != "79b519a56c878f519f7ccd1a07e9a7f4cf91566d9d833dc3fef943b27f4cb95a"
+                != "82f91b4f170d25a674da9b0f9b8b70c1442ece3e988a677560fa324ee5142753"
             ):
                 self.show_fatal_error(
                     "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
