@@ -993,7 +993,7 @@ class Window(QMainWindow, Ui_MainWindow):
         # Prepare to capture output
         # Create and show the real-time output dialog
         dialog = QDialog(self)
-        dialog.setWindowTitle("DICOM Transmission Info")
+        dialog.setWindowTitle(self.tr("Información de la transferencia DICOM"))
         layout = QVBoxLayout(dialog)
 
         text_edit = QTextEdit()
