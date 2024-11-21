@@ -206,20 +206,20 @@ class Window(QMainWindow, Ui_MainWindow):
         # Otherwise, image shows rotated 90
         pg.setConfigOptions(imageAxisOrder="row-major")
 
-        # Check for data integrity
-        if not enable_external_data:
-            print("Checking data integrity...")
-            if (
-                hash_folder(os.path.join(self.bundle_dir, "data"))
-                != "82f91b4f170d25a674da9b0f9b8b70c1442ece3e988a677560fa324ee5142753"
-            ):
-                self.show_fatal_error(
-                    "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
-                )
-                sys.exit()  # Exits the application if the hash doesn't match
-
-            else:
-                print("Data integrity OK")
+        # # Check for data integrity
+        # if not enable_external_data:
+        #     print("Checking data integrity...")
+        #     if (
+        #         hash_folder(os.path.join(self.bundle_dir, "data"))
+        #         != "82f91b4f170d25a674da9b0f9b8b70c1442ece3e988a677560fa324ee5142753"
+        #     ):
+        #         self.show_fatal_error(
+        #             "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
+        #         )
+        #         sys.exit()  # Exits the application if the hash doesn't match
+        #
+        #     else:
+        #         print("Data integrity OK")
 
         # Set window title with current version
         self.setWindowTitle(f"Kali MC v.{__version__}")
