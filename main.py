@@ -12,7 +12,7 @@ import pyqtgraph.opengl as gl
 
 from PySide6 import QtGui, QtCore
 
-# from PySide6.QtCore import QThread, Signal, QObject
+from PySide6.QtCore import QThread, Signal, QObject
 from PySide6.QtWidgets import (
     QApplication,
     QFileDialog,
@@ -42,7 +42,7 @@ from kali_mc.conf import (
 )
 from kali_mc.report_utils import create_pdf
 
-# from kali_mc.dicom_utils import send_rtplan
+from kali_mc.dicom_utils import send_rtplan
 from kali_mc.main_utils import hash_folder
 
 
@@ -60,38 +60,38 @@ def find_text_position(data, level):
     return None
 
 
-# class StreamHandler(QObject):
-#     new_text = Signal(str)  # Signal emitted when new text is available
-#
-#
-# class OutputCapturingThread(QThread):
-#     def __init__(self, target, args=None, kwargs=None):
-#         super().__init__()
-#         self.target = target
-#         self.args = args if args else ()
-#         self.kwargs = kwargs if kwargs else {}
-#         self.stream_handler = StreamHandler()
-#         self.original_stdout = sys.stdout
-#
-#     def run(self):
-#         # Redirect stdout to capture the output
-#         sys.stdout = self
-#         try:
-#             self.target(*self.args, **self.kwargs)
-#         finally:
-#             # Restore the original stdout after the target function finishes
-#             sys.stdout = self.original_stdout
-#
-#     def write(self, text):
-#         if text.strip():  # Filter out empty lines
-#             self.stream_handler.new_text.emit(text)
-#         # Also write to the original stdout
-#         self.original_stdout.write(text)
-#         self.original_stdout.flush()  # Ensure immediate flushing
-#
-#     def flush(self):
-#         # Ensure compatibility with file-like objects
-#         self.original_stdout.flush()
+class StreamHandler(QObject):
+    new_text = Signal(str)  # Signal emitted when new text is available
+
+
+class OutputCapturingThread(QThread):
+    def __init__(self, target, args=None, kwargs=None):
+        super().__init__()
+        self.target = target
+        self.args = args if args else ()
+        self.kwargs = kwargs if kwargs else {}
+        self.stream_handler = StreamHandler()
+        self.original_stdout = sys.stdout
+
+    def run(self):
+        # Redirect stdout to capture the output
+        sys.stdout = self
+        try:
+            self.target(*self.args, **self.kwargs)
+        finally:
+            # Restore the original stdout after the target function finishes
+            sys.stdout = self.original_stdout
+
+    def write(self, text):
+        if text.strip():  # Filter out empty lines
+            self.stream_handler.new_text.emit(text)
+        # Also write to the original stdout
+        self.original_stdout.write(text)
+        self.original_stdout.flush()  # Ensure immediate flushing
+
+    def flush(self):
+        # Ensure compatibility with file-like objects
+        self.original_stdout.flush()
 
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -206,20 +206,20 @@ class Window(QMainWindow, Ui_MainWindow):
         # Otherwise, image shows rotated 90
         pg.setConfigOptions(imageAxisOrder="row-major")
 
-        # # Check for data integrity
-        # if not enable_external_data:
-        #     print("Checking data integrity...")
-        #     if (
-        #         hash_folder(os.path.join(self.bundle_dir, "data"))
-        #         != "82f91b4f170d25a674da9b0f9b8b70c1442ece3e988a677560fa324ee5142753"
-        #     ):
-        #         self.show_fatal_error(
-        #             "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
-        #         )
-        #         sys.exit()  # Exits the application if the hash doesn't match
-        #
-        #     else:
-        #         print("Data integrity OK")
+        # Check for data integrity
+        expected_hash = (
+            "82f91b4f170d25a674da9b0f9b8b70c1442ece3e988a677560fa324ee5142753"
+        )
+
+        if not enable_external_data and not os.getenv("SKIP_INTEGRITY_CHECK"):
+            print("Checking data integrity...")
+            if hash_folder(os.path.join(self.bundle_dir, "data")) != expected_hash:
+                self.show_fatal_error(
+                    "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
+                )
+                sys.exit()
+            else:
+                print("Data integrity OK")
 
         # Set window title with current version
         self.setWindowTitle(f"Kali MC v.{__version__}")
@@ -1011,18 +1011,18 @@ class Window(QMainWindow, Ui_MainWindow):
         close_button.setEnabled(False)
         layout.addWidget(close_button)
 
-        # # Define the worker thread to run send_rtplan
-        # thread = OutputCapturingThread(target=send_rtplan, args=(data_dict,))
-        # thread.stream_handler.new_text.connect(text_edit.append)
-        #
-        # # Enable the close button when the thread finishes
-        # thread.finished.connect(lambda: close_button.setEnabled(True))
+        # Define the worker thread to run send_rtplan
+        thread = OutputCapturingThread(target=send_rtplan, args=(data_dict,))
+        thread.stream_handler.new_text.connect(text_edit.append)
+
+        # Enable the close button when the thread finishes
+        thread.finished.connect(lambda: close_button.setEnabled(True))
 
         # Connect the close button to close the dialog
         close_button.clicked.connect(dialog.accept)
 
         # Start the thread and show the dialog
-        # thread.start()
+        thread.start()
         dialog.exec()
 
     def show_info_message(self, title, message):
