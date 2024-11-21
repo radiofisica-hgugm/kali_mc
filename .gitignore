@@ -161,3 +161,6 @@ cython_debug/
 
 # Local configuration
 local_conf.py
+
+# Custom dosimetric data
+custom_data/

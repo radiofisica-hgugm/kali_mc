@@ -1,5 +1,5 @@
-# ENVÍO DE DATOS A SERVIDOR DICOM
-from pydicom import dcmread
+# Send data to remote DICOM server
+from PySide6.QtCore import QCoreApplication
 from pydicom import Sequence, Dataset
 from pydicom.uid import ImplicitVRLittleEndian
 from pydicom.dataset import FileDataset, FileMetaDataset
@@ -202,7 +202,7 @@ def send_rtplan(data_dict):
 
     with tempfile.TemporaryFile() as fp:
         rtplan = fill_rtplan(fp, data_dict)
-        print("Associating with remote DICOM server ..............")
+        print(QCoreApplication.translate("Dicom", "Asociando con el servidor remoto"))
         ae = AE(ae_title="MY_STORAGE_SCU")
         # We can also do the same thing with the requested contexts
         ae.requested_contexts = VerificationPresentationContexts
@@ -222,11 +222,21 @@ def send_rtplan(data_dict):
         )
 
         if assoc.is_established:
-            print("Sending DICOM file to remote server ......................")
+            print(
+                QCoreApplication.translate(
+                    "Dicom", "Enviando archivo DICOM a servidor remoto"
+                )
+            )
             status = assoc.send_c_store(rtplan)
             if status.Status != 0:
-                print("Tranfer error!")
+                print(QCoreApplication.translate("Dicom", "Error en la transferencia!"))
             else:
-                print("DICOM RTPlan was successfully sent")
+                print(
+                    QCoreApplication.translate(
+                        "Dicom", "El RTPlan se ha enviado correctamente"
+                    )
+                )
 
             assoc.release()
+        else:
+            print(QCoreApplication.translate("Dicom", "La asociación ha fallado!"))

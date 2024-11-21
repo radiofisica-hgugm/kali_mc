@@ -5,7 +5,7 @@ from pydicom.dataset import Dataset
 from pydicom.uid import ImplicitVRLittleEndian
 from pynetdicom import AE
 from main import Window
-from kali_mc.dicom_utils import fill_rtplan
+from kali_mc.dicom_utils import fill_rtplan, send_rtplan
 import tempfile
 
 destination_server = "localhost"
@@ -70,17 +70,11 @@ def test_fill_rtplan_creates_rtplan_with_required_fields():
     ]
     for field in required_fields:
         assert hasattr(rtplan, field), f"{field} is missing in rtplan"
-    # Optionally: Add further assertions to check specific values
 
 
-def test_send_dicom_with_real_rtplan_creation(qtbot, mocker):
+def test_send_rtplan(qtbot, mocker):
     # Initialize the window instance
-    window = Window()
-    qtbot.addWidget(window)
-
-    mocker.patch.object(
-        window, "create_data_dict", return_value=create_fake_data_dict()
-    )
+    data_dict = create_fake_data_dict()
 
     # Mock the AE class in dicom_utils.py
     mock_ae = mocker.patch("kali_mc.dicom_utils.AE")
@@ -96,7 +90,7 @@ def test_send_dicom_with_real_rtplan_creation(qtbot, mocker):
     mock_assoc.send_c_store.return_value = mock_status
 
     # Run the send_dicom method
-    window.send_dicom()
+    send_rtplan(data_dict)
 
     # Verify send_c_store was called
     assert mock_assoc.send_c_store.called, "send_c_store was not called as expected."

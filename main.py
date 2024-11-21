@@ -9,8 +9,19 @@ import numpy as np
 import pyqtgraph as pg
 import pyqtgraph.exporters
 import pyqtgraph.opengl as gl
+
 from PySide6 import QtGui, QtCore
-from PySide6.QtWidgets import QApplication, QFileDialog, QMessageBox
+
+from PySide6.QtCore import QThread, Signal, QObject
+from PySide6.QtWidgets import (
+    QApplication,
+    QFileDialog,
+    QMessageBox,
+    QTextEdit,
+    QVBoxLayout,
+    QDialog,
+    QPushButton,
+)
 from scipy.interpolate import RegularGridInterpolator, interp1d
 
 try:
@@ -26,9 +37,13 @@ from kali_mc.conf import (
     serial_number,
     __version__,
     locale,
+    enable_external_data,
+    external_data_path,
 )
 from kali_mc.report_utils import create_pdf
+
 from kali_mc.dicom_utils import send_rtplan
+from kali_mc.main_utils import hash_folder
 
 
 def find_text_position(data, level):
@@ -45,6 +60,40 @@ def find_text_position(data, level):
     return None
 
 
+class StreamHandler(QObject):
+    new_text = Signal(str)  # Signal emitted when new text is available
+
+
+class OutputCapturingThread(QThread):
+    def __init__(self, target, args=None, kwargs=None):
+        super().__init__()
+        self.target = target
+        self.args = args if args else ()
+        self.kwargs = kwargs if kwargs else {}
+        self.stream_handler = StreamHandler()
+        self.original_stdout = sys.stdout
+
+    def run(self):
+        # Redirect stdout to capture the output
+        sys.stdout = self
+        try:
+            self.target(*self.args, **self.kwargs)
+        finally:
+            # Restore the original stdout after the target function finishes
+            sys.stdout = self.original_stdout
+
+    def write(self, text):
+        if text.strip():  # Filter out empty lines
+            self.stream_handler.new_text.emit(text)
+        # Also write to the original stdout
+        self.original_stdout.write(text)
+        self.original_stdout.flush()  # Ensure immediate flushing
+
+    def flush(self):
+        # Ensure compatibility with file-like objects
+        self.original_stdout.flush()
+
+
 class Window(QMainWindow, Ui_MainWindow):
 
     def __init__(self, parent=None):
@@ -59,6 +108,13 @@ class Window(QMainWindow, Ui_MainWindow):
             self.bundle_dir = os.path.join(
                 os.path.dirname(os.path.abspath(__file__)), "kali_mc"
             )
+
+        if enable_external_data:
+            self.data_dir = external_data_path
+            print(rf"Running Kali MC with external data in {external_data_path}")
+            print(rf"Warning: No integrity checks are run on external data!")
+        else:
+            self.data_dir = os.path.join(self.bundle_dir, "data")
 
         self.initial_title = self.windowTitle()
         self.energies = [6, 8, 10, 12]
@@ -82,7 +138,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         if rescale_factors:
             self.rescale_mat = np.load(
-                os.path.join(self.bundle_dir, rf"data/rescale_factors.npy")
+                os.path.join(self.data_dir, "rescaling_factors.npy")
             )
         else:
             self.rescale_mat = np.ones([36, 4])
@@ -147,11 +203,30 @@ class Window(QMainWindow, Ui_MainWindow):
         self.openGLWidget.opts["bgcolor"] = (0.3, 0.3, 0.3, 1)
 
         # Interpret image data as row-major instead of col-major
-        # Otherwise, image shows rotated 90ยบ
+        # Otherwise, image shows rotated 90
         pg.setConfigOptions(imageAxisOrder="row-major")
+
+        # Check for data integrity
+        expected_hash = (
+            "82f91b4f170d25a674da9b0f9b8b70c1442ece3e988a677560fa324ee5142753"
+        )
+
+        if not enable_external_data and not os.getenv("SKIP_INTEGRITY_CHECK"):
+            print("Checking data integrity...")
+            if hash_folder(os.path.join(self.bundle_dir, "data")) != expected_hash:
+                self.show_fatal_error(
+                    "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
+                )
+                sys.exit()
+            else:
+                print("Data integrity OK")
 
         # Set window title with current version
         self.setWindowTitle(f"Kali MC v.{__version__}")
+
+    def show_fatal_error(self, message):
+        # Display a critical error message box with the given message
+        QMessageBox.critical(self, "Fatal Error", message)
 
     def find_checked_radiobutton(self):
         """find the checked radiobutton, returns energy index"""
@@ -171,9 +246,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
         if (a_idx >= 0) and (b_idx >= 0):
 
-            R90_array = np.load(
-                os.path.join(self.bundle_dir, rf"data/R90_C{applicator}.npz")
-            )["R90"][
+            R90_array = np.load(os.path.join(self.data_dir, rf"R90_C{applicator}.npz"))[
+                "R90"
+            ][
                 :, b_idx
             ]  # load R90 data
             self.label_6MeV.setText(f"{R90_array[0]:.1f}")
@@ -237,8 +312,8 @@ class Window(QMainWindow, Ui_MainWindow):
                     self.label_comments_warning.setText("")
                     self.label_comments_ico.setPixmap(QtGui.QPixmap(""))
                 self.npzfile = os.path.join(
-                    self.bundle_dir,
-                    rf"data/sim/C{applicator}/B{bevel}/C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz",
+                    self.data_dir,
+                    rf"sim/C{applicator}/B{bevel}/C{applicator}B{bevel}_{self.energies[energy_idx]}MeV.npz",
                 )
                 print(f"Loading file: {self.npzfile}")
                 results = np.load(self.npzfile, allow_pickle=True)
@@ -797,9 +872,9 @@ class Window(QMainWindow, Ui_MainWindow):
             return
         # Load output from file and calculate
         OFs = np.load(
-            os.path.join(self.bundle_dir, rf"data/OF_C{applicator}.npz"),
+            os.path.join(self.data_dir, rf"OF_C{applicator}.npz"),
             allow_pickle=True,
-        )["arr_0"]
+        )["OFs"]
         self.cGy_UM = OFs[b_idx, energy_idx]
         self.output_label.setText(f"{self.cGy_UM:.3f}")
         prescription_isodose = 90
@@ -922,7 +997,37 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def send_dicom(self):
         data_dict = self.create_data_dict()
-        send_rtplan(data_dict)
+        # Prepare to capture output
+        # Create and show the real-time output dialog
+        dialog = QDialog(self)
+        dialog.setWindowTitle(self.tr("Información de la transferencia DICOM"))
+        layout = QVBoxLayout(dialog)
+
+        text_edit = QTextEdit()
+        text_edit.setReadOnly(True)
+        layout.addWidget(text_edit)
+
+        close_button = QPushButton("Close")
+        close_button.setEnabled(False)
+        layout.addWidget(close_button)
+
+        # Define the worker thread to run send_rtplan
+        thread = OutputCapturingThread(target=send_rtplan, args=(data_dict,))
+        thread.stream_handler.new_text.connect(text_edit.append)
+
+        # Enable the close button when the thread finishes
+        thread.finished.connect(lambda: close_button.setEnabled(True))
+
+        # Connect the close button to close the dialog
+        close_button.clicked.connect(dialog.accept)
+
+        # Start the thread and show the dialog
+        thread.start()
+        dialog.exec()
+
+    def show_info_message(self, title, message):
+        # Create and show an informational QMessageBox
+        QMessageBox.information(self, title, message)
 
     def calc_UM_diff(self):
         if self.UM_label.text() != "" and self.SecondEdit.text() != "":

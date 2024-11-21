@@ -1,11 +1,14 @@
-Sources of data
+Data sources
 ================
 
 Dose distributions
 --------------------
-The dose distributions that can be visualized in Kali MC, they have been pre-calculated with penEasy
-2020 :footcite:p:`sempauPENELOPEbasedSystemAutomated2011`, based in PENELOPE
+The dose distributions that can be visualized in Kali MC by default were pre-calculated using penEasy
+2020 :footcite:p:`sempauPENELOPEbasedSystemAutomated2011`, based on PENELOPE
 2018 :footcite:p:`nuclearenergyagencyPENELOPE2018Code2019`.
+
+Monte Carlo calculated Phase Space Files in IAEA format providing the aforementioned absorbed dose distributions are
+available online :footcite:p:`ayala_2024_14143380`.
 
 R\ :sub:`90` \ values
 ----------------------
@@ -17,10 +20,5 @@ Output factors
 
 The output factors introduced in Kali MC come from measurements at Gregorio Marañón hospital, Madrid.
 
-
-.. note::
-
-    We are currently working on a Kali MC version that will allow the user to select between measured and Monte Carlo
-    calculated output factors and R\ :sub:`90` \ values.
 
 .. footbibliography::

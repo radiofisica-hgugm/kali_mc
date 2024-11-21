@@ -34,4 +34,5 @@ Contents
    usage
    local_conf
    data_sources
+   custom_data_sources
    license

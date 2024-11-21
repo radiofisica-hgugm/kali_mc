@@ -75,6 +75,17 @@ rescale_factors = False
 Whether to apply rescaling factors to some absorbed dose distributions.
 """
 
+# External data
+enable_external_data = False
+"""
+Whether to use external data for MU calculations and R90 values. A valid path is needed in `external_data_path`
+"""
+
+external_data_path = r""
+"""
+A valid path to external data files in numpy format, please check the docs for details. Only takes effect if
+`enable_external_data == True`.
+"""
 
 # Locale:
 # By default, fallback to english
@@ -91,4 +102,4 @@ except ImportError:
     print("local_conf ignored")
     pass
 
-__version__ = "1.2.1"
+__version__ = "1.3.0"
