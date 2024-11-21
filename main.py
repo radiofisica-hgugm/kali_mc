@@ -77,14 +77,19 @@ class OutputCapturingThread(QThread):
         try:
             self.target(*self.args, **self.kwargs)
         finally:
+            # Restore the original stdout after the target function finishes
             sys.stdout = self.original_stdout
 
     def write(self, text):
         if text.strip():  # Filter out empty lines
             self.stream_handler.new_text.emit(text)
+        # Also write to the original stdout
+        self.original_stdout.write(text)
+        self.original_stdout.flush()  # Ensure immediate flushing
 
     def flush(self):
-        pass  # Required to match file-like interface
+        # Ensure compatibility with file-like objects
+        self.original_stdout.flush()
 
 
 class Window(QMainWindow, Ui_MainWindow):
