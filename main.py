@@ -58,38 +58,38 @@ def find_text_position(data, level):
     return None
 
 
-class StreamHandler(QObject):
-    new_text = Signal(str)  # Signal emitted when new text is available
-
-
-class OutputCapturingThread(QThread):
-    def __init__(self, target, args=None, kwargs=None):
-        super().__init__()
-        self.target = target
-        self.args = args if args else ()
-        self.kwargs = kwargs if kwargs else {}
-        self.stream_handler = StreamHandler()
-        self.original_stdout = sys.stdout
-
-    def run(self):
-        # Redirect stdout to capture the output
-        sys.stdout = self
-        try:
-            self.target(*self.args, **self.kwargs)
-        finally:
-            # Restore the original stdout after the target function finishes
-            sys.stdout = self.original_stdout
-
-    def write(self, text):
-        if text.strip():  # Filter out empty lines
-            self.stream_handler.new_text.emit(text)
-        # Also write to the original stdout
-        self.original_stdout.write(text)
-        self.original_stdout.flush()  # Ensure immediate flushing
-
-    def flush(self):
-        # Ensure compatibility with file-like objects
-        self.original_stdout.flush()
+# class StreamHandler(QObject):
+#     new_text = Signal(str)  # Signal emitted when new text is available
+#
+#
+# class OutputCapturingThread(QThread):
+#     def __init__(self, target, args=None, kwargs=None):
+#         super().__init__()
+#         self.target = target
+#         self.args = args if args else ()
+#         self.kwargs = kwargs if kwargs else {}
+#         self.stream_handler = StreamHandler()
+#         self.original_stdout = sys.stdout
+#
+#     def run(self):
+#         # Redirect stdout to capture the output
+#         sys.stdout = self
+#         try:
+#             self.target(*self.args, **self.kwargs)
+#         finally:
+#             # Restore the original stdout after the target function finishes
+#             sys.stdout = self.original_stdout
+#
+#     def write(self, text):
+#         if text.strip():  # Filter out empty lines
+#             self.stream_handler.new_text.emit(text)
+#         # Also write to the original stdout
+#         self.original_stdout.write(text)
+#         self.original_stdout.flush()  # Ensure immediate flushing
+#
+#     def flush(self):
+#         # Ensure compatibility with file-like objects
+#         self.original_stdout.flush()
 
 
 class Window(QMainWindow, Ui_MainWindow):
