@@ -11,7 +11,8 @@ import pyqtgraph.exporters
 import pyqtgraph.opengl as gl
 
 from PySide6 import QtGui, QtCore
-from PySide6.QtCore import QThread, Signal, QObject
+
+# from PySide6.QtCore import QThread, Signal, QObject
 from PySide6.QtWidgets import (
     QApplication,
     QFileDialog,
@@ -40,7 +41,8 @@ from kali_mc.conf import (
     external_data_path,
 )
 from kali_mc.report_utils import create_pdf
-from kali_mc.dicom_utils import send_rtplan
+
+# from kali_mc.dicom_utils import send_rtplan
 from kali_mc.main_utils import hash_folder
 
 
