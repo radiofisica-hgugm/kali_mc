@@ -1009,12 +1009,12 @@ class Window(QMainWindow, Ui_MainWindow):
         close_button.setEnabled(False)
         layout.addWidget(close_button)
 
-        # Define the worker thread to run send_rtplan
-        thread = OutputCapturingThread(target=send_rtplan, args=(data_dict,))
-        thread.stream_handler.new_text.connect(text_edit.append)
-
-        # Enable the close button when the thread finishes
-        thread.finished.connect(lambda: close_button.setEnabled(True))
+        # # Define the worker thread to run send_rtplan
+        # thread = OutputCapturingThread(target=send_rtplan, args=(data_dict,))
+        # thread.stream_handler.new_text.connect(text_edit.append)
+        #
+        # # Enable the close button when the thread finishes
+        # thread.finished.connect(lambda: close_button.setEnabled(True))
 
         # Connect the close button to close the dialog
         close_button.clicked.connect(dialog.accept)
