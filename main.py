@@ -1020,7 +1020,7 @@ class Window(QMainWindow, Ui_MainWindow):
         close_button.clicked.connect(dialog.accept)
 
         # Start the thread and show the dialog
-        thread.start()
+        # thread.start()
         dialog.exec()
 
     def show_info_message(self, title, message):
