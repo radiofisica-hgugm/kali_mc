@@ -212,7 +212,7 @@ class Window(QMainWindow, Ui_MainWindow):
             "e5bbd27960ccd7c9354b4484207b158e3e656a11e4d8bde309d8a0cf7d33454a"
         )
 
-        if not enable_external_data and not os.getenv("SKIP_INTEGRITY_CHECK"):
+        if not enable_external_data:
             print("Checking data integrity...")
             folder_hash = None  # Initialize to avoid referencing before assignment
             try:

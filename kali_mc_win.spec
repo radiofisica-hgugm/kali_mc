@@ -16,7 +16,7 @@ a = Analysis(
 )
 pyz = PYZ(a.pure)
 splash = Splash(
-    'kali_mc\\ui\\res\\splash-kali.png',
+    'kali_mc/ui/res/splash-kali.png',
     binaries=a.binaries,
     datas=a.datas,
     text_pos=None,
