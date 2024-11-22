@@ -1075,6 +1075,6 @@ if __name__ == "__main__":
         pyi_splash.update_text("Kali MC starting...")
         pyi_splash.close()
 
-    except NameError:
+    except (NameError, RuntimeError):
         pass
     sys.exit(app.exec())
