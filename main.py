@@ -39,11 +39,12 @@ from kali_mc.conf import (
     locale,
     enable_external_data,
     external_data_path,
+    datafiles_list,
 )
 from kali_mc.report_utils import create_pdf
 
 from kali_mc.dicom_utils import send_rtplan
-from kali_mc.main_utils import hash_folder
+from kali_mc.main_utils import hash_selected_files
 
 
 def find_text_position(data, level):
@@ -208,12 +209,22 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # Check for data integrity
         expected_hash = (
-            "82f91b4f170d25a674da9b0f9b8b70c1442ece3e988a677560fa324ee5142753"
+            "e5bbd27960ccd7c9354b4484207b158e3e656a11e4d8bde309d8a0cf7d33454a"
         )
 
-        if not enable_external_data and not os.getenv("SKIP_INTEGRITY_CHECK"):
+        if not enable_external_data:
             print("Checking data integrity...")
-            if hash_folder(os.path.join(self.bundle_dir, "data")) != expected_hash:
+            folder_hash = None  # Initialize to avoid referencing before assignment
+            try:
+                folder_hash = hash_selected_files(
+                    os.path.join(self.bundle_dir, "data"), datafiles_list
+                )
+                print("Data folder hash:", folder_hash)
+            except FileNotFoundError as e:
+                print(e)
+
+            # Only perform integrity check if folder_hash was successfully assigned
+            if folder_hash is None or folder_hash != expected_hash:
                 self.show_fatal_error(
                     "Fatal Error - Data integrity checks failed! \nCannot initialize Kali MC"
                 )
@@ -1064,6 +1075,6 @@ if __name__ == "__main__":
         pyi_splash.update_text("Kali MC starting...")
         pyi_splash.close()
 
-    except NameError:
+    except (NameError, RuntimeError):
         pass
     sys.exit(app.exec())

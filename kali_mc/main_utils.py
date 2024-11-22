@@ -2,34 +2,26 @@ import hashlib
 import os
 
 
-def hash_file(filepath):
-    """Calculate the SHA-256 hash of a file."""
-    sha256 = hashlib.sha256()
-    with open(filepath, "rb") as f:
-        while chunk := f.read(8192):
-            sha256.update(chunk)
-    return sha256.hexdigest()
+def hash_selected_files(folder_path, file_names):
+    """
+    Compute a hash for a specific list of files, ensuring consistent ordering.
 
+    Args:
+        folder_path (str): Path to the folder containing the files.
+        file_names (list): List of file names to hash, sorted in the desired order.
 
-def hash_folder(folder_path):
-    """Calculate the SHA-256 hash of a folder including all its contents."""
-    sha256 = hashlib.sha256()
+    Returns:
+        str: The computed hash.
+    """
+    hasher = hashlib.sha256()
 
-    for root, dirs, files in os.walk(folder_path):
-        # Sort files and directories to ensure consistent ordering
-        dirs.sort()
-        files.sort()
+    for file_name in file_names:
+        file_path = os.path.join(folder_path, file_name)
+        if os.path.exists(file_path):
+            with open(file_path, "rb") as f:
+                while chunk := f.read(65536):  # Read file in chunks for efficiency
+                    hasher.update(chunk)
+        else:
+            raise FileNotFoundError(f"File {file_name} does not exist in {folder_path}")
 
-        for name in files:
-            filepath = os.path.join(root, name)
-            # Update hash with the file path
-            sha256.update(filepath.encode("utf-8"))
-            # Update hash with the file's content
-            sha256.update(hash_file(filepath).encode("utf-8"))
-
-        # Update hash with directory names
-        for name in dirs:
-            dirpath = os.path.join(root, name)
-            sha256.update(dirpath.encode("utf-8"))
-
-    return sha256.hexdigest()
+    return hasher.hexdigest()
