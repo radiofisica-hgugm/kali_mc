@@ -103,3 +103,20 @@ except ImportError:
     pass
 
 __version__ = "1.3.0"
+
+# Data files to check for integrity
+applicators = [3, 4, 5, 6, 7, 8, 9, 10, 12]
+bevels = [0, 15, 30, 45]
+energies = [6, 8, 10, 12]
+# OFs
+datafiles_list = [f"OF_C{i}.npz" for i in applicators]
+# R90s
+[datafiles_list.append(f"R90_C{i}.npz") for i in applicators]
+datafiles_list.append("rescaling_factors.npy")
+datafiles_list.append("sim/OFs_penEasy.npz")
+datafiles_list.append("sim/R90s_penEasy.npz")
+
+for d in applicators:
+    for b in bevels:
+        for en in energies:
+            datafiles_list.append(f"sim/C{d}/B{b}/C{d}B{b}_{en}MeV.npz")
