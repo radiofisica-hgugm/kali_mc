@@ -114,7 +114,7 @@ jobs:
           path: dist/kali_mc_ubuntu.zip
 
   release:
-    needs: [build-windows, build-macos]
+    needs: [build-windows, build-macos, build-ubuntu]
     runs-on: ubuntu-latest
 
     steps:
