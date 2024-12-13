@@ -248,6 +248,24 @@ class Window(QMainWindow, Ui_MainWindow):
                 checked_radiobutton_idx = e_idx
         return checked_radiobutton_idx
 
+    def clear_GraphWidgets(self):
+        self.graphWidget1.clear()
+        self.p1 = self.graphWidget1.addPlot(colspan=1, title="Crossline")
+        self.img1 = pg.ImageItem()
+        self.p1.addItem(self.img1)
+
+        self.graphWidget2.clear()
+        self.p2 = self.graphWidget2.addPlot(colspan=1, title="Inline")
+        self.img2 = pg.ImageItem()
+        self.p2.addItem(self.img2)
+
+        self.graphWidget3.clear()
+        self.p3 = self.graphWidget3.addPlot(
+            colspan=1, title=self.tr("Isodosis del 90% en zmax")
+        )
+        self.img3 = pg.ImageItem()
+        self.p3.addItem(self.img3)
+
     def refresh(self):
         a_idx = self.combo_applicator.currentIndex() - 1  # applicator index
         applicator = self.combo_applicator.currentText()
@@ -399,6 +417,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.z_clinical_max = z_vals[np.argmax(depth_dose)]
         self.label_zmax.setText(f"{-self.z_clinical_max:.2f}")
 
+        self.clear_GraphWidgets()
+
         if self.rescale_factor != 0:
             # plot cross plane
             self.plot_crossplane(interpolator)
@@ -428,18 +448,14 @@ class Window(QMainWindow, Ui_MainWindow):
             print("Plots updated")
 
         else:
-            self.p1.clear()
-            self.p2.clear()
-            self.p3.clear()
+            self.clear_GraphWidgets()
             self.openGLWidget.clear()
+            self.label_zmax.setText("")
+            self.label_R90X.setText("")
+            self.label_R90Y.setText("")
 
     def plot_crossplane(self, interpolator):
         plot_relative = True
-
-        self.p1.clear()
-        self.img1 = pg.ImageItem()
-        self.p1.addItem(self.img1)
-
         # Define the points on the y=0 plane for interpolation
         x_vals = np.linspace(
             self.x_scale[0],
@@ -481,11 +497,7 @@ class Window(QMainWindow, Ui_MainWindow):
             color_limits = (self.dose_min, self.dose_max)
         self.img1.setImage(data)
 
-        # Colorbar
-        if self.colorbar_cross:
-            self.colorbar_cross.setParentItem(None)
-            self.colorbar_cross = None
-
+        # Add a new colorbar
         self.colorbar_cross = pg.ColorBarItem(values=color_limits, colorMap="turbo")
         self.colorbar_cross.setImageItem(self.img1, insert_in=self.p1)
 
@@ -513,10 +525,6 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def plot_inplane(self, interpolator):
         plot_relative = True
-
-        self.p2.clear()
-        self.img2 = pg.ImageItem()
-        self.p2.addItem(self.img2)
 
         # Define the points on the y=0 plane for interpolation
         x_vals = 0
@@ -558,11 +566,6 @@ class Window(QMainWindow, Ui_MainWindow):
             color_limits = (self.dose_min, self.dose_max)
         self.img2.setImage(data)
 
-        # Colorbar
-        if self.colorbar_in:
-            self.colorbar_in.setParentItem(None)
-            self.colorbar_in = None
-
         self.colorbar_in = pg.ColorBarItem(values=color_limits, colorMap="turbo")
         self.colorbar_in.setImageItem(self.img2, insert_in=self.p2)
 
@@ -591,10 +594,6 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def plot_coronal(self, interpolator):
         plot_relative = True
-
-        self.p3.clear()
-        self.img3 = pg.ImageItem()
-        self.p3.addItem(self.img3)
 
         # Define the points on the y=0 plane for interpolation
         x_vals = np.linspace(
@@ -635,11 +634,6 @@ class Window(QMainWindow, Ui_MainWindow):
             levels = self.levels * self.clinical_max / 100
             color_limits = (self.dose_min, self.dose_max)
         self.img3.setImage(data)
-
-        # Colorbar
-        if self.colorbar_coronal:
-            self.colorbar_coronal.setParentItem(None)
-            self.colorbar_coronal = None
 
         self.colorbar_coronal = pg.ColorBarItem(values=color_limits, colorMap="turbo")
         self.colorbar_coronal.setImageItem(self.img3, insert_in=self.p3)

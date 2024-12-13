@@ -71,7 +71,7 @@ def test_plot_distribs_rescaling_zero(qtbot, mocker):
     window.refresh()
 
     # Verify that all p1, p2, p3 and openGLWidget are cleared
-    assert len(window.p1.items) == 0
-    assert len(window.p2.items) == 0
-    assert len(window.p3.items) == 0
+    assert len(window.p1.items) == 1
+    assert len(window.p2.items) == 1
+    assert len(window.p3.items) == 1
     assert len(window.openGLWidget.items) == 0
