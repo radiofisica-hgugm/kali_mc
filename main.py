@@ -623,9 +623,8 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(Y_plane.shape)
-        self.data_coronal = np.rot90(D_plane) * self.rescale_factor
+        self.data_coronal = np.flipud(np.rot90(D_plane)) * self.rescale_factor
         self.p3.addItem(pg.GridItem())
-        # self.p3.getViewBox().invertY(True)
         self.p3.getViewBox().setAspectLocked(lock=True, ratio=1)
         self.p3.getAxis("bottom").setLabel("cm")
 
