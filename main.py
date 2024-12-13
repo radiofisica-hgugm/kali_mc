@@ -248,6 +248,29 @@ class Window(QMainWindow, Ui_MainWindow):
                 checked_radiobutton_idx = e_idx
         return checked_radiobutton_idx
 
+    def clear_GraphWidgets(self):
+        self.graphWidget1.clear()
+        self.p1 = self.graphWidget1.addPlot(colspan=1, title="Crossline")
+        self.img1 = pg.ImageItem()
+        self.p1.addItem(self.img1)
+
+        self.graphWidget2.clear()
+        self.p2 = self.graphWidget2.addPlot(colspan=1, title="Inline")
+        self.img2 = pg.ImageItem()
+        self.p2.addItem(self.img2)
+
+        self.graphWidget3.clear()
+        self.p3 = self.graphWidget3.addPlot(
+            colspan=1, title=self.tr("Isodosis del 90% en zmax")
+        )
+        self.img3 = pg.ImageItem()
+        self.p3.addItem(self.img3)
+
+        self.openGLWidget.clear()
+        self.label_zmax.setText("")
+        self.label_R90X.setText("")
+        self.label_R90Y.setText("")
+
     def refresh(self):
         a_idx = self.combo_applicator.currentIndex() - 1  # applicator index
         applicator = self.combo_applicator.currentText()
@@ -337,6 +360,16 @@ class Window(QMainWindow, Ui_MainWindow):
             self.npzfile = ""
             self.dose_distrib = None
             self.calcular.setEnabled(False)
+            self.clear_GraphWidgets()
+            self.label_rescale_f_6.setText("")
+            self.label_rescale_f_8.setText("")
+            self.label_rescale_f_10.setText("")
+            self.label_rescale_f_12.setText("")
+            self.label_6MeV.setText("")
+            self.label_8MeV.setText("")
+            self.label_10MeV.setText("")
+            self.label_12MeV.setText("")
+
         self.output_label.setText("")
         self.UM_label.setText("")
         self.label_linac_dose.setText("")
@@ -397,6 +430,8 @@ class Window(QMainWindow, Ui_MainWindow):
         depth_dose = interpolator(points)
         self.clinical_max = np.max(depth_dose)
         self.z_clinical_max = z_vals[np.argmax(depth_dose)]
+
+        self.clear_GraphWidgets()
         self.label_zmax.setText(f"{-self.z_clinical_max:.2f}")
 
         if self.rescale_factor != 0:
@@ -410,7 +445,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.plot_coronal(interpolator)
 
             # 3D
-            self.openGLWidget.clear()
             self.openGLWidget.setCameraPosition(distance=20, azimuth=-55, elevation=15)
             g = gl.GLGridItem()
             self.openGLWidget.addItem(g)
@@ -427,19 +461,8 @@ class Window(QMainWindow, Ui_MainWindow):
             self.add_inclined_cylinder()
             print("Plots updated")
 
-        else:
-            self.p1.clear()
-            self.p2.clear()
-            self.p3.clear()
-            self.openGLWidget.clear()
-
     def plot_crossplane(self, interpolator):
         plot_relative = True
-
-        self.p1.clear()
-        self.img1 = pg.ImageItem()
-        self.p1.addItem(self.img1)
-
         # Define the points on the y=0 plane for interpolation
         x_vals = np.linspace(
             self.x_scale[0],
@@ -481,11 +504,7 @@ class Window(QMainWindow, Ui_MainWindow):
             color_limits = (self.dose_min, self.dose_max)
         self.img1.setImage(data)
 
-        # Colorbar
-        if self.colorbar_cross:
-            self.colorbar_cross.setParentItem(None)
-            self.colorbar_cross = None
-
+        # Add a new colorbar
         self.colorbar_cross = pg.ColorBarItem(values=color_limits, colorMap="turbo")
         self.colorbar_cross.setImageItem(self.img1, insert_in=self.p1)
 
@@ -513,10 +532,6 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def plot_inplane(self, interpolator):
         plot_relative = True
-
-        self.p2.clear()
-        self.img2 = pg.ImageItem()
-        self.p2.addItem(self.img2)
 
         # Define the points on the y=0 plane for interpolation
         x_vals = 0
@@ -558,11 +573,6 @@ class Window(QMainWindow, Ui_MainWindow):
             color_limits = (self.dose_min, self.dose_max)
         self.img2.setImage(data)
 
-        # Colorbar
-        if self.colorbar_in:
-            self.colorbar_in.setParentItem(None)
-            self.colorbar_in = None
-
         self.colorbar_in = pg.ColorBarItem(values=color_limits, colorMap="turbo")
         self.colorbar_in.setImageItem(self.img2, insert_in=self.p2)
 
@@ -592,10 +602,6 @@ class Window(QMainWindow, Ui_MainWindow):
     def plot_coronal(self, interpolator):
         plot_relative = True
 
-        self.p3.clear()
-        self.img3 = pg.ImageItem()
-        self.p3.addItem(self.img3)
-
         # Define the points on the y=0 plane for interpolation
         x_vals = np.linspace(
             self.x_scale[0],
@@ -617,9 +623,8 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # Interpolate the data on the y=0 plane
         D_plane = interpolator(points_plane).reshape(Y_plane.shape)
-        self.data_coronal = np.rot90(D_plane) * self.rescale_factor
+        self.data_coronal = np.flipud(np.rot90(D_plane)) * self.rescale_factor
         self.p3.addItem(pg.GridItem())
-        # self.p3.getViewBox().invertY(True)
         self.p3.getViewBox().setAspectLocked(lock=True, ratio=1)
         self.p3.getAxis("bottom").setLabel("cm")
 
@@ -635,11 +640,6 @@ class Window(QMainWindow, Ui_MainWindow):
             levels = self.levels * self.clinical_max / 100
             color_limits = (self.dose_min, self.dose_max)
         self.img3.setImage(data)
-
-        # Colorbar
-        if self.colorbar_coronal:
-            self.colorbar_coronal.setParentItem(None)
-            self.colorbar_coronal = None
 
         self.colorbar_coronal = pg.ColorBarItem(values=color_limits, colorMap="turbo")
         self.colorbar_coronal.setImageItem(self.img3, insert_in=self.p3)

@@ -8,7 +8,7 @@ copyright = "2024, Servicio de Dosimetría y Radioprotección , Hospital General
 author = "Rafael Ayala"
 
 release = "1.3"
-version = "1.3.0"
+version = "1.3.1"
 
 # -- General configuration
 
