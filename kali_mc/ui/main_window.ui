@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1468</width>
-    <height>886</height>
+    <width>1474</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
        <number>4</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,2,5,5,3">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,3,5,5,3">
         <property name="spacing">
          <number>6</number>
         </property>
@@ -274,12 +274,15 @@
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>20</y>
-             <width>231</width>
-             <height>61</height>
+             <y>30</y>
+             <width>271</width>
+             <height>91</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout_5">
+            <property name="formAlignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+            </property>
             <property name="rightMargin">
              <number>15</number>
             </property>
@@ -346,9 +349,9 @@
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>20</y>
+             <y>30</y>
              <width>271</width>
-             <height>182</height>
+             <height>171</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout" columnstretch="2,0,0,0">
@@ -1609,7 +1612,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1468</width>
+     <width>1474</width>
      <height>22</height>
     </rect>
    </property>

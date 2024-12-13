@@ -72,7 +72,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1468, 886)
+        MainWindow.resize(1474, 900)
         icon = QIcon()
         icon.addFile(
             ":/icons/res/kali_ico.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off
@@ -209,9 +209,14 @@ class Ui_MainWindow(object):
         self.groupBox_2.setFont(font3)
         self.formLayoutWidget_2 = QWidget(self.groupBox_2)
         self.formLayoutWidget_2.setObjectName("formLayoutWidget_2")
-        self.formLayoutWidget_2.setGeometry(QRect(10, 20, 231, 61))
+        self.formLayoutWidget_2.setGeometry(QRect(10, 30, 271, 91))
         self.formLayout_5 = QFormLayout(self.formLayoutWidget_2)
         self.formLayout_5.setObjectName("formLayout_5")
+        self.formLayout_5.setFormAlignment(
+            Qt.AlignmentFlag.AlignLeading
+            | Qt.AlignmentFlag.AlignLeft
+            | Qt.AlignmentFlag.AlignVCenter
+        )
         self.formLayout_5.setContentsMargins(0, 0, 15, 0)
         self.label_4 = QLabel(self.formLayoutWidget_2)
         self.label_4.setObjectName("label_4")
@@ -244,7 +249,7 @@ class Ui_MainWindow(object):
         self.groupBox_3.setFont(font3)
         self.gridLayoutWidget = QWidget(self.groupBox_3)
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
-        self.gridLayoutWidget.setGeometry(QRect(10, 20, 271, 182))
+        self.gridLayoutWidget.setGeometry(QRect(10, 30, 271, 171))
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setObjectName("gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -583,7 +588,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.groupBox_5)
 
-        self.verticalLayout.setStretch(2, 2)
+        self.verticalLayout.setStretch(2, 3)
         self.verticalLayout.setStretch(3, 5)
         self.verticalLayout.setStretch(4, 5)
         self.verticalLayout.setStretch(5, 3)
@@ -951,7 +956,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName("menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1468, 22))
+        self.menubar.setGeometry(QRect(0, 0, 1474, 22))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")

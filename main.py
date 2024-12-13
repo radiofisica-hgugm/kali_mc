@@ -266,6 +266,11 @@ class Window(QMainWindow, Ui_MainWindow):
         self.img3 = pg.ImageItem()
         self.p3.addItem(self.img3)
 
+        self.openGLWidget.clear()
+        self.label_zmax.setText("")
+        self.label_R90X.setText("")
+        self.label_R90Y.setText("")
+
     def refresh(self):
         a_idx = self.combo_applicator.currentIndex() - 1  # applicator index
         applicator = self.combo_applicator.currentText()
@@ -355,6 +360,16 @@ class Window(QMainWindow, Ui_MainWindow):
             self.npzfile = ""
             self.dose_distrib = None
             self.calcular.setEnabled(False)
+            self.clear_GraphWidgets()
+            self.label_rescale_f_6.setText("")
+            self.label_rescale_f_8.setText("")
+            self.label_rescale_f_10.setText("")
+            self.label_rescale_f_12.setText("")
+            self.label_6MeV.setText("")
+            self.label_8MeV.setText("")
+            self.label_10MeV.setText("")
+            self.label_12MeV.setText("")
+
         self.output_label.setText("")
         self.UM_label.setText("")
         self.label_linac_dose.setText("")
@@ -415,9 +430,9 @@ class Window(QMainWindow, Ui_MainWindow):
         depth_dose = interpolator(points)
         self.clinical_max = np.max(depth_dose)
         self.z_clinical_max = z_vals[np.argmax(depth_dose)]
-        self.label_zmax.setText(f"{-self.z_clinical_max:.2f}")
 
         self.clear_GraphWidgets()
+        self.label_zmax.setText(f"{-self.z_clinical_max:.2f}")
 
         if self.rescale_factor != 0:
             # plot cross plane
@@ -430,7 +445,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.plot_coronal(interpolator)
 
             # 3D
-            self.openGLWidget.clear()
             self.openGLWidget.setCameraPosition(distance=20, azimuth=-55, elevation=15)
             g = gl.GLGridItem()
             self.openGLWidget.addItem(g)
@@ -446,13 +460,6 @@ class Window(QMainWindow, Ui_MainWindow):
             # 3D Cylinder
             self.add_inclined_cylinder()
             print("Plots updated")
-
-        else:
-            self.clear_GraphWidgets()
-            self.openGLWidget.clear()
-            self.label_zmax.setText("")
-            self.label_R90X.setText("")
-            self.label_R90Y.setText("")
 
     def plot_crossplane(self, interpolator):
         plot_relative = True
