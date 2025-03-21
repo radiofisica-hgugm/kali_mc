@@ -102,7 +102,7 @@ except ImportError:
     print("local_conf ignored")
     pass
 
-__version__ = "1.3.1"
+__version__ = "1.3.2"
 
 # Data files to check for integrity
 applicators = [3, 4, 5, 6, 7, 8, 9, 10, 12]
