@@ -209,7 +209,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         # Check for data integrity
         expected_hash = (
-            "e5bbd27960ccd7c9354b4484207b158e3e656a11e4d8bde309d8a0cf7d33454a"
+            "db86ca1124ed8f71c355706f72285b418fa1105aae78f3a888c9a849bc5da1ed"
         )
 
         if not enable_external_data:
