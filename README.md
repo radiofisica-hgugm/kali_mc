@@ -31,3 +31,7 @@
 ## Additional data:
 Monte Carlo Phase Space Files (PSFs) that give rise to the displayed absorbed dose distributions are available here:
  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14029134.svg)](https://doi.org/10.5281/zenodo.14029134)
+
+More information about the Monte Carlo modelling of the Liac HWL mobile accelerator can be found in:
+
+ *Ayala R, Soza Á, García MJ, García R, Udías JM, Ibáñez P. Development and validation of a Monte Carlo model of a mobile accelerator for intraoperative radiation therapy. Med Phys. 2025; 52:e18040. https://doi.org/10.1002/mp.18040*
