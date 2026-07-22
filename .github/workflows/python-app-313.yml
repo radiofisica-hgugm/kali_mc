@@ -1,7 +1,6 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/use-cases-and-examples/building-and-testing/building-and-testing-python
+# This workflow will install Python dependencies, run tests and lint with Python 3.13
 
-name: Python application - ubuntu-latest- python 3.9
+name: Python application - ubuntu-latest- python 3.13
 
 on:
   push:
@@ -18,15 +17,14 @@ jobs:
       # Display must be available globally for linux to know where xvfb is
       DISPLAY: ":99.0"
       QT_SELECT: "qt6"
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.9
+    - name: Set up Python 3.13
       uses: actions/setup-python@v3
       with:
-        python-version: "3.9"
+        python-version: "3.13"
     - name: Install dependencies
       run: |
         sudo apt update
