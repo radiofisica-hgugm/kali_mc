@@ -28,6 +28,11 @@
 ## Documentation:
 [https://kali-mc.readthedocs.io/](https://kali-mc.readthedocs.io/)
 
+## How to cite:
+If you use Kali MC in your work, please cite the article describing the software:
+
+*Ayala R, García R, Ruiz G, Gómez S, Santos M, Álvarez A, García MJ, Soza Á, Udías JM, Ibáñez P. Kali MC: an open-source toolkit for intraoperative electron radiation therapy treatment planning. Biomed Phys Eng Express. 2026;12(3):037001. https://doi.org/10.1088/2057-1976/ae5f9d*
+
 ## Additional data:
 Monte Carlo Phase Space Files (PSFs) that give rise to the displayed absorbed dose distributions are available here:
  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14029134.svg)](https://doi.org/10.5281/zenodo.14029134)
