@@ -7,8 +7,8 @@ project = "Kali MC"
 copyright = "2024, Servicio de Dosimetría y Radioprotección , Hospital General Universitario Gregorio Marañón"
 author = "Rafael Ayala"
 
-release = "1.3"
-version = "1.3.1"
+release = "1.3.4"
+version = "1.3"
 
 # -- General configuration
 
@@ -39,7 +39,6 @@ html_theme = "sphinx_rtd_theme"
 html_logo = "kali_mc.svg"
 html_theme_options = {
     "logo_only": False,
-    "display_version": True,
 }
 
 # -- Options for EPUB output

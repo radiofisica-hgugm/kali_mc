@@ -6,13 +6,13 @@ Starting Kali MC
 Running from source
 --------------------
 
-To use Kali MC, first ensure you have a Python 3 distribution (Python version >= 3.9) installed in your system
+To use Kali MC, first ensure you have a Python 3 distribution (Python version >= 3.10) installed in your system
 and/or activate a virtual environment, you can check it in a terminal:
 
 .. code-block:: console
 
     $ python --version
-    Python 3.9.19
+    Python 3.10.18
 
 Clone the repository (or download zip and extract folder) `https://github.com/radiofisica-hgugm/kali_mc.git <https://github.com/radiofisica-hgugm/kali_mc.git>`_
 
